@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -9,12 +10,30 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
-            int q = gcd(27, 18);
-
-
-            Console.WriteLine(q);
+            FindFilePath(@"F:\Program Files (x86)\Tencent", ".exe");
 
             Console.Read();
+        }
+
+        /// <summary>
+        /// 寻找符合条件的文件路径
+        /// </summary>
+        /// <param name="path">查找根目录</param>
+        /// <param name="keyword">查找关键字</param>
+        static void FindFilePath(string path, string keyword)
+        {
+            DirectoryInfo d = new DirectoryInfo(path);
+            foreach (FileInfo file in d.GetFiles())
+            {
+                if (file.Name.ToLower().Contains(keyword))
+                {
+                    Console.WriteLine(file.FullName);
+                }
+            }
+            foreach (DirectoryInfo item in d.GetDirectories())
+            {
+                FindFilePath(item.FullName, keyword);
+            }
         }
 
         /// <summary>
