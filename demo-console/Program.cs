@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace demo_console
@@ -10,9 +11,50 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
-            FindFilePath(@"F:\Program Files (x86)\Tencent", ".exe");
+            GetUrl();
 
             Console.Read();
+        }
+
+        static void GetUrl()
+        {
+            string[] code = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
+            string baseUrl = "https://github.com/";
+            for (int i = 0; i < code.Length; i++)
+            {
+                for (int j = 0; j < code.Length; j++)
+                {
+                    for (int k = 0; k < code.Length; k++)
+                    {
+                        IsExist(baseUrl + code[i] + code[j] + code[k]);
+                    }
+                }
+            }
+
+            Console.WriteLine("输出完毕！");
+        }
+
+        static void IsExist(string url)
+        {
+            try
+            {
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+                req.Method = "GET";
+                req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36";
+                var rsp = req.GetResponse() as HttpWebResponse; // 最好能捕获异常302的HttpException,然后再处理一下。在Data中取键值 Location  
+                if (rsp.StatusCode == HttpStatusCode.NotFound)
+                {
+                    Console.WriteLine(url);
+                }
+            }
+            catch (WebException ex)
+            {
+                var rsp = ex.Response as HttpWebResponse;
+                if (rsp == null || rsp.StatusCode == HttpStatusCode.NotFound)
+                {
+                    Console.WriteLine(url);
+                }
+            }
         }
 
         /// <summary>
