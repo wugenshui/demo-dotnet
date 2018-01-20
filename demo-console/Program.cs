@@ -5,17 +5,23 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 
 namespace demo_console
 {
     class Program
     {
+        private static readonly log4net.ILog _Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         static void Main(string[] args)
         {
-            DataTable data = DBHelper.ExecuteDataset(DBHelper.GetConnection(), CommandType.Text, "select * from AuthorityOu").Tables[0];
+            _Log.Error("DEBUG");
+            _Log.Debug("123");
 
-            Console.Read();
+            //LogHelper.Debug("123");
+            //DataTable data = DBHelper.ExecuteDataset(DBHelper.GetConnection(), CommandType.Text, "select * from AuthorityOu").Tables[0];
+
+            //Console.ReadKey();
         }
 
         static void GetUrl()
