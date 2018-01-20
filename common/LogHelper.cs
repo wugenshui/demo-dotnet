@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace common
 {
+    /// <summary>
+    /// 在AssemblyInfo.cs中加入：
+    /// [assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4netConfig.ini", Watch = true)]
+    /// private static readonly log4net.ILog _Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);  //日志
+    /// </summary>
     public class LogHelper
     {
         // 日志纪录对象
