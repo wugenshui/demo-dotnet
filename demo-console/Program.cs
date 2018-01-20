@@ -12,12 +12,8 @@ namespace demo_console
 {
     class Program
     {
-        private static readonly log4net.ILog _Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         static void Main(string[] args)
         {
-            _Log.Error("DEBUG");
-            _Log.Debug("123");
-
             try
             {
                 int i = 0;
@@ -25,10 +21,11 @@ namespace demo_console
             }
             catch (Exception ex)
             {
-                _Log.Error(ex);
+                LogHelper.Debug(ex);
             }
+            LogHelper.Info("记录正确的信息");
+            LogHelper.Error("错误了");
 
-            //LogHelper.Debug("123");
             //DataTable data = DBHelper.ExecuteDataset(DBHelper.GetConnection(), CommandType.Text, "select * from AuthorityOu").Tables[0];
 
             //Console.ReadKey();
