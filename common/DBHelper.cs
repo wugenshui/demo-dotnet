@@ -205,7 +205,7 @@ namespace common
         /// <returns></returns> 
         public static string GetConnSting()
         {
-            return "Persist Security Info=False;Data Source=.;Initial Catalog=s;User ID=sa;password=sa;Packet Size=4096;Pooling=true;Max Pool Size=100;Min Pool Size=1";
+            return "Persist Security Info=False;Data Source=.;Initial Catalog=oa;User ID=sa;password=sa;Packet Size=4096;Pooling=true;Max Pool Size=100;Min Pool Size=1";
             //return ConfigurationManager.ConnectionStrings["ConStr"].ConnectionString;
         }
         /// <summary> 

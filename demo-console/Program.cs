@@ -1,5 +1,7 @@
-﻿using System;
+﻿using common;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,7 +13,7 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
-            GetUrl();
+            DataTable data = DBHelper.ExecuteDataset(DBHelper.GetConnection(), CommandType.Text, "select * from AuthorityOu").Tables[0];
 
             Console.Read();
         }
@@ -46,6 +48,7 @@ namespace demo_console
                 {
                     Console.WriteLine(url);
                 }
+                Console.WriteLine(url.Replace("https://github.com/", ""));
             }
             catch (WebException ex)
             {
