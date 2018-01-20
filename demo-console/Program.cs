@@ -18,6 +18,16 @@ namespace demo_console
             _Log.Error("DEBUG");
             _Log.Debug("123");
 
+            try
+            {
+                int i = 0;
+                int k = 1 / i;
+            }
+            catch (Exception ex)
+            {
+                _Log.Error(ex);
+            }
+
             //LogHelper.Debug("123");
             //DataTable data = DBHelper.ExecuteDataset(DBHelper.GetConnection(), CommandType.Text, "select * from AuthorityOu").Tables[0];
 
