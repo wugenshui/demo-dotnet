@@ -12,9 +12,22 @@ namespace demo_console
 {
     class Program
     {
+        public class user
+        {
+            public int id { get; set; }
+            public string name { get; set; }
+        }
         static void Main(string[] args)
         {
-            GetUrl();
+            user u = new user()
+            {
+                id = 1,
+                name = "陈波"
+            };
+
+            var s = JsonHelper.JsonSerialize(u);
+            var uu = JsonHelper.JsonDeserialize<user>(s);
+
             //Console.ReadKey();
         }
 
