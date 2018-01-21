@@ -14,20 +14,7 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
-            try
-            {
-                int i = 0;
-                int k = 1 / i;
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Debug(ex);
-            }
-            LogHelper.Info("记录正确的信息");
-            LogHelper.Error("错误了");
-
-            //DataTable data = DBHelper.ExecuteDataset(DBHelper.GetConnection(), CommandType.Text, "select * from AuthorityOu").Tables[0];
-
+            GetUrl();
             //Console.ReadKey();
         }
 
@@ -53,11 +40,8 @@ namespace demo_console
         {
             try
             {
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
-                req.Method = "GET";
-                req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36";
-                var rsp = req.GetResponse() as HttpWebResponse; // 最好能捕获异常302的HttpException,然后再处理一下。在Data中取键值 Location  
-                if (rsp.StatusCode == HttpStatusCode.NotFound)
+                var response = HttpHelper.GetResponse(url); // 最好能捕获异常302的HttpException,然后再处理一下。在Data中取键值 Location  
+                if (response.StatusCode == HttpStatusCode.NotFound)
                 {
                     Console.WriteLine(url);
                 }

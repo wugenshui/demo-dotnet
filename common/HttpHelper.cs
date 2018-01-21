@@ -90,5 +90,20 @@ namespace common
 
             return retString;
         }
+
+        /// <summary>
+        /// GET请求与获取结果
+        /// </summary>
+        public static HttpWebResponse GetResponse(string url)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.117 Safari/537.36";
+            request.ContentType = "text/html;charset=UTF-8";
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            return response;
+        }
     }
 }
