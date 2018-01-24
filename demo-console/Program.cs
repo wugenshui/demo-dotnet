@@ -12,22 +12,25 @@ namespace demo_console
 {
     class Program
     {
-        public class user
+        public class father
         {
             public int id { get; set; }
             public string name { get; set; }
         }
+        public class son : father
+        {
+            public string special { get; set; }
+        }
+
         static void Main(string[] args)
         {
-            user u = new user()
+            // 父类转子类
+            father u = new father()
             {
                 id = 1,
                 name = "陈波"
             };
-
-            var s = JsonHelper.JsonSerialize(u);
-            var uu = JsonHelper.JsonDeserialize<user>(s);
-
+            son newU = JsonHelper.EntityParse<son>(u);
             //Console.ReadKey();
         }
 

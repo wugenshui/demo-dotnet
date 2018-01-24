@@ -41,6 +41,21 @@ namespace common
         }
 
         /// <summary>
+        /// 实体-序列化-反序列化为指定实体
+        /// </summary>
+        /// <typeparam name="T">对象类型</typeparam>
+        /// <param name="object">转换实体</param>
+        /// <returns>序列化后的对象</returns>
+        public static T EntityParse<T>(object obj)
+        {
+            string jsonString = JsonConvert.SerializeObject(obj);
+            T t = default(T);
+            t = JsonConvert.DeserializeObject<T>(jsonString);
+
+            return t;
+        }
+
+        /// <summary>
         /// DataTable序列化为Json字符串
         /// </summary>
         /// <param name="table">需要序列化的DataTable</param>
