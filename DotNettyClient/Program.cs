@@ -25,8 +25,6 @@ namespace DotNettyClient
 
         static async Task RunClientAsync()
         {
-            //ExampleHelper.SetConsoleLogger();
-
             var group = new MultithreadEventLoopGroup();
 
             X509Certificate2 cert = null;

@@ -31,5 +31,15 @@ namespace DotNettyServer
             Console.WriteLine("服务器异常:" + exception);
             context.CloseAsync();
         }
+
+        public override void ChannelActive(IChannelHandlerContext context)
+        {
+            Console.WriteLine("激活" + context.Channel.LocalAddress.ToString());
+        }
+
+        public override void ChannelInactive(IChannelHandlerContext context)
+        {
+            Console.WriteLine("断开连接" + context.Channel.LocalAddress.ToString());
+        }
     }
 }
