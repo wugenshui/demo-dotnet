@@ -10,11 +10,11 @@ namespace common
     /// <summary> 
     /// SqlServer数据访问帮助类 
     /// </summary> 
-    public sealed class DBHelper
+    public sealed class SqlHelper
     {
         #region 私有构造函数和方法
 
-        private DBHelper() { }
+        private SqlHelper() { }
 
         /// <summary>
         /// 大数据量批量插入BulkToDB
@@ -22,7 +22,7 @@ namespace common
         /// <param name="dt">数据表</param>
         public static void BulkToDB(DataTable dt)
         {
-            SqlConnection conn = new SqlConnection(DBHelper.GetConnSting());
+            SqlConnection conn = new SqlConnection(SqlHelper.GetConnSting());
             SqlBulkCopy bulkCopy = new SqlBulkCopy(conn);
             bulkCopy.DestinationTableName = dt.TableName;
             bulkCopy.BatchSize = dt.Rows.Count;
@@ -214,7 +214,7 @@ namespace common
         /// <returns></returns> 
         public static SqlConnection GetConnection()
         {
-            SqlConnection Connection = new SqlConnection(DBHelper.GetConnSting());
+            SqlConnection Connection = new SqlConnection(SqlHelper.GetConnSting());
             return Connection;
         }
         #endregion
@@ -1859,11 +1859,11 @@ namespace common
                 // 分配参数值 
                 AssignParameterValues(commandParameters, dataRow);
 
-                return DBHelper.ExecuteNonQuery(connectionString, CommandType.StoredProcedure, spName, commandParameters);
+                return SqlHelper.ExecuteNonQuery(connectionString, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return DBHelper.ExecuteNonQuery(connectionString, CommandType.StoredProcedure, spName);
+                return SqlHelper.ExecuteNonQuery(connectionString, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -1888,11 +1888,11 @@ namespace common
                 // 分配参数值 
                 AssignParameterValues(commandParameters, dataRow);
 
-                return DBHelper.ExecuteNonQuery(connection, CommandType.StoredProcedure, spName, commandParameters);
+                return SqlHelper.ExecuteNonQuery(connection, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return DBHelper.ExecuteNonQuery(connection, CommandType.StoredProcedure, spName);
+                return SqlHelper.ExecuteNonQuery(connection, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -1918,11 +1918,11 @@ namespace common
                 // 分配参数值 
                 AssignParameterValues(commandParameters, dataRow);
 
-                return DBHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, spName, commandParameters);
+                return SqlHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return DBHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, spName);
+                return SqlHelper.ExecuteNonQuery(transaction, CommandType.StoredProcedure, spName);
             }
         }
         #endregion
@@ -1949,11 +1949,11 @@ namespace common
                 // 分配参数值 
                 AssignParameterValues(commandParameters, dataRow);
 
-                return DBHelper.ExecuteDataset(connectionString, CommandType.StoredProcedure, spName, commandParameters);
+                return SqlHelper.ExecuteDataset(connectionString, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return DBHelper.ExecuteDataset(connectionString, CommandType.StoredProcedure, spName);
+                return SqlHelper.ExecuteDataset(connectionString, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -1979,11 +1979,11 @@ namespace common
                 // 分配参数值 
                 AssignParameterValues(commandParameters, dataRow);
 
-                return DBHelper.ExecuteDataset(connection, CommandType.StoredProcedure, spName, commandParameters);
+                return SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return DBHelper.ExecuteDataset(connection, CommandType.StoredProcedure, spName);
+                return SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2009,11 +2009,11 @@ namespace common
                 // 分配参数值 
                 AssignParameterValues(commandParameters, dataRow);
 
-                return DBHelper.ExecuteDataset(transaction, CommandType.StoredProcedure, spName, commandParameters);
+                return SqlHelper.ExecuteDataset(transaction, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return DBHelper.ExecuteDataset(transaction, CommandType.StoredProcedure, spName);
+                return SqlHelper.ExecuteDataset(transaction, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2041,11 +2041,11 @@ namespace common
                 // 分配参数值 
                 AssignParameterValues(commandParameters, dataRow);
 
-                return DBHelper.ExecuteReader(connectionString, CommandType.StoredProcedure, spName, commandParameters);
+                return SqlHelper.ExecuteReader(connectionString, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return DBHelper.ExecuteReader(connectionString, CommandType.StoredProcedure, spName);
+                return SqlHelper.ExecuteReader(connectionString, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2071,11 +2071,11 @@ namespace common
                 // 分配参数值 
                 AssignParameterValues(commandParameters, dataRow);
 
-                return DBHelper.ExecuteReader(connection, CommandType.StoredProcedure, spName, commandParameters);
+                return SqlHelper.ExecuteReader(connection, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return DBHelper.ExecuteReader(connection, CommandType.StoredProcedure, spName);
+                return SqlHelper.ExecuteReader(connection, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2101,11 +2101,11 @@ namespace common
                 // 分配参数值 
                 AssignParameterValues(commandParameters, dataRow);
 
-                return DBHelper.ExecuteReader(transaction, CommandType.StoredProcedure, spName, commandParameters);
+                return SqlHelper.ExecuteReader(transaction, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return DBHelper.ExecuteReader(transaction, CommandType.StoredProcedure, spName);
+                return SqlHelper.ExecuteReader(transaction, CommandType.StoredProcedure, spName);
             }
         }
         #endregion
@@ -2132,11 +2132,11 @@ namespace common
                 // 分配参数值 
                 AssignParameterValues(commandParameters, dataRow);
 
-                return DBHelper.ExecuteScalar(connectionString, CommandType.StoredProcedure, spName, commandParameters);
+                return SqlHelper.ExecuteScalar(connectionString, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return DBHelper.ExecuteScalar(connectionString, CommandType.StoredProcedure, spName);
+                return SqlHelper.ExecuteScalar(connectionString, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2161,11 +2161,11 @@ namespace common
                 // 分配参数值 
                 AssignParameterValues(commandParameters, dataRow);
 
-                return DBHelper.ExecuteScalar(connection, CommandType.StoredProcedure, spName, commandParameters);
+                return SqlHelper.ExecuteScalar(connection, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return DBHelper.ExecuteScalar(connection, CommandType.StoredProcedure, spName);
+                return SqlHelper.ExecuteScalar(connection, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2191,11 +2191,11 @@ namespace common
                 // 分配参数值 
                 AssignParameterValues(commandParameters, dataRow);
 
-                return DBHelper.ExecuteScalar(transaction, CommandType.StoredProcedure, spName, commandParameters);
+                return SqlHelper.ExecuteScalar(transaction, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return DBHelper.ExecuteScalar(transaction, CommandType.StoredProcedure, spName);
+                return SqlHelper.ExecuteScalar(transaction, CommandType.StoredProcedure, spName);
             }
         }
         #endregion
@@ -2222,11 +2222,11 @@ namespace common
                 // 分配参数值 
                 AssignParameterValues(commandParameters, dataRow);
 
-                return DBHelper.ExecuteXmlReader(connection, CommandType.StoredProcedure, spName, commandParameters);
+                return SqlHelper.ExecuteXmlReader(connection, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return DBHelper.ExecuteXmlReader(connection, CommandType.StoredProcedure, spName);
+                return SqlHelper.ExecuteXmlReader(connection, CommandType.StoredProcedure, spName);
             }
         }
 
@@ -2252,11 +2252,11 @@ namespace common
                 // 分配参数值 
                 AssignParameterValues(commandParameters, dataRow);
 
-                return DBHelper.ExecuteXmlReader(transaction, CommandType.StoredProcedure, spName, commandParameters);
+                return SqlHelper.ExecuteXmlReader(transaction, CommandType.StoredProcedure, spName, commandParameters);
             }
             else
             {
-                return DBHelper.ExecuteXmlReader(transaction, CommandType.StoredProcedure, spName);
+                return SqlHelper.ExecuteXmlReader(transaction, CommandType.StoredProcedure, spName);
             }
         }
         #endregion

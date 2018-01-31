@@ -24,14 +24,7 @@ namespace demo_console
 
         static void Main(string[] args)
         {
-            // 父类转子类
-            father u = new father()
-            {
-                id = 1,
-                name = "陈波"
-            };
-            son newU = JsonHelper.EntityParse<son>(u);
-            //Console.ReadKey();
+            var date = SqlHelper.ExecuteDataset("server=.;Integrated Security=True;Database=GMS;Persist Security Info=True", CommandType.Text, "select * from GMS_WorkOrder").Tables[0];
         }
 
         static void GetUrl()
