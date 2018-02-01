@@ -24,7 +24,9 @@ namespace demo_console
 
         static void Main(string[] args)
         {
-            var date = SqlHelper.ExecuteDataset("server=.;Integrated Security=True;Database=GMS;Persist Security Info=True", CommandType.Text, "select * from GMS_WorkOrder").Tables[0];
+            var data = SqlHelper.ExecuteNonQuery("select * from GMS_WorkOrder");
+            var data1 = SqlHelper.ExecuteScalar("select * from GMS_WorkOrder");
+            var data2 = SqlHelper.ExecuteDataset("getwork", CommandType.StoredProcedure).Tables[0];
         }
 
         static void GetUrl()
