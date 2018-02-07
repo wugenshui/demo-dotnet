@@ -1,4 +1,5 @@
 ﻿using common;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,21 +13,24 @@ namespace demo_console
 {
     class Program
     {
-        public class father
-        {
-            public int id { get; set; }
-            public string name { get; set; }
-        }
-        public class son : father
-        {
-            public string special { get; set; }
-        }
-
         static void Main(string[] args)
         {
-            var data = SqlHelper.ExecuteNonQuery("select * from GMS_WorkOrder");
-            var data1 = SqlHelper.ExecuteScalar("select * from GMS_WorkOrder");
-            var data2 = SqlHelper.ExecuteDataset("getwork", CommandType.StoredProcedure).Tables[0];
+            //JArray jUsers = new JArray();
+            //JObject jUser = new JObject();
+            //jUser["name"] = "张三";
+            //jUser["age"] = 18;
+            //string user = jUser.ToString();
+
+            JObject jUser = new JObject
+            {
+                { "name", "Tom" },
+                { "age", 18 }
+            };
+            JArray jUsers = new JArray();
+            jUsers.Add(new JObject { { "name", "Tom" }, { "age", 18 } });
+            jUsers.Add(new JObject { { "name", "Bob" }, { "age", 18 } });
+            string users = jUsers.ToString();
+
         }
 
         static void GetUrl()
