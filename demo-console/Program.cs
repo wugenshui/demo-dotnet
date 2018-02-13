@@ -15,6 +15,10 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
+
+            //ZipHelper.ZipFile("G://1.html", "G://1.zip");
+            bool iss = ZipHelper.UnZip("G://1.zip", "G:/");
+
             //JArray jUsers = new JArray();
             //JObject jUser = new JObject();
             //jUser["name"] = "张三";
