@@ -15,26 +15,11 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
+            ExcelHelper excel = new ExcelHelper(@"C:\Users\chenbo\Desktop\GMS数据库文档.xls");
+            DataTable data = excel.ExcelToDataTable("GMS数据库文档", true);
 
-            //ZipHelper.ZipFile("G://1.html", "G://1.zip");
-            bool iss = ZipHelper.UnZip("G://1.zip", "G:/");
-
-            //JArray jUsers = new JArray();
-            //JObject jUser = new JObject();
-            //jUser["name"] = "张三";
-            //jUser["age"] = 18;
-            //string user = jUser.ToString();
-
-            JObject jUser = new JObject
-            {
-                { "name", "Tom" },
-                { "age", 18 }
-            };
-            JArray jUsers = new JArray();
-            jUsers.Add(new JObject { { "name", "Tom" }, { "age", 18 } });
-            jUsers.Add(new JObject { { "name", "Bob" }, { "age", 18 } });
-            string users = jUsers.ToString();
-
+            ExcelHelper excel2 = new ExcelHelper(@"C:\Users\chenbo\Desktop\2.xls");
+            int count = excel2.DataTableToExcel(data, "123", true);
         }
 
         static void GetUrl()
