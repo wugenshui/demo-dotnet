@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="GMS_WorkOrder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SyncWorkOrderID" Type="int" />
+          <Property Name="Order_ID" Type="int" />
+          <Property Name="RailWay_ID" Type="int" />
+          <Property Name="RailWayName" Type="nvarchar" MaxLength="150" />
+          <Property Name="RailWayType" Type="int" />
+          <Property Name="OU_ID" Type="int" />
+          <Property Name="OUName" Type="nvarchar" MaxLength="150" />
+          <Property Name="WorkPlace" Type="nvarchar" MaxLength="150" />
+          <Property Name="Content" Type="nvarchar" MaxLength="500" />
+          <Property Name="WorkLeader" Type="nvarchar" MaxLength="150" />
+          <Property Name="Operator" Type="nvarchar" MaxLength="150" />
+          <Property Name="ProtectionMan" Type="nvarchar" MaxLength="150" />
+          <Property Name="SkylightDate" Type="datetime" />
+          <Property Name="WorkContent" Type="nvarchar" MaxLength="500" />
+          <Property Name="WorkType" Type="int" />
+          <Property Name="Leader_ID" Type="nvarchar" MaxLength="150" />
+          <Property Name="Worker_ID" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="GMS_WorkOrderEquipment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkOrder_Id" Type="int" Nullable="false" />
+          <Property Name="Equipment_ID" Type="int" Nullable="false" />
+          <Property Name="EquipmentName" Type="nvarchar" MaxLength="250" />
+          <Property Name="IsInPos" Type="int" />
+          <Property Name="InPosDt" Type="datetime" />
+          <Property Name="IsInPosConfirm" Type="int" />
+          <Property Name="InPosConfirmDt" Type="datetime" />
+          <Property Name="InPosConfirmDesc" Type="nvarchar" MaxLength="250" />
+          <Property Name="IsAtchOrdered" Type="int" />
+          <Property Name="AtchOrderedDt" Type="datetime" />
+          <Property Name="IsAtched" Type="int" />
+          <Property Name="AtchedDt" Type="datetime" />
+          <Property Name="IsAtchConfirm" Type="int" />
+          <Property Name="AtchConfirmDt" Type="datetime" />
+          <Property Name="AtchConfirmDesc" Type="nvarchar" MaxLength="250" />
+          <Property Name="IsRemoveOrdered" Type="int" />
+          <Property Name="RemoveOrderedDt" Type="datetime" />
+          <Property Name="IsRemoved" Type="int" />
+          <Property Name="RemovedDt" Type="datetime" />
+          <Property Name="IsRemoveConfirm" Type="int" />
+          <Property Name="RemoveConfirmDt" Type="datetime" />
+          <Property Name="RemoveConfirmDesc" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="GMS_WorkOrderEquipmentAttachment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkOrderEquipment_ID" Type="int" Nullable="false" />
+          <Property Name="ConfirmedType" Type="int" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“GMS.dbo.GMS_WorkOrderPoints”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="GMS_WorkOrderPoints">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Longitude" />
+            <PropertyRef Name="Latitude" />
+            <PropertyRef Name="WorkOrder_ID" />
+            <PropertyRef Name="HasSend" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Longitude" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Latitude" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="WorkOrder_ID" Type="int" Nullable="false" />
+          <Property Name="HasSend" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="GMSModelStoreContainer">
+          <EntitySet Name="GMS_WorkOrder" EntityType="Self.GMS_WorkOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GMS_WorkOrderEquipment" EntityType="Self.GMS_WorkOrderEquipment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GMS_WorkOrderEquipmentAttachment" EntityType="Self.GMS_WorkOrderEquipmentAttachment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GMS_WorkOrderPoints" EntityType="Self.GMS_WorkOrderPoints" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [GMS_WorkOrderPoints].[ID] AS [ID], 
+    [GMS_WorkOrderPoints].[Longitude] AS [Longitude], 
+    [GMS_WorkOrderPoints].[Latitude] AS [Latitude], 
+    [GMS_WorkOrderPoints].[CreateTime] AS [CreateTime], 
+    [GMS_WorkOrderPoints].[WorkOrder_ID] AS [WorkOrder_ID], 
+    [GMS_WorkOrderPoints].[HasSend] AS [HasSend]
+    FROM [dbo].[GMS_WorkOrderPoints] AS [GMS_WorkOrderPoints]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="GMS_WorkOrder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SyncWorkOrderID" Type="Int32" />
+          <Property Name="Order_ID" Type="Int32" />
+          <Property Name="RailWay_ID" Type="Int32" />
+          <Property Name="RailWayName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="RailWayType" Type="Int32" />
+          <Property Name="OU_ID" Type="Int32" />
+          <Property Name="OUName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="WorkPlace" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="WorkLeader" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Operator" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ProtectionMan" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SkylightDate" Type="DateTime" Precision="3" />
+          <Property Name="WorkContent" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="WorkType" Type="Int32" />
+          <Property Name="Leader_ID" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Worker_ID" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="GMS_WorkOrderEquipment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkOrder_Id" Type="Int32" Nullable="false" />
+          <Property Name="Equipment_ID" Type="Int32" Nullable="false" />
+          <Property Name="EquipmentName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsInPos" Type="Int32" />
+          <Property Name="InPosDt" Type="DateTime" Precision="3" />
+          <Property Name="IsInPosConfirm" Type="Int32" />
+          <Property Name="InPosConfirmDt" Type="DateTime" Precision="3" />
+          <Property Name="InPosConfirmDesc" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsAtchOrdered" Type="Int32" />
+          <Property Name="AtchOrderedDt" Type="DateTime" Precision="3" />
+          <Property Name="IsAtched" Type="Int32" />
+          <Property Name="AtchedDt" Type="DateTime" Precision="3" />
+          <Property Name="IsAtchConfirm" Type="Int32" />
+          <Property Name="AtchConfirmDt" Type="DateTime" Precision="3" />
+          <Property Name="AtchConfirmDesc" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IsRemoveOrdered" Type="Int32" />
+          <Property Name="RemoveOrderedDt" Type="DateTime" Precision="3" />
+          <Property Name="IsRemoved" Type="Int32" />
+          <Property Name="RemovedDt" Type="DateTime" Precision="3" />
+          <Property Name="IsRemoveConfirm" Type="Int32" />
+          <Property Name="RemoveConfirmDt" Type="DateTime" Precision="3" />
+          <Property Name="RemoveConfirmDesc" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="GMS_WorkOrderEquipmentAttachment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkOrderEquipment_ID" Type="Int32" Nullable="false" />
+          <Property Name="ConfirmedType" Type="Int32" Nullable="false" />
+          <Property Name="FileName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GMS_WorkOrderPoints">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Longitude" />
+            <PropertyRef Name="Latitude" />
+            <PropertyRef Name="WorkOrder_ID" />
+            <PropertyRef Name="HasSend" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Longitude" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Latitude" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="WorkOrder_ID" Type="Int32" Nullable="false" />
+          <Property Name="HasSend" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GMS_WorkOrder" EntityType="Self.GMS_WorkOrder" />
+          <EntitySet Name="GMS_WorkOrderEquipment" EntityType="Self.GMS_WorkOrderEquipment" />
+          <EntitySet Name="GMS_WorkOrderEquipmentAttachment" EntityType="Self.GMS_WorkOrderEquipmentAttachment" />
+          <EntitySet Name="GMS_WorkOrderPoints" EntityType="Self.GMS_WorkOrderPoints" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GMSModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="GMS_WorkOrder">
+            <EntityTypeMapping TypeName="GMSModel.GMS_WorkOrder">
+              <MappingFragment StoreEntitySet="GMS_WorkOrder">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SyncWorkOrderID" ColumnName="SyncWorkOrderID" />
+                <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
+                <ScalarProperty Name="RailWay_ID" ColumnName="RailWay_ID" />
+                <ScalarProperty Name="RailWayName" ColumnName="RailWayName" />
+                <ScalarProperty Name="RailWayType" ColumnName="RailWayType" />
+                <ScalarProperty Name="OU_ID" ColumnName="OU_ID" />
+                <ScalarProperty Name="OUName" ColumnName="OUName" />
+                <ScalarProperty Name="WorkPlace" ColumnName="WorkPlace" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="WorkLeader" ColumnName="WorkLeader" />
+                <ScalarProperty Name="Operator" ColumnName="Operator" />
+                <ScalarProperty Name="ProtectionMan" ColumnName="ProtectionMan" />
+                <ScalarProperty Name="SkylightDate" ColumnName="SkylightDate" />
+                <ScalarProperty Name="WorkContent" ColumnName="WorkContent" />
+                <ScalarProperty Name="WorkType" ColumnName="WorkType" />
+                <ScalarProperty Name="Leader_ID" ColumnName="Leader_ID" />
+                <ScalarProperty Name="Worker_ID" ColumnName="Worker_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GMS_WorkOrderEquipment">
+            <EntityTypeMapping TypeName="GMSModel.GMS_WorkOrderEquipment">
+              <MappingFragment StoreEntitySet="GMS_WorkOrderEquipment">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="WorkOrder_Id" ColumnName="WorkOrder_Id" />
+                <ScalarProperty Name="Equipment_ID" ColumnName="Equipment_ID" />
+                <ScalarProperty Name="EquipmentName" ColumnName="EquipmentName" />
+                <ScalarProperty Name="IsInPos" ColumnName="IsInPos" />
+                <ScalarProperty Name="InPosDt" ColumnName="InPosDt" />
+                <ScalarProperty Name="IsInPosConfirm" ColumnName="IsInPosConfirm" />
+                <ScalarProperty Name="InPosConfirmDt" ColumnName="InPosConfirmDt" />
+                <ScalarProperty Name="InPosConfirmDesc" ColumnName="InPosConfirmDesc" />
+                <ScalarProperty Name="IsAtchOrdered" ColumnName="IsAtchOrdered" />
+                <ScalarProperty Name="AtchOrderedDt" ColumnName="AtchOrderedDt" />
+                <ScalarProperty Name="IsAtched" ColumnName="IsAtched" />
+                <ScalarProperty Name="AtchedDt" ColumnName="AtchedDt" />
+                <ScalarProperty Name="IsAtchConfirm" ColumnName="IsAtchConfirm" />
+                <ScalarProperty Name="AtchConfirmDt" ColumnName="AtchConfirmDt" />
+                <ScalarProperty Name="AtchConfirmDesc" ColumnName="AtchConfirmDesc" />
+                <ScalarProperty Name="IsRemoveOrdered" ColumnName="IsRemoveOrdered" />
+                <ScalarProperty Name="RemoveOrderedDt" ColumnName="RemoveOrderedDt" />
+                <ScalarProperty Name="IsRemoved" ColumnName="IsRemoved" />
+                <ScalarProperty Name="RemovedDt" ColumnName="RemovedDt" />
+                <ScalarProperty Name="IsRemoveConfirm" ColumnName="IsRemoveConfirm" />
+                <ScalarProperty Name="RemoveConfirmDt" ColumnName="RemoveConfirmDt" />
+                <ScalarProperty Name="RemoveConfirmDesc" ColumnName="RemoveConfirmDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GMS_WorkOrderEquipmentAttachment">
+            <EntityTypeMapping TypeName="GMSModel.GMS_WorkOrderEquipmentAttachment">
+              <MappingFragment StoreEntitySet="GMS_WorkOrderEquipmentAttachment">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="WorkOrderEquipment_ID" ColumnName="WorkOrderEquipment_ID" />
+                <ScalarProperty Name="ConfirmedType" ColumnName="ConfirmedType" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GMS_WorkOrderPoints">
+            <EntityTypeMapping TypeName="GMSModel.GMS_WorkOrderPoints">
+              <MappingFragment StoreEntitySet="GMS_WorkOrderPoints">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="WorkOrder_ID" ColumnName="WorkOrder_ID" />
+                <ScalarProperty Name="HasSend" ColumnName="HasSend" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
