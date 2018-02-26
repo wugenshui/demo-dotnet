@@ -35,4 +35,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
+// 如果为了使得应用程序的配置文件（web/app.config）不至于很臃肿，把log4net的配置单独放置在Log4net.config文件中
+// 那么需要在应用程序的AssemblyInfo.cs添加这行代码。目的是程序启动时是找到Log4net.config配置文件
 [assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4netConfig.ini", Watch = true)]

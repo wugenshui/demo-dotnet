@@ -15,11 +15,9 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
-            ExcelHelper excel = new ExcelHelper(@"C:\Users\chenbo\Desktop\GMS数据库文档.xls");
-            DataTable data = excel.ExcelToDataTable("GMS数据库文档", true);
-
-            ExcelHelper excel2 = new ExcelHelper(@"C:\Users\chenbo\Desktop\2.xls");
-            int count = excel2.DataTableToExcel(data, "123", true);
+            LogHelper.Info("info");
+            LogHelper.Debug("debug");
+            LogHelper.Error(new Exception("出错啦！"));
         }
 
         static void GetUrl()

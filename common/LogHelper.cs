@@ -36,7 +36,7 @@ namespace common
         }
 
         /// <summary>
-        /// 记录信息日志
+        /// 记录普通信息日志
         /// </summary>
         /// <param name="info">日志信息</param>
         public static void Info(object info)
