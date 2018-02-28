@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demo-redis", "demo-redis\de
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "开机自启动程序", "开机自启动程序\开机自启动程序.csproj", "{81A2DBE4-B948-4C07-879D-DC70FCCFACED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "db-Dapper", "db-Dapper\db-Dapper.csproj", "{B7840DF3-145D-45B9-83AB-4410393748A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,14 @@ Global
 		{81A2DBE4-B948-4C07-879D-DC70FCCFACED}.Release|Any CPU.ActiveCfg = Release|x86
 		{81A2DBE4-B948-4C07-879D-DC70FCCFACED}.Release|x86.ActiveCfg = Release|x86
 		{81A2DBE4-B948-4C07-879D-DC70FCCFACED}.Release|x86.Build.0 = Release|x86
+		{B7840DF3-145D-45B9-83AB-4410393748A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7840DF3-145D-45B9-83AB-4410393748A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7840DF3-145D-45B9-83AB-4410393748A0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B7840DF3-145D-45B9-83AB-4410393748A0}.Debug|x86.Build.0 = Debug|Any CPU
+		{B7840DF3-145D-45B9-83AB-4410393748A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7840DF3-145D-45B9-83AB-4410393748A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7840DF3-145D-45B9-83AB-4410393748A0}.Release|x86.ActiveCfg = Release|Any CPU
+		{B7840DF3-145D-45B9-83AB-4410393748A0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
