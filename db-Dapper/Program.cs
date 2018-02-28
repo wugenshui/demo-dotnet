@@ -14,6 +14,8 @@ namespace db_Dapper
         public int id { get; set; }
         public int ouid { get; set; }
         public int userid { get; set; }
+
+        public Ou ou { get; set; }
     }
 
     class Ou
@@ -21,6 +23,7 @@ namespace db_Dapper
         public int id { get; set; }
         public int pid { get; set; }
         public string name { get; set; }
+        public List<OuUser> users { get; set; }
     }
 
     class Program
@@ -50,6 +53,21 @@ namespace db_Dapper
             {
                 int id = item.id;
             }
+
+            var data5 = connection.Query<OuUser, Ou, OuUser>("SELECT * FROM AuthorityOuUser u LEFT JOIN AuthorityOu o ON u.ouId=o.id",
+                                    (OuUser, Ou) =>
+                                    {
+                                        OuUser.ou = Ou;
+                                        return OuUser;
+                                    }, splitOn: "userid").ToList();
+
+            // 查询不出来
+            var data6 = connection.Query<Ou, List<OuUser>, Ou>("SELECT * FROM AuthorityOu o LEFT JOIN AuthorityOuUser u ON u.ouId=o.id",
+                                    (Ou, OuUser) =>
+                                    {
+                                        Ou.users = OuUser;
+                                        return Ou;
+                                    }, splitOn: "name").ToList();
         }
     }
 }
