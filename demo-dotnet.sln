@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "开机自启动程序", "�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "db-Dapper", "db-Dapper\db-Dapper.csproj", "{B7840DF3-145D-45B9-83AB-4410393748A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "db-SqlSugar", "db-SqlSugar\db-SqlSugar.csproj", "{AB577F77-3FBC-46E0-B184-769C847AAF2B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,14 @@ Global
 		{B7840DF3-145D-45B9-83AB-4410393748A0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B7840DF3-145D-45B9-83AB-4410393748A0}.Release|x86.ActiveCfg = Release|Any CPU
 		{B7840DF3-145D-45B9-83AB-4410393748A0}.Release|x86.Build.0 = Release|Any CPU
+		{AB577F77-3FBC-46E0-B184-769C847AAF2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB577F77-3FBC-46E0-B184-769C847AAF2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB577F77-3FBC-46E0-B184-769C847AAF2B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AB577F77-3FBC-46E0-B184-769C847AAF2B}.Debug|x86.Build.0 = Debug|Any CPU
+		{AB577F77-3FBC-46E0-B184-769C847AAF2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB577F77-3FBC-46E0-B184-769C847AAF2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB577F77-3FBC-46E0-B184-769C847AAF2B}.Release|x86.ActiveCfg = Release|Any CPU
+		{AB577F77-3FBC-46E0-B184-769C847AAF2B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
