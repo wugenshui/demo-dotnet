@@ -30,6 +30,11 @@ namespace db_Dapper
     {
         static void Main(string[] args)
         {
+
+        }
+
+        static void baseSql()
+        {
             IDbConnection connection = new SqlConnection("Data Source=.;Initial Catalog=OA;Integrated Security=True;MultipleActiveResultSets=True");
             string sql = "INSERT INTO AuthorityOuUser (ouId, userId) VALUES (@ouid, @userid)";
             OuUser model = new OuUser { ouid = 86, userid = 31 };
@@ -68,6 +73,27 @@ namespace db_Dapper
                                         Ou.users = OuUser;
                                         return Ou;
                                     }, splitOn: "name").ToList();
+        }
+
+        static void transation()
+        {
+            string sql = "INSERT INTO AuthorityOuUser (ouId, userId) VALUES (@ouid, @userid)";
+            using (IDbConnection dbConnection = new SqlConnection("Data Source=.;Initial Catalog=OA;Integrated Security=True;MultipleActiveResultSets=True"))
+            {
+                dbConnection.Open();
+                IDbTransaction transaction = dbConnection.BeginTransaction();
+                try
+                {
+                    dbConnection.Execute(sql, new OuUser { ouid = 1, userid = 1 }, transaction);
+                    // throw new Exception("23");   // 引发异常，回滚事件
+                    dbConnection.Execute(sql, new OuUser { ouid = 2, userid = 2 }, transaction);
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                }
+            }
         }
     }
 }
