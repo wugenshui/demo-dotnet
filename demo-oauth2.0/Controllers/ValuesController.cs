@@ -40,6 +40,9 @@ namespace demoOAuth2.Controllers
         }
     }
 
+    /// <summary>
+    /// 接受测试代码
+    /// </summary>
     public class CodesController : ApiController
     {
         [HttpGet]
