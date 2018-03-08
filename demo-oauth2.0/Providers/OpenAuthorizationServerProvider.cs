@@ -41,6 +41,7 @@ namespace demoOAuth2.Providers
             var identity = new ClaimsIdentity(new GenericIdentity(
                 context.ClientId, OAuthDefaults.AuthenticationType),
                 context.Scope.Select(x => new Claim("urn:oauth:scope", x)));
+            identity.AddClaim(new Claim(ClaimTypes.Sid, "10086"));
 
             context.Validated(identity);
         }
@@ -69,6 +70,7 @@ namespace demoOAuth2.Providers
 
             var OAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
             OAuthIdentity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+            OAuthIdentity.AddClaim(new Claim(ClaimTypes.Sid, "10086"));
             context.Validated(OAuthIdentity);
         }
 
@@ -118,7 +120,7 @@ namespace demoOAuth2.Providers
         /// </summary>
         public override async Task ValidateAuthorizeRequest(OAuthValidateAuthorizeRequestContext context)
         {
-            if (context.AuthorizeRequest.ClientId == "xishuai" && 
+            if (context.AuthorizeRequest.ClientId == "xishuai" &&
                 (context.AuthorizeRequest.IsAuthorizationCodeGrantType || context.AuthorizeRequest.IsImplicitGrantType))
             {
                 context.Validated();

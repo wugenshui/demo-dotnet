@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Web.Http;
 
@@ -12,10 +13,11 @@ namespace demoOAuth2.Controllers
     {
         // GET api/values
         [Authorize]
-        public IEnumerable<string> Get()
+        public string Get()
         {
+            ClaimsIdentity identity = User.Identity as ClaimsIdentity;
             var b = Request.Content;
-            return new string[] { "value1", "value2" };
+            return User.Identity.Name;
         }
 
         // GET api/values/5
