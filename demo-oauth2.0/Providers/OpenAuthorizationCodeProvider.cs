@@ -9,6 +9,9 @@ namespace demoOAuth2.Providers
 {
     public class OpenAuthorizationCodeProvider : AuthenticationTokenProvider
     {
+        /// <summary>
+        /// authorization_code集合
+        /// </summary>
         private readonly ConcurrentDictionary<string, string> _authenticationCodes = new ConcurrentDictionary<string, string>(StringComparer.Ordinal);
 
         /// <summary>

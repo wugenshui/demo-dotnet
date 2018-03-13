@@ -120,8 +120,7 @@ namespace demoOAuth2.Providers
         /// </summary>
         public override async Task ValidateAuthorizeRequest(OAuthValidateAuthorizeRequestContext context)
         {
-            if (context.AuthorizeRequest.ClientId == "xishuai" &&
-                (context.AuthorizeRequest.IsAuthorizationCodeGrantType || context.AuthorizeRequest.IsImplicitGrantType))
+            if (context.AuthorizeRequest.ClientId == "xishuai" && (context.AuthorizeRequest.IsAuthorizationCodeGrantType || context.AuthorizeRequest.IsImplicitGrantType))
             {
                 context.Validated();
             }
@@ -138,20 +137,5 @@ namespace demoOAuth2.Providers
         {
             context.Validated(context.RedirectUri);
         }
-
-        /// <summary>
-        /// 验证 access_token 的请求
-        /// </summary>
-        //public override async Task ValidateTokenRequest(OAuthValidateTokenRequestContext context)
-        //{
-        //    if (context.TokenRequest.IsAuthorizationCodeGrantType || context.TokenRequest.IsRefreshTokenGrantType || context.TokenRequest.IsResourceOwnerPasswordCredentialsGrantType)
-        //    {
-        //        context.Validated();
-        //    }
-        //    else
-        //    {
-        //        context.Rejected();
-        //    }
-        //}
     }
 }

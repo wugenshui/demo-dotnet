@@ -28,6 +28,7 @@ namespace demoOAuth2
 
                 Provider = new OpenAuthorizationServerProvider(), //access_token 相关认证服务
                 AuthorizationCodeProvider = new OpenAuthorizationCodeProvider(), //authorization_code 认证服务
+                //AuthorizationCodeProvider = new OAuthAuthorizationServerProvider(), //authorization_code 认证服务
                 RefreshTokenProvider = new OpenRefreshTokenProvider() //refresh_token 认证服务
             };
             app.UseOAuthBearerTokens(OAuthOptions); //表示 token_type 使用 bearer 方式

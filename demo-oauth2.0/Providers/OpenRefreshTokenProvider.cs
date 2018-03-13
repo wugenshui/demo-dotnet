@@ -13,6 +13,9 @@ namespace demoOAuth2.Providers
 {
     public class OpenRefreshTokenProvider : AuthenticationTokenProvider
     {
+        /// <summary>
+        /// refresh_token集合
+        /// </summary>
         private static ConcurrentDictionary<string, string> _refreshTokens = new ConcurrentDictionary<string, string>();
 
         /// <summary>
@@ -26,7 +29,6 @@ namespace demoOAuth2.Providers
             context.SetToken(Guid.NewGuid().ToString("n") + Guid.NewGuid().ToString("n"));
             _refreshTokens[context.Token] = context.SerializeTicket();
         }
-
 
         /// <summary>
         /// 由 refresh_token 解析成 access_token
