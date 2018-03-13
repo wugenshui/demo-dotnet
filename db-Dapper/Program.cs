@@ -30,7 +30,7 @@ namespace db_Dapper
     {
         static void Main(string[] args)
         {
-
+            transation();
         }
 
         static void baseSql()
