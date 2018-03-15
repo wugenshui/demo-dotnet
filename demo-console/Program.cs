@@ -1,6 +1,7 @@
 ﻿using common;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -13,11 +14,31 @@ namespace demo_console
 {
     class Program
     {
+        public class Person
+        {
+            public string name { get; set; }
+        }
         static void Main(string[] args)
         {
-            LogHelper.Info("info");
-            LogHelper.Debug("debug");
-            LogHelper.Error(new Exception("出错啦！"));
+            ConcurrentBag<Person> bag = new ConcurrentBag<Person>();
+            bag.Add(new Person { name = "1" });
+            bag.Add(new Person { name = "2" });
+            bag.Add(new Person { name = "3" });
+
+            var temp = bag.Where(o => true);
+
+            Person pp = new Person() { name = "2" };
+            bool state = bag.TryTake(out pp);
+
+            foreach (var item in temp)
+            {
+                Person p = item;
+                //bag.TryTake(out c);
+                //if (bag.TryPeek(out p))
+                //{
+                //    p.name = "陈博";
+                //}
+            }
         }
 
         static void GetUrl()

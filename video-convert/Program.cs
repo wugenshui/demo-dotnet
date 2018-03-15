@@ -1,5 +1,6 @@
 ﻿using NReco.VideoConverter;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -14,20 +15,21 @@ namespace video_convert
         static void Main(string[] args)
         {
             FFMpegConverter ffMpeg = new FFMpegConverter();
-            ffMpeg.ConvertMedia("1.mp4", "2.mp4", Format.mp4);
+            ConvertSettings setting = new ConvertSettings();
+            setting.VideoFrameSize = FrameSize.svga800x600;
+            //setting.SetVideoFrameSize(100, 20);
+            ffMpeg.ConvertMedia("1.mp4", Format.mp4, "2.mp4", Format.mp4, setting);  // 将h5不支持的视频转换为支持的视频
             //VideoHelper.RunProcess(" -i 1.mp4 -ab 56 -ar 22050 -b 500K 2.mp4");
         }
+    }
 
+    public class VideoHelper
+    {
         /// <summary>
         /// 调用ffmpeg.exe 执行命令
         /// </summary>
         /// <param name="Parameters">命令参数</param>
         /// <returns>返回执行结果</returns>
-
-    }
-
-    public class VideoHelper
-    {
         public static string RunProcess(string Parameters)
         {
             string FFmpegPath = "./ffmpeg.exe";
