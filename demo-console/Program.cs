@@ -20,24 +20,23 @@ namespace demo_console
         }
         static void Main(string[] args)
         {
-            ConcurrentBag<Person> bag = new ConcurrentBag<Person>();
-            bag.Add(new Person { name = "1" });
-            bag.Add(new Person { name = "2" });
-            bag.Add(new Person { name = "3" });
+            // 线程安全的操作类
+            ConcurrentDictionary<int, Person> bag = new ConcurrentDictionary<int, Person>();
+            Person p1 = new Person { name = "1" };
+            Person p2 = new Person { name = "2" };
+            Person p3 = new Person { name = "3" };
+            bag.TryAdd(1, p1);
+            bag.TryAdd(2, p2);
+            bag.TryAdd(3, p3);
 
-            var temp = bag.Where(o => true);
+            bag.TryUpdate(1, p2, p1);
 
-            Person pp = new Person() { name = "2" };
-            bool state = bag.TryTake(out pp);
+            bool state = bag.TryRemove(2, out p2);
 
-            foreach (var item in temp)
+            foreach (int key in bag.Keys)
             {
-                Person p = item;
-                //bag.TryTake(out c);
-                //if (bag.TryPeek(out p))
-                //{
-                //    p.name = "陈博";
-                //}
+                Person p = null;
+                bag.TryGetValue(key, out p);
             }
         }
 
