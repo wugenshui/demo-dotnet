@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>获取Code</title>
+    <meta charset="utf-8" />
+    <script src="../Scripts/jquery-1.11.0.js"></script>
+    <script src="../Scripts/common.js"></script>
+</head>
+<body>
+    <a href="../../authorize?grant_type=authorization_code&response_type=code&client_id=xishuai&redirect_uri=http://localhost:6598/web/authorizationCode/getToken.html&state=state参数">获取Code</a>
+    <script>
+        $.get("../../api/values", function (data) {
+            console.log(data);
+        });
+
+
+    </script>
+</body>
+</html>
+<!--
+ValidateClientRedirectUri       验证 redirect_uri
+ValidateAuthorizeRequest        验证 authorization_code 的请求
+AuthorizeEndpoint               生成 authorization_code（authorization code 授权方式）、生成 access_token （implicit 授权模式）
+-->

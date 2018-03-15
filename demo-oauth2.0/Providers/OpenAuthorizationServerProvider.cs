@@ -91,8 +91,8 @@ namespace demoOAuth2.Providers
                 //authorization code 授权方式
                 var redirectUri = context.Request.Query["redirect_uri"];
                 var clientId = context.Request.Query["client_id"];
-                var identity = new ClaimsIdentity(new GenericIdentity(
-                    clientId, OAuthDefaults.AuthenticationType));
+                var state = context.Request.Query["state"];
+                var identity = new ClaimsIdentity(new GenericIdentity(clientId, OAuthDefaults.AuthenticationType));
 
                 var authorizeCodeContext = new AuthenticationTokenCreateContext(
                     context.OwinContext,
@@ -110,7 +110,10 @@ namespace demoOAuth2.Providers
                         }));
 
                 await context.Options.AuthorizationCodeProvider.CreateAsync(authorizeCodeContext);
-                context.Response.Redirect(redirectUri + "?code=" + Uri.EscapeDataString(authorizeCodeContext.Token));
+                redirectUri += "?code=" + Uri.EscapeDataString(authorizeCodeContext.Token);
+                if (!string.IsNullOrWhiteSpace(state))
+                    redirectUri += "&state=" + HttpUtility.UrlEncode(state);
+                context.Response.Redirect(redirectUri);
                 context.RequestCompleted();
             }
         }

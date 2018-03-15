@@ -170,6 +170,13 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="web\Scripts\jquery-1.11.0.intellisense.js" />
+    <Content Include="web\authorizationCode\getToken.html" />
+    <Content Include="web\authorizationCode\index - 复制.html" />
+    <Content Include="web\authorizationCode\index.html" />
+    <Content Include="web\Scripts\common.js" />
+    <Content Include="web\Scripts\jquery-1.11.0.js" />
+    <Content Include="web\Scripts\jquery-1.11.0.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -180,7 +187,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="web\Scripts\jquery-1.11.0.min.map" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
