@@ -1,5 +1,6 @@
 // 获取路径查询参数
 function getQueryString(name) {
+    debugger;
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var reg_rewrite = new RegExp("(^|/)" + name + "/([^/]*)(/|$)", "i");
     var r = window.location.search.substr(1).match(reg);
@@ -18,7 +19,7 @@ function testToken(token) {
     $.ajax({
         type: 'get',
         headers: {
-            'Authorization': token
+            'Authorization': 'bearer ' + token
         },
         url: '../../api/values',
         success: function (data) {
