@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NReco.VideoConverter;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -12,7 +13,9 @@ namespace video_convert
     {
         static void Main(string[] args)
         {
-            VideoHelper.RunProcess(" -i 1.mp4 -ab 56 -ar 22050 -b 500K 2.mp4");
+            FFMpegConverter ffMpeg = new FFMpegConverter();
+            ffMpeg.ConvertMedia("1.mp4", "2.mp4", Format.mp4);
+            //VideoHelper.RunProcess(" -i 1.mp4 -ab 56 -ar 22050 -b 500K 2.mp4");
         }
 
         /// <summary>
