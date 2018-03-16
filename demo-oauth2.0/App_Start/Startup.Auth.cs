@@ -24,7 +24,7 @@ namespace demoOAuth2
                 AuthenticationMode = AuthenticationMode.Active,
                 TokenEndpointPath = new PathString("/token"), //获取 access_token 认证服务请求地址
                 AuthorizeEndpointPath = new PathString("/authorize"), //获取 authorization_code 认证服务请求地址
-                AccessTokenExpireTimeSpan = TimeSpan.FromSeconds(100), //access_token 过期时间
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1), //access_token 过期时间
 
                 Provider = new OpenAuthorizationServerProvider(), //access_token 相关认证服务
                 AuthorizationCodeProvider = new OpenAuthorizationCodeProvider(), //authorization_code 认证服务
