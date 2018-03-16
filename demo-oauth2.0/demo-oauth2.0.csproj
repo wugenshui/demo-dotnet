@@ -175,7 +175,6 @@
     <Compile Include="Providers\OpenAuthorizationCodeProvider.cs" />
     <Compile Include="Providers\OpenRefreshTokenProvider.cs" />
     <Compile Include="Providers\OpenAuthorizationServerProvider.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="web\Scripts\jquery-1.11.0.intellisense.js" />
