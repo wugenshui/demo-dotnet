@@ -6,9 +6,17 @@
     <meta charset="utf-8" />
     <script src="../Scripts/jquery-1.11.0.js"></script>
     <script src="../Scripts/common.js"></script>
+    <style>
+        p {
+            font-size: 24px;
+        }
+    </style>
 </head>
 <body>
+    <p id="data"></p>
+    <button onclick="refreshToken()">刷新token</button>
     <script>
+        var token = {};
         $.post("../../token", {
             grant_type: 'password',
             username: 'xishuai',
@@ -21,9 +29,23 @@
             //    "expires_in": 99,
             //    "refresh_token": "ef1fdb4f10d4486ab4a3a3c10ed6575f12e7c365a6c744568af2a7dc7b6c3642"
             //}
-            console.log(data);
-            testToken(data.access_token);
+            token = data;
+            console.log(token);
+            $("#data").text(JSON.stringify(token));
+            testToken(token.access_token);
         });
+
+        function refreshToken() {
+            $.post("../../token", {
+                grant_type: 'refresh_token',
+                refresh_token: token.refresh_token,
+            }, function (data) {
+                token = data;
+                console.log(token);
+                $("#data").text(JSON.stringify(token));
+                testToken(token.access_token);
+            });
+        }
     </script>
 </body>
 </html>

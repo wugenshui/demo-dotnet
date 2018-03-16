@@ -46,7 +46,8 @@ namespace demoOAuth2.Providers
                 context.TryGetFormCredentials(out clientId, out clientSecret);
             }
 
-            if (context.Parameters.GetValues("grant_type").FirstOrDefault() != "password")
+            string grant_type = context.Parameters.GetValues("grant_type").FirstOrDefault();
+            if (grant_type != "password" && grant_type != "refresh_token")
             {
                 if (clientId != "xishuai" || clientSecret != "123")
                 {
