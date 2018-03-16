@@ -11,6 +11,27 @@ using System.Web;
 
 namespace demoOAuth2.Providers
 {
+    //authorization_code
+    //1	ValidateClientRedirectUri
+    //2	ValidateAuthorizeRequest
+    //3	AuthorizeEndpoint
+
+    //4	ValidateClientAuthentication
+
+    //client_credentials
+    //1	ValidateClientAuthentication
+    //2	GrantClientCredentials
+
+
+    //password
+    //1	ValidateClientAuthentication
+    //2	GrantResourceOwnerCredentials
+
+
+    //implicit
+    //1	ValidateClientRedirectUri
+    //2	ValidateAuthorizeRequest
+    //3	AuthorizeEndpoint
     public class OpenAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
         /// <summary>
@@ -25,11 +46,15 @@ namespace demoOAuth2.Providers
                 context.TryGetFormCredentials(out clientId, out clientSecret);
             }
 
-            if (clientId != "xishuai" || clientSecret != "123")
+            if (context.Parameters.GetValues("grant_type").FirstOrDefault() != "password")
             {
-                context.SetError("invalid_client", "client or clientSecret is not valid");
-                return;
+                if (clientId != "xishuai" || clientSecret != "123")
+                {
+                    context.SetError("invalid_client", "client or clientSecret is not valid");
+                    return;
+                }
             }
+
             context.Validated();
         }
 
@@ -47,24 +72,24 @@ namespace demoOAuth2.Providers
         }
 
         /// <summary>
-        /// 生成 access_token（resource owner password credentials 授权方式）
+        /// 生成 access_token（密码模式）
         /// </summary>
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             if (string.IsNullOrEmpty(context.UserName))
             {
-                context.SetError("invalid_username", "username is not valid");
+                context.SetError("非法的用户名", "用户名不能为空！");
                 return;
             }
             if (string.IsNullOrEmpty(context.Password))
             {
-                context.SetError("invalid_password", "password is not valid");
+                context.SetError("非法的密码", "密码不能为空！");
                 return;
             }
 
             if (context.UserName != "xishuai" || context.Password != "123")
             {
-                context.SetError("invalid_identity", "username or password is not valid");
+                context.SetError("不合法的身份验证", "账号或密码不正确！");
                 return;
             }
 
@@ -72,6 +97,31 @@ namespace demoOAuth2.Providers
             OAuthIdentity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
             OAuthIdentity.AddClaim(new Claim(ClaimTypes.Sid, "10086"));
             context.Validated(OAuthIdentity);
+        }
+
+        #region 验证码模式、简化模式
+
+        /// <summary>
+        /// 验证 redirect_uri
+        /// </summary>
+        public override async Task ValidateClientRedirectUri(OAuthValidateClientRedirectUriContext context)
+        {
+            context.Validated(context.RedirectUri);
+        }
+
+        /// <summary>
+        /// 验证 authorization_code 的请求
+        /// </summary>
+        public override async Task ValidateAuthorizeRequest(OAuthValidateAuthorizeRequestContext context)
+        {
+            if (context.AuthorizeRequest.ClientId == "xishuai" && (context.AuthorizeRequest.IsAuthorizationCodeGrantType || context.AuthorizeRequest.IsImplicitGrantType))
+            {
+                context.Validated();
+            }
+            else
+            {
+                context.Rejected();
+            }
         }
 
         /// <summary>
@@ -118,27 +168,6 @@ namespace demoOAuth2.Providers
             }
         }
 
-        /// <summary>
-        /// 验证 authorization_code 的请求
-        /// </summary>
-        public override async Task ValidateAuthorizeRequest(OAuthValidateAuthorizeRequestContext context)
-        {
-            if (context.AuthorizeRequest.ClientId == "xishuai" && (context.AuthorizeRequest.IsAuthorizationCodeGrantType || context.AuthorizeRequest.IsImplicitGrantType))
-            {
-                context.Validated();
-            }
-            else
-            {
-                context.Rejected();
-            }
-        }
-
-        /// <summary>
-        /// 验证 redirect_uri
-        /// </summary>
-        public override async Task ValidateClientRedirectUri(OAuthValidateClientRedirectUriContext context)
-        {
-            context.Validated(context.RedirectUri);
-        }
+        #endregion
     }
 }
