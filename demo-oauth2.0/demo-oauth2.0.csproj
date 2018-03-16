@@ -171,9 +171,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="web\Scripts\jquery-1.11.0.intellisense.js" />
-    <Content Include="web\authorizationCode\getCode.html" />
-    <Content Include="web\authorizationCode\index - 复制.html" />
-    <Content Include="web\authorizationCode\index.html" />
+    <Content Include="web\authorization_code\getCode.html" />
+    <Content Include="web\authorization_code\index.html" />
+    <Content Include="web\client_credentials\index.html" />
+    <Content Include="web\password\index.html" />
     <Content Include="web\implicit\getToken.html" />
     <Content Include="web\implicit\index.html" />
     <Content Include="web\Scripts\common.js" />

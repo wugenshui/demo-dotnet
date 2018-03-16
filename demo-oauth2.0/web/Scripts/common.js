@@ -23,7 +23,6 @@ function testToken(token) {
         },
         url: '../../api/values',
         success: function (data) {
-            debugger;
             console.log(data);
         }
     })

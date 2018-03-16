@@ -2,26 +2,18 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
+    <title>密码模式</title>
     <meta charset="utf-8" />
-    <script src="../Scripts/jquery-1.11.0.min.js"></script>
+    <script src="../Scripts/jquery-1.11.0.js"></script>
     <script src="../Scripts/common.js"></script>
 </head>
 <body>
-    <h1><span>Code:</span><span id="span1"></span></h1>
-    <h1><span>State:</span><span id="span2"></span></h1>
-
     <script>
-        var code = getQueryString("code");
-        $("#span1").text(code);
-        $("#span2").text(getQueryString("state"));
-
         $.post("../../token", {
-            grant_type: 'authorization_code',
-            code: code,
-            client_id: 'xishuai',
-            client_secret: '123',
-            redirect_uri: 'http://localhost:6598/web/authorizationCode/getCode.html'
+            grant_type: 'password',
+            username: 'xishuai',
+            password: '123',
+            scope: []
         }, function (data) {
             // data = {
             //    "access_token": "WwDsgMjkj2BhQbHiLH4KrBH6PLOVl19EsGCPbZthUNyqKY0Q3UMPL5je-rRYG1g67ref6Molq1RhMySq3c-WJyM1e19ZbFYBoJ8JnDuFlISunA-DkOYHjURAVFKrLBBfBbxfwYM03RHsgySNwEkPInSTTv9Z-yauPOhYWkb8D15N5h_2WpISXxvQsoqcGe9PAO-_zkCnptzRS-wtMli5Pf6U0YliWWFQ3ZwUT6FiIqs",
@@ -35,3 +27,8 @@
     </script>
 </body>
 </html>
+<!--
+ValidateClientRedirectUri       验证 redirect_uri
+ValidateAuthorizeRequest        验证 authorization_code 的请求
+AuthorizeEndpoint               生成 authorization_code（authorization code 授权方式）、生成 access_token （implicit 授权模式）
+-->
