@@ -16,7 +16,11 @@ namespace demoOAuth2.Controllers
         public string Get()
         {
             ClaimsIdentity identity = User.Identity as ClaimsIdentity;
-            var b = Request.Content;
+            Claim claim = identity.Claims.Where(o => o.Type == "userinfo").FirstOrDefault();
+            if (claim != null)
+            {
+                return claim.Value;
+            }
             return User.Identity.Name;
         }
 

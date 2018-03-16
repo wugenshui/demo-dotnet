@@ -87,15 +87,16 @@ namespace demoOAuth2.Providers
                 return;
             }
 
-            if (context.UserName != "xishuai" || context.Password != "123")
-            {
-                context.SetError("不合法的身份验证", "账号或密码不正确！");
-                return;
-            }
+            //if (context.UserName != "xishuai" || context.Password != "123")
+            //{
+            //    context.SetError("不合法的身份验证", "账号或密码不正确！");
+            //    return;
+            //}
 
             var OAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
             OAuthIdentity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
             OAuthIdentity.AddClaim(new Claim(ClaimTypes.Sid, "10086"));
+            OAuthIdentity.AddClaim(new Claim("userinfo", "{username:\"" + context.UserName + "\",password:\"" + context.Password + "\"}"));
             context.Validated(OAuthIdentity);
         }
 
