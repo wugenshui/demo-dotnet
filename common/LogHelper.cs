@@ -23,7 +23,8 @@ namespace common
         /// <param name="info">日志信息</param>
         public static void Error(object info)
         {
-            _Log.Error(info);
+            if (_Log.IsErrorEnabled)
+                _Log.Error(info);
         }
 
         /// <summary>
@@ -32,16 +33,18 @@ namespace common
         /// <param name="info">日志信息</param>
         public static void Debug(object info)
         {
-            _Log.Debug(info);
+            if (_Log.IsDebugEnabled)
+                _Log.Debug(info);
         }
 
         /// <summary>
-        /// 记录普通信息日志
+        /// 记录信息日志
         /// </summary>
         /// <param name="info">日志信息</param>
         public static void Info(object info)
         {
-            _Log.Info(info);
+            if (_Log.IsInfoEnabled)
+                _Log.Info(info);
         }
     }
 }
