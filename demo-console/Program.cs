@@ -1,5 +1,6 @@
 ﻿using common;
 using Newtonsoft.Json.Linq;
+using NLog;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -20,7 +21,24 @@ namespace demo_console
         }
         static void Main(string[] args)
         {
-            // 线程安全的操作类
+            ILogger log = LogManager.GetLogger("NLog");
+            log.Debug("Debug调试信息");
+            log.Info("Info一般信息");
+            log.Error("Error异常");
+            try
+            {
+                int a = 0;
+                var b = 1 / a;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
+        // 线程安全的操作类
+        static void safeThreadClass()
+        {
             ConcurrentDictionary<int, Person> bag = new ConcurrentDictionary<int, Person>();
             Person p1 = new Person { name = "1" };
             Person p2 = new Person { name = "2" };
@@ -28,11 +46,8 @@ namespace demo_console
             bag.TryAdd(1, p1);
             bag.TryAdd(2, p2);
             bag.TryAdd(3, p3);
-
             bag.TryUpdate(1, p2, p1);
-
             bool state = bag.TryRemove(2, out p2);
-
             foreach (int key in bag.Keys)
             {
                 Person p = null;
