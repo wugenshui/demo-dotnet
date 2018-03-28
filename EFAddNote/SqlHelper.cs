@@ -16,15 +16,14 @@ namespace EFAddNote
 
         private SqlHelper() { }
 
+        public static string connStr = "";
         /// <summary> 
         /// 获取数据库连接字符串 
         /// </summary> 
         /// <returns></returns> 
         public static string GetConnSting()
         {
-            //string connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
-            //return Base64Helper.Base64Decode(connectionString);
-            return "server=.;Integrated Security=True;Database=GMS;Persist Security Info=True";
+            return connStr; 
         }
         /// <summary> 
         /// 获取数据库连接对象 
