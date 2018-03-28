@@ -20,7 +20,8 @@ namespace EFAddNote
             {
                 if (file.Name.Contains(".edmx"))
                 {
-                    Console.WriteLine(file.Name);
+                    Console.WriteLine("查询到配置文件:" + file.Name);
+                    Console.WriteLine();
                     XmlDocument doc = new XmlDocument();
                     doc.Load(file.FullName);
                     XmlElement root = doc.DocumentElement;
@@ -31,7 +32,6 @@ namespace EFAddNote
                     foreach (XmlElement entity in entitys)
                     {
                         string tablename = entity.Attributes["Name"].Value;
-                        string tableAttr = GetTableAttr(tablename);
                         DataTable table = GetColumAttr(tablename);
                         XmlNodeList props = entity.GetElementsByTagName("Property");
                         foreach (XmlElement prop in props)
@@ -41,13 +41,68 @@ namespace EFAddNote
                             if (rows.Length > 0)
                             {
                                 DataRow row = rows[0];
-                                if (row["column_description"] != DBNull.Value && !string.IsNullOrWhiteSpace(row["column_description"].ToString()))
+                                if (row["column_description"] != DBNull.Value && !string.IsNullOrWhiteSpace(row["column_description"].ToString())) // 调整列注释
                                 {
-                                    Console.WriteLine(tablename + ":" + rowname + ":" + row["column_description"]);
+                                    XmlNodeList documentations = prop.GetElementsByTagName("Documentation");
+                                    XmlNode documentation;
+                                    XmlNode summary;
+                                    XmlNodeList summarys;
+                                    if (documentations.Count <= 0)
+                                    {
+                                        documentation = doc.CreateElement("Documentation");
+                                        prop.AppendChild(documentation);
+                                    }
+                                    else
+                                    {
+                                        documentation = documentations[0];
+                                    }
+                                    summarys = ((XmlElement)documentation).GetElementsByTagName("Summary");
+                                    if (summarys.Count <= 0)
+                                    {
+                                        summary = doc.CreateElement("Summary");
+                                        ((XmlElement)documentation).AppendChild(summary);
+                                    }
+                                    else
+                                    {
+                                        summary = summarys[0];
+                                    }
+                                    (summary as XmlElement).InnerText = row["column_description"].ToString();
+                                    Console.WriteLine(rowname + "   " + row["column_description"]);
                                 }
                             }
                         }
+                        string tableAttr = GetTableAttr(tablename);
+                        if (!string.IsNullOrWhiteSpace(tableAttr)) // 调整表注释
+                        {
+                            XmlNodeList documentations = entity.GetElementsByTagName("Documentation");
+                            XmlNode documentation;
+                            XmlNode summary;
+                            XmlNodeList summarys;
+                            if (documentations.Count <= 0)
+                            {
+                                documentation = doc.CreateElement("Documentation");
+                                entity.AppendChild(documentation);
+                            }
+                            else
+                            {
+                                documentation = documentations[0];
+                            }
+                            summarys = ((XmlElement)documentation).GetElementsByTagName("Summary");
+                            if (summarys.Count <= 0)
+                            {
+                                summary = doc.CreateElement("Summary");
+                                ((XmlElement)documentation).AppendChild(summary);
+                            }
+                            else
+                            {
+                                summary = summarys[0];
+                            }
+                            ((XmlElement)summary).InnerText = tableAttr;
+                            Console.WriteLine("数据表：" + tablename + "   " + tableAttr);
+                            Console.WriteLine();
+                        }
                     }
+                    doc.Save(file.FullName);
                     break;
                 }
             }
