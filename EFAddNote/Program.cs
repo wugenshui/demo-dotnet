@@ -12,7 +12,7 @@ namespace EFAddNote
     {
         static void Main(string[] args)
         {
-            SqlHelper.connStr = "data source =.; initial catalog = CRM; persist security info = True; user id = sa; password = sa; ";
+            SqlHelper.connStr = "data source=.; initial catalog=CRM; persist security info = True; user id = sa; password = sa;";
 
             string dirpath = Environment.CurrentDirectory;
             DirectoryInfo dir = new DirectoryInfo(dirpath);
@@ -28,12 +28,13 @@ namespace EFAddNote
                     XmlElement models = runtime.GetElementsByTagName("edmx:ConceptualModels")[0] as XmlElement;
                     XmlElement schema = models.GetElementsByTagName("Schema")[0] as XmlElement;
                     XmlNodeList entitys = schema.GetElementsByTagName("EntityType");
-                    foreach (XmlNode entity in entitys)
+                    foreach (XmlElement entity in entitys)
                     {
                         string tablename = entity.Attributes["Name"].Value;
-                        DataTable table = GetDocument(tablename);
-                        XmlNodeList props = ((XmlElement)entity).GetElementsByTagName("Property");
-                        foreach (XmlNode prop in props)
+                        string tableAttr = GetTableAttr(tablename);
+                        DataTable table = GetColumAttr(tablename);
+                        XmlNodeList props = entity.GetElementsByTagName("Property");
+                        foreach (XmlElement prop in props)
                         {
                             string rowname = prop.Attributes["Name"].Value;
                             DataRow[] rows = table.Select("column_name='" + rowname + "'");
@@ -45,15 +46,21 @@ namespace EFAddNote
                                     Console.WriteLine(tablename + ":" + rowname + ":" + row["column_description"]);
                                 }
                             }
-
                         }
                     }
+                    break;
                 }
             }
+            Console.WriteLine("输出完成！等待退出！");
             Console.ReadKey();
         }
 
-        public static DataTable GetDocument(string tablename)
+        /// <summary>
+        /// 查询列注释
+        /// </summary>
+        /// <param name="tablename">表名</param>
+        /// <returns></returns>
+        public static DataTable GetColumAttr(string tablename)
         {
             DataTable result = new DataTable();
             string sql = @"SELECT
@@ -66,6 +73,21 @@ namespace EFAddNote
                             WHERE A.name = '" + tablename + "'";
             result = SqlHelper.ExecuteDataset(sql).Tables[0];
             return result;
+        }
+
+        /// <summary>
+        /// 查询表注释
+        /// </summary>
+        /// <param name="tablename">表名</param>
+        /// <returns></returns>
+        public static string GetTableAttr(string tablename)
+        {
+            string sql = @"select isnull(value,'') 
+                            from sys.extended_properties ex_p 
+                            where ex_p.minor_id=0 and ex_p.major_id in 
+                                (select id from sys.sysobjects a where a.name='" + tablename + "')";
+            object result = SqlHelper.ExecuteScalar(sql);
+            return result == null ? "" : result.ToString();
         }
     }
 }
