@@ -23,7 +23,7 @@ namespace EFAddNote
         /// <returns></returns> 
         public static string GetConnSting()
         {
-            return connStr; 
+            return connStr;
         }
         /// <summary> 
         /// 获取数据库连接对象 
@@ -148,9 +148,9 @@ namespace EFAddNote
         /// <param name="commandType">命令类型(存储过程,命令文本或其它.)</param> 
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <returns>返回影响的行数</returns> 
-        public static int ExecuteNonQuery(string commandText, CommandType commandType = CommandType.Text, params SqlParameter[] commandParameters)
+        public static int ExecuteNonQuery(string commandText, params SqlParameter[] commandParameters)
         {
-            return ExecuteNonQuery(GetConnection(), commandType, commandText, commandParameters);
+            return ExecuteNonQuery(GetConnection(), CommandType.Text, commandText, commandParameters);
         }
 
         /// <summary> 
@@ -221,9 +221,9 @@ namespace EFAddNote
         /// <param name="commandText">存储过程名或T-SQL语句</param> 
         /// <param name="param">参数</param> 
         /// <returns>返回一个包含结果集的DataSet</returns>
-        public static DataSet ExecuteDataset(string commandText, CommandType commandType = CommandType.Text, params SqlParameter[] param)
+        public static DataSet ExecuteDataset(string commandText, params SqlParameter[] param)
         {
-            return ExecuteDataset(GetConnection(), commandType, commandText, param);
+            return ExecuteDataset(GetConnection(), CommandType.Text, commandText, param);
         }
 
         /// <summary> 
@@ -311,9 +311,9 @@ namespace EFAddNote
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <param name="param">参数</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalar(string commandText, CommandType commandType = CommandType.Text, params SqlParameter[] param)
+        public static object ExecuteScalar(string commandText, params SqlParameter[] param)
         {
-            return ExecuteScalar(GetConnection(), commandType, commandText, param);
+            return ExecuteScalar(GetConnection(), CommandType.Text, commandText, param);
         }
 
         /// <summary> 

@@ -15,11 +15,13 @@ namespace demo_console
 {
     class Program
     {
-        public class Person
-        {
-            public string name { get; set; }
-        }
         static void Main(string[] args)
+        {
+
+        }
+
+        // nlog记录日志
+        static void nlog()
         {
             ILogger log = LogManager.GetLogger("NLog");
             log.Debug("Debug调试信息");
@@ -36,6 +38,10 @@ namespace demo_console
             }
         }
 
+        public class Person
+        {
+            public string name { get; set; }
+        }
         // 线程安全的操作类
         static void safeThreadClass()
         {
