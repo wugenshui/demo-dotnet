@@ -14,10 +14,10 @@ namespace db_SqlSugar
         public int userid { get; set; }
     }
 
-    [SugarTable("AuthorityOu")]
+    //[SugarTable("AuthorityOu")]
     public class AuthorityOu
     {
-        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
+        //[SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public int id { get; set; }
         public int pid { get; set; }
         public string name { get; set; }
@@ -28,30 +28,19 @@ namespace db_SqlSugar
         static void Main(string[] args)
         {
             //创建SqlSugarClient对象
-            var db = GetInstance();
-            var sdb = new SimpleClient<AuthorityOu>(db);
+            var db = SqlSugarHelper.GetInstance();
 
-            var sss = db.SqlQueryable<AuthorityOu>("select * from AuthorityOu").ToPageList(1, 2);
+            //var sss = db.SqlQueryable<AuthorityOu>("select * from AuthorityOu").ToPageList(1, 2);
 
             var _AuthorityOu = db.GetSimpleClient<AuthorityOu>();
+            var sss = _AuthorityOu.GetList();
             var firstOu = _AuthorityOu.GetById(1);
-            var booll = _AuthorityOu.Insert(new AuthorityOu()
-             {
+            var booll = _AuthorityOu.InsertReturnIdentity(new AuthorityOu()
+            {
                 name = "1",
                 pid = 1,
                 id = 1
             });
-        }
-
-        public static SqlSugarClient GetInstance()
-        {
-            SqlSugarClient db = new SqlSugarClient(new ConnectionConfig() { ConnectionString = "server=.;uid=sa;pwd=sa;database=OA", DbType = DbType.SqlServer, IsAutoCloseConnection = true });
-            db.Aop.OnLogExecuting = (sql, pars) =>
-            {
-                Console.WriteLine(sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
-                Console.WriteLine();
-            };
-            return db;
         }
     }
 }
