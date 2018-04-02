@@ -92,13 +92,13 @@ namespace EFAddNote
         /// <summary> 
         /// 预处理用户提供的命令,数据库连接/事务/命令类型/参数 
         /// </summary> 
-        /// <param name="command">要处理的SqlCommand</param> 
-        /// <param name="connection">数据库连接</param> 
-        /// <param name="transaction">一个有效的事务或者是null值</param> 
-        /// <param name="commandType">命令类型 (存储过程,命令文本, 其它.)</param> 
-        /// <param name="commandText">存储过程名或都T-SQL命令文本</param> 
-        /// <param name="commandParameters">和命令相关联的SqlParameter参数数组,如果没有参数为'null'</param> 
-        /// <param name="mustCloseConnection"><c>true</c> 如果连接是打开的,则为true,其它情况下为false.</param> 
+        /// <param name="command">要处理的SqlCommand</param>
+        /// <param name="connection">数据库连接</param>
+        /// <param name="transaction">一个有效的事务或者是null值</param>
+        /// <param name="commandType">命令类型 (存储过程,命令文本, 其它.)</param>
+        /// <param name="commandText">存储过程名或都T-SQL命令文本</param>
+        /// <param name="commandParameters">和命令相关联的SqlParameter参数数组,如果没有参数为'null'</param>
+        /// <param name="mustCloseConnection"><c>true</c> 如果连接是打开的,则为true,其它情况下为false.</param>
         private static void PrepareCommand(SqlCommand command, SqlConnection connection, SqlTransaction transaction, CommandType commandType, string commandText, SqlParameter[] commandParameters, out bool mustCloseConnection)
         {
             if (command == null) throw new ArgumentNullException("command");
@@ -145,12 +145,12 @@ namespace EFAddNote
         /// <summary> 
         /// 执行指定数据库连接对象的命令 
         /// </summary> 
-        /// <param name="commandType">命令类型(存储过程,命令文本或其它.)</param> 
-        /// <param name="commandText">存储过程名称或T-SQL语句</param> 
+        /// <param name="commandText">T-SQL语句</param> 
+        /// <param name="param">SqlParamter参数数组</param> 
         /// <returns>返回影响的行数</returns> 
-        public static int ExecuteNonQuery(string commandText, params SqlParameter[] commandParameters)
+        public static int ExecuteNonQuery(string commandText, params SqlParameter[] param)
         {
-            return ExecuteNonQuery(GetConnection(), CommandType.Text, commandText, commandParameters);
+            return ExecuteNonQuery(GetConnection(), CommandType.Text, commandText, param);
         }
 
         /// <summary> 
@@ -213,13 +213,8 @@ namespace EFAddNote
         /// <summary> 
         /// 执行指定数据库连接对象的命令,返回DataSet. 
         /// </summary> 
-        /// <remarks> 
-        /// 示例:  
-        ///  DataSet ds = ExecuteDataset(conn, CommandType.StoredProcedure, "GetOrders"); 
-        /// </remarks> 
-        /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
-        /// <param name="commandText">存储过程名或T-SQL语句</param> 
-        /// <param name="param">参数</param> 
+        /// <param name="commandText">T-SQL语句</param> 
+        /// <param name="param">SqlParamter参数数组</param> 
         /// <returns>返回一个包含结果集的DataSet</returns>
         public static DataSet ExecuteDataset(string commandText, params SqlParameter[] param)
         {
@@ -303,13 +298,8 @@ namespace EFAddNote
         /// <summary> 
         /// 执行指定数据库连接对象的命令,返回结果集中的第一行第一列. 
         /// </summary> 
-        /// <remarks> 
-        /// 示例:  
-        ///  int orderCount = (int)ExecuteScalar(conn, CommandType.StoredProcedure, "GetOrderCount"); 
-        /// </remarks> 
-        /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
-        /// <param name="commandText">存储过程名称或T-SQL语句</param> 
-        /// <param name="param">参数</param> 
+        /// <param name="commandText">T-SQL语句</param> 
+        /// <param name="param">SqlParamter参数数组</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
         public static object ExecuteScalar(string commandText, params SqlParameter[] param)
         {
