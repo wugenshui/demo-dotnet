@@ -61,22 +61,19 @@ namespace WebNettyServer
 
                 // bootstrap绑定到指定端口的行为 就是服务端启动服务，同样的Serverbootstrap可以bind到多个端口
                 IChannel serverChannel = await bootstrap.BindAsync(CommonHelper.Port);
-
-                Console.ReadLine();
-                //关闭服务
-                await serverChannel.CloseAsync();
+                LogHelper.Info("服务启动！");
             }
             catch (Exception ex)
             {
                 LogHelper.Error(ex);
             }
-            finally
-            {
-                // 释放工作组线程
-                await Task.WhenAll(
-                    bossGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)),
-                    workerGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)));
-            }
+            //finally
+            //{
+            //    // 释放工作组线程
+            //    await Task.WhenAll(
+            //        bossGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)),
+            //        workerGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)));
+            //}
         }
     }
 }

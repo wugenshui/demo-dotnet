@@ -204,7 +204,6 @@
     <Content Include="packages.config" />
     <Content Include="NLog.config">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\WebNettyServer.pubxml" />
     <None Include="Web.Debug.config">
