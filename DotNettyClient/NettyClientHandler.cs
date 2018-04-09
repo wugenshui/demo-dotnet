@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace DotNettyClient
 {
     // 代码和服务端也相差不多，并且继承了同样的基类。
-    public class EchoClientHandler : ChannelHandlerAdapter
+    public class NettyClientHandler : ChannelHandlerAdapter
     {
         readonly IByteBuffer initialMessage;
 
-        public EchoClientHandler()
+        public NettyClientHandler()
         {
             this.initialMessage = Unpooled.Buffer(CommonHelper.Size);
             byte[] messageBytes = Encoding.UTF8.GetBytes("Hello world");
@@ -21,7 +21,10 @@ namespace DotNettyClient
         }
 
         //重写基类方法，当链接上服务器后，马上发送Hello World消息到服务端
-        public override void ChannelActive(IChannelHandlerContext context) => context.WriteAndFlushAsync(this.initialMessage);
+        public override void ChannelActive(IChannelHandlerContext context)
+        {
+            context.WriteAndFlushAsync(this.initialMessage);
+        }
 
         public override void ChannelRead(IChannelHandlerContext context, object message)
         {
@@ -30,7 +33,7 @@ namespace DotNettyClient
             {
                 Console.WriteLine("Received from server: " + byteBuffer.ToString(Encoding.UTF8));
             }
-            context.WriteAsync(message);
+            //context.WriteAsync(message);
         }
 
         public override void ChannelReadComplete(IChannelHandlerContext context) => context.Flush();

@@ -147,7 +147,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonHelper.cs" />
-    <Compile Include="EchoServerHandler.cs" />
+    <Compile Include="NettyServerHandler.cs" />
+    <Compile Include="NettyServerHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
