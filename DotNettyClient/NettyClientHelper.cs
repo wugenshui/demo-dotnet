@@ -58,7 +58,7 @@ namespace DotNettyClient
                         }
                         //编码解码配置，下面两个配置必须和服务器端保持一致
                         // 读超时、写超时、读写超时
-                        pipeline.AddLast("ping", new IdleStateHandler(300, 300, 600));
+                        pipeline.AddLast("timeout", new IdleStateHandler(10, 10, 20));
                         //出栈消息，通过这个handler 在消息顶部加上消息的长度
                         pipeline.AddLast("framing-enc", new LengthFieldPrepender(2));
                         //入栈消息通过该Handler,解析消息的包长信息，并将正确的消息体发送给下一个处理Handler

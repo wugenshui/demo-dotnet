@@ -16,7 +16,7 @@ namespace DotNettyClient
         public NettyClientHandler()
         {
             this.initialMessage = Unpooled.Buffer(CommonHelper.Size);
-            byte[] messageBytes = Encoding.UTF8.GetBytes("Hello world");
+            byte[] messageBytes = Encoding.UTF8.GetBytes("连接服务器成功！");
             this.initialMessage.WriteBytes(messageBytes);
         }
 
