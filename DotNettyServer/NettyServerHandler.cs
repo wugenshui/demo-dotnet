@@ -16,32 +16,32 @@ namespace DotNettyServer
             var buffer = message as IByteBuffer;
             if (buffer != null)
             {
-                Console.WriteLine("接收到客户端消息:" + buffer.ToString(Encoding.UTF8));
+                Console.WriteLine("接收到客户端" + context.Channel.RemoteAddress.ToString() + "消息:" + buffer.ToString(Encoding.UTF8));
             }
             context.WriteAndFlushAsync(message);    // 回写输出流
         }
 
         public override void ChannelActive(IChannelHandlerContext context)
         {
-            Console.WriteLine("建立连接：" + context.Channel.LocalAddress.ToString());
+            Console.WriteLine("建立连接：" + context.Channel.RemoteAddress.ToString());
         }
 
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)
         {
             if (exception is SocketException && ((SocketException)exception).ErrorCode == 10054)
             {
-                Console.WriteLine("套接字异常:" + exception.Message);
+                Console.WriteLine(context.Channel.RemoteAddress.ToString() + "套接字异常:" + exception.Message);
             }
             else
             {
-                Console.WriteLine("服务器异常:" + exception);
+                Console.WriteLine(context.Channel.RemoteAddress.ToString() + "服务器异常:" + exception);
                 NettyServerHelper.init().Wait();
             }
         }
 
         public override void ChannelInactive(IChannelHandlerContext context)
         {
-            Console.WriteLine("断开连接：" + context.Channel.LocalAddress.ToString());
+            Console.WriteLine("断开连接：" + context.Channel.RemoteAddress.ToString());
         }
     }
 }
