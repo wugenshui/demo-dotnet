@@ -3,11 +3,20 @@ using DotNetty.Transport.Channels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DotNettyClient
 {
+    public class Message
+    {
+        public string type { get; set; }
+        public string from { get; set; }
+        public string to { get; set; }
+        public bool state { get; set; }
+        public string msg { get; set; }
+    }
     // 代码和服务端也相差不多，并且继承了同样的基类。
     public class NettyClientHandler : ChannelHandlerAdapter
     {
@@ -15,8 +24,15 @@ namespace DotNettyClient
 
         public NettyClientHandler()
         {
+            string name = Dns.GetHostName();
+            //IPAddress[] ipadrlist = Dns.GetHostAddresses(name);
+            Message msg = new Message()
+            {
+                type = "connect",
+                from = name
+            };
             this.initialMessage = Unpooled.Buffer(CommonHelper.Size);
-            byte[] messageBytes = Encoding.UTF8.GetBytes("连接服务器成功！");
+            byte[] messageBytes = Encoding.UTF8.GetBytes(JsonHelper.JsonSerialize(msg));
             this.initialMessage.WriteBytes(messageBytes);
         }
 
@@ -31,7 +47,19 @@ namespace DotNettyClient
             var byteBuffer = message as IByteBuffer;
             if (byteBuffer != null)
             {
-                Console.WriteLine("Received from server: " + byteBuffer.ToString(Encoding.UTF8));
+                Message msg = JsonHelper.JsonDeserialize<Message>(byteBuffer.ToString(Encoding.UTF8));
+                if (msg.type == "list")
+                {
+                    Program.users = JsonHelper.JsonDeserialize<List<string>>(msg.msg);
+                }
+                else if (msg.type == "connect")
+                {
+                    Console.WriteLine(msg.msg);  // 打印出服务器消息
+                }
+                else if (msg.type == "emit")
+                {
+                    Console.WriteLine("用户" + msg.from + "说:" + msg.msg);  // 打印出服务器消息
+                }
             }
             //context.WriteAsync(message);
         }

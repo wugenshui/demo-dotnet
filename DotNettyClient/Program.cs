@@ -12,12 +12,14 @@ using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DotNettyClient
 {
-    class Program
+    public class Program
     {
+        public static List<string> users = new List<string>();
         static void Main(string[] args)
         {
             NettyClientHelper.init().Wait();
@@ -25,7 +27,23 @@ namespace DotNettyClient
             for (;;)
             {
                 string line = Console.ReadLine();
-                NettyClientHelper.Send(line);
+                Message msg = new Message()
+                {
+                    type = "list",
+                };
+                NettyClientHelper.Send(JsonHelper.JsonSerialize(msg));
+                Thread.Sleep(200);
+                foreach (string user in users)
+                {
+                    Message msgs = new Message()
+                    {
+                        type = "emit",
+                        from = Dns.GetHostName(),
+                        to = user,
+                        msg = line,
+                    };
+                    NettyClientHelper.Send(JsonHelper.JsonSerialize(msgs));
+                }
             }
         }
     }
