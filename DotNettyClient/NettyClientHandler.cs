@@ -58,7 +58,9 @@ namespace DotNettyClient
                 }
                 else if (msg.type == "emit")
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("用户" + msg.from + "说:" + msg.msg);  // 打印出服务器消息
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
             }
             //context.WriteAsync(message);
