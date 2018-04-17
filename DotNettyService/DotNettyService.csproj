@@ -184,7 +184,6 @@
     <None Include="App.config" />
     <Content Include="NLog.config">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
   </ItemGroup>

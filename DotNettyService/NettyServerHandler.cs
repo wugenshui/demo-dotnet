@@ -29,7 +29,7 @@ namespace DotNettyService
             var buffer = message as IByteBuffer;
             if (buffer != null)
             {
-                Console.WriteLine("接收到客户端" + context.Channel.RemoteAddress.ToString() + "消息:" + buffer.ToString(Encoding.UTF8));
+                LogHelper.Info("接收到客户端" + context.Channel.RemoteAddress.ToString() + "消息:" + buffer.ToString(Encoding.UTF8));
             }
 
             Message request = JsonHelper.JsonDeserialize<Message>(buffer.ToString(Encoding.UTF8));
@@ -82,7 +82,7 @@ namespace DotNettyService
 
         public override void ChannelActive(IChannelHandlerContext context)
         {
-            Console.WriteLine("建立连接：" + context.Channel.RemoteAddress.ToString());
+            LogHelper.Info("建立连接：" + context.Channel.RemoteAddress.ToString());
             channels.TryAdd(context.Channel.RemoteAddress.ToString(), context);
         }
 
@@ -90,18 +90,18 @@ namespace DotNettyService
         {
             if (exception is SocketException && ((SocketException)exception).ErrorCode == 10054)
             {
-                Console.WriteLine(context.Channel.RemoteAddress.ToString() + "套接字异常:" + exception.Message);
+                LogHelper.Info(context.Channel.RemoteAddress.ToString() + "套接字异常:" + exception.Message);
             }
             else
             {
-                Console.WriteLine(context.Channel.RemoteAddress.ToString() + "服务器异常:" + exception);
+                LogHelper.Error(context.Channel.RemoteAddress.ToString() + "服务器异常:" + exception);
                 NettyServerHelper.init().Wait();
             }
         }
 
         public override void ChannelInactive(IChannelHandlerContext context)
         {
-            Console.WriteLine("断开连接：" + context.Channel.RemoteAddress.ToString());
+            LogHelper.Info("断开连接：" + context.Channel.RemoteAddress.ToString());
             channels.TryRemove(context.Channel.RemoteAddress.ToString(), out context);
         }
     }
