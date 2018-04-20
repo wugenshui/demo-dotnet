@@ -17,7 +17,18 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
+            for (int i = 0; i < 10000; i++)
+            {
+                using (IDataReader reader = SqlHelper.ExecuteReader("select * from GMS_Log"))
+                {
+                    while (reader.Read())
+                    {
+                        Console.WriteLine(reader["Message"]);
+                    }
+                }
+            }
 
+            Console.ReadKey();
         }
 
         // nlog记录日志

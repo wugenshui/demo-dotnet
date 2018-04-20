@@ -403,17 +403,6 @@ namespace common
         #region ExecuteReader 数据阅读器
 
         /// <summary> 
-        /// 枚举,标识数据库连接是由SqlHelper提供还是由调用者提供 
-        /// </summary> 
-        private enum SqlConnectionOwnership
-        {
-            /// <summary>由SqlHelper提供连接</summary> 
-            Internal,
-            /// <summary>由调用者提供连接</summary> 
-            External
-        }
-
-        /// <summary> 
         /// 执行指定数据库连接对象的数据阅读器. 
         /// </summary> 
         /// <remarks> 
@@ -424,10 +413,10 @@ namespace common
         /// <param name="transaction">一个有效的事务,或者为 'null'</param> 
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名或T-SQL语句</param> 
-        /// <param name="commandParameters">SqlParameters参数数组,如果没有参数则为'null'</param> 
+        /// <param name="commandParameters">SqlParameters参数数组,如果没有参数则为'null'</param>
         /// <param name="connectionOwnership">标识数据库连接对象是由调用者提供还是由SqlHelper提供</param> 
-        /// <returns>返回包含结果集的SqlDataReader</returns> 
-        private static SqlDataReader ExecuteReader(SqlConnection connection, SqlTransaction transaction, CommandType commandType, string commandText, SqlParameter[] commandParameters, SqlConnectionOwnership connectionOwnership)
+        /// <returns>返回包含结果集的SqlDataReader</returns>
+        private static SqlDataReader ExecuteReader(SqlConnection connection, SqlTransaction transaction, CommandType commandType, string commandText, SqlParameter[] commandParameters)
         {
             if (connection == null) throw new ArgumentNullException("connection");
 
@@ -441,14 +430,7 @@ namespace common
                 // 创建数据阅读器 
                 SqlDataReader dataReader;
 
-                if (connectionOwnership == SqlConnectionOwnership.External)
-                {
-                    dataReader = cmd.ExecuteReader();
-                }
-                else
-                {
-                    dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-                }
+                dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
 
                 // 清除参数,以便再次使用.. 
                 // HACK: There is a problem here, the output parameter values are fletched 
@@ -478,83 +460,19 @@ namespace common
         }
 
         /// <summary> 
-        /// 执行指定数据库连接字符串的数据阅读器. 
-        /// </summary> 
-        /// <remarks> 
-        /// 示例:  
-        ///  SqlDataReader dr = ExecuteReader(connString, CommandType.StoredProcedure, "GetOrders"); 
-        /// </remarks> 
-        /// <param name="connectionString">一个有效的数据库连接字符串</param> 
-        /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
-        /// <param name="commandText">存储过程名或T-SQL语句</param> 
-        /// <returns>返回包含结果集的SqlDataReader</returns> 
-        public static SqlDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText)
-        {
-            return ExecuteReader(connectionString, commandType, commandText, (SqlParameter[])null);
-        }
-
-        /// <summary> 
-        /// 执行指定数据库连接字符串的数据阅读器,指定参数. 
-        /// </summary> 
-        /// <remarks> 
-        /// 示例:  
-        ///  SqlDataReader dr = ExecuteReader(connString, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24)); 
-        /// </remarks> 
-        /// <param name="connectionString">一个有效的数据库连接字符串</param> 
-        /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
-        /// <param name="commandText">存储过程名或T-SQL语句</param> 
-        /// <param name="commandParameters">SqlParamter参数数组(new SqlParameter("@prodid", 24))</param> 
-        /// <returns>返回包含结果集的SqlDataReader</returns> 
-        public static SqlDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
-        {
-            if (connectionString == null || connectionString.Length == 0) throw new ArgumentNullException("connectionString");
-            SqlConnection connection = null;
-            try
-            {
-                connection = new SqlConnection(connectionString);
-                connection.Open();
-
-                return ExecuteReader(connection, null, commandType, commandText, commandParameters, SqlConnectionOwnership.Internal);
-            }
-            catch
-            {
-                // If we fail to return the SqlDatReader, we need to close the connection ourselves 
-                if (connection != null) connection.Close();
-                throw;
-            }
-        }
-
-        /// <summary> 
-        /// 执行指定数据库连接对象的数据阅读器. 
-        /// </summary> 
-        /// <remarks> 
-        /// 示例:  
-        ///  SqlDataReader dr = ExecuteReader(conn, CommandType.StoredProcedure, "GetOrders"); 
-        /// </remarks> 
-        /// <param name="connection">一个有效的数据库连接对象</param> 
-        /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
-        /// <param name="commandText">存储过程名或T-SQL语句</param> 
-        /// <returns>返回包含结果集的SqlDataReader</returns> 
-        public static SqlDataReader ExecuteReader(SqlConnection connection, CommandType commandType, string commandText)
-        {
-            return ExecuteReader(connection, commandType, commandText, null);
-        }
-
-        /// <summary> 
         /// [调用者方式]执行指定数据库连接对象的数据阅读器,指定参数. 
         /// </summary> 
         /// <remarks> 
         /// 示例:  
         ///  SqlDataReader dr = ExecuteReader(conn, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24)); 
         /// </remarks> 
-        /// <param name="connection">一个有效的数据库连接对象</param> 
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandParameters">SqlParamter参数数组</param> 
         /// <returns>返回包含结果集的SqlDataReader</returns> 
-        public static SqlDataReader ExecuteReader(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        public static SqlDataReader ExecuteReader(string commandText, params SqlParameter[] commandParameters)
         {
-            return ExecuteReader(connection, null, commandType, commandText, commandParameters, SqlConnectionOwnership.External);
+            return ExecuteReader(GetConnection(), null, CommandType.Text, commandText, commandParameters);
         }
 
         /// <summary> 
@@ -565,12 +483,11 @@ namespace common
         ///  SqlDataReader dr = ExecuteReader(trans, CommandType.StoredProcedure, "GetOrders"); 
         /// </remarks> 
         /// <param name="transaction">一个有效的连接事务</param> 
-        /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <returns>返回包含结果集的SqlDataReader</returns> 
-        public static SqlDataReader ExecuteReader(SqlTransaction transaction, CommandType commandType, string commandText)
+        public static SqlDataReader ExecuteReader(SqlTransaction transaction, string commandText)
         {
-            return ExecuteReader(transaction, commandType, commandText, (SqlParameter[])null);
+            return ExecuteReader(transaction, CommandType.Text, commandText, null);
         }
 
         /// <summary> 
@@ -590,7 +507,7 @@ namespace common
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
 
-            return ExecuteReader(transaction.Connection, transaction, commandType, commandText, commandParameters, SqlConnectionOwnership.External);
+            return ExecuteReader(transaction.Connection, transaction, commandType, commandText, commandParameters);
         }
 
         #endregion ExecuteReader数据阅读器
