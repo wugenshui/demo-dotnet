@@ -10,12 +10,23 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 
 namespace demo_console
 {
     class Program
     {
         static void Main(string[] args)
+        {
+            for (int i = 0; i < 10000; i++)
+            {
+                Thread thread = new Thread(ThreadFun);
+                thread.Start();
+            }
+            Console.ReadKey();
+        }
+
+        static void ThreadFun() // 来自委托：ThreadStart 
         {
             for (int i = 0; i < 10000; i++)
             {
@@ -28,8 +39,9 @@ namespace demo_console
                 }
             }
 
-            Console.ReadKey();
+            
         }
+
 
         // nlog记录日志
         static void nlog()
