@@ -414,7 +414,6 @@ namespace common
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名或T-SQL语句</param> 
         /// <param name="commandParameters">SqlParameters参数数组,如果没有参数则为'null'</param>
-        /// <param name="connectionOwnership">标识数据库连接对象是由调用者提供还是由SqlHelper提供</param> 
         /// <returns>返回包含结果集的SqlDataReader</returns>
         private static SqlDataReader ExecuteReader(SqlConnection connection, SqlTransaction transaction, CommandType commandType, string commandText, SqlParameter[] commandParameters)
         {
@@ -462,11 +461,6 @@ namespace common
         /// <summary> 
         /// [调用者方式]执行指定数据库连接对象的数据阅读器,指定参数. 
         /// </summary> 
-        /// <remarks> 
-        /// 示例:  
-        ///  SqlDataReader dr = ExecuteReader(conn, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24)); 
-        /// </remarks> 
-        /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandParameters">SqlParamter参数数组</param> 
         /// <returns>返回包含结果集的SqlDataReader</returns> 
