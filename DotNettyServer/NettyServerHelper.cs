@@ -61,7 +61,7 @@ namespace DotNettyServer
 
                 // bootstrap绑定到指定端口的行为 就是服务端启动服务，同样的Serverbootstrap可以bind到多个端口
                 IChannel serverChannel = await bootstrap.BindAsync(CommonHelper.Port);
-
+                Console.WriteLine("服务器已启动！");
                 Console.ReadLine();
                 //关闭服务
                 await serverChannel.CloseAsync();
