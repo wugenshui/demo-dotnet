@@ -19,6 +19,8 @@ namespace DotNettyServer
         static void Main(string[] args)
         {
             NettyServerHelper.init().Wait();
+            Console.WriteLine("服务启动成功！");
+            Console.ReadLine();
         }
     }
 }
