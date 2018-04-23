@@ -20,47 +20,38 @@ namespace DotNettyClient
     // 代码和服务端也相差不多，并且继承了同样的基类。
     public class NettyClientHandler : ChannelHandlerAdapter
     {
-        readonly IByteBuffer initialMessage;
-
-        public NettyClientHandler()
-        {
-            string name = Dns.GetHostName();
-            //IPAddress[] ipadrlist = Dns.GetHostAddresses(name);
-            Message msg = new Message()
-            {
-                type = "connect",
-                from = name
-            };
-            this.initialMessage = Unpooled.Buffer(CommonHelper.Size);
-            byte[] messageBytes = Encoding.UTF8.GetBytes(JsonHelper.JsonSerialize(msg));
-            this.initialMessage.WriteBytes(messageBytes);
-        }
-
         //重写基类方法，当链接上服务器后，马上发送Hello World消息到服务端
         public override void ChannelActive(IChannelHandlerContext context)
         {
-            context.WriteAndFlushAsync(this.initialMessage);
+            Message msg = new Message()
+            {
+                type = "connect",
+                from = Dns.GetHostName()
+            };
+            context.WriteAndFlushAsync(JsonHelper.JsonSerialize(msg));
         }
 
         public override void ChannelRead(IChannelHandlerContext context, object message)
         {
-            var byteBuffer = message as IByteBuffer;
-            if (byteBuffer != null)
+            if (message != null)
             {
-                Message msg = JsonHelper.JsonDeserialize<Message>(byteBuffer.ToString(Encoding.UTF8));
-                if (msg.type == "list")
+                Message msg = JsonHelper.JsonDeserialize<Message>(message.ToString());
+                if (msg != null)
                 {
-                    Program.users = JsonHelper.JsonDeserialize<List<string>>(msg.msg);
-                }
-                else if (msg.type == "connect")
-                {
-                    Console.WriteLine(msg.msg);  // 打印出服务器消息
-                }
-                else if (msg.type == "emit")
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("用户" + msg.from + "说:" + msg.msg);  // 打印出服务器消息
-                    Console.ForegroundColor = ConsoleColor.White;
+                    if (msg.type == "list")
+                    {
+                        Program.users = JsonHelper.JsonDeserialize<List<string>>(msg.msg);
+                    }
+                    else if (msg.type == "connect")
+                    {
+                        Console.WriteLine(msg.msg);  // 打印出服务器消息
+                    }
+                    else if (msg.type == "emit")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("用户" + msg.from + "说:" + msg.msg);  // 打印出服务器消息
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
                 }
             }
             //context.WriteAsync(message);

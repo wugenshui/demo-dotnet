@@ -60,9 +60,11 @@ namespace DotNettyClient
                         // 读超时、写超时、读写超时
                         pipeline.AddLast("timeout", new IdleStateHandler(10, 10, 20));
                         //出栈消息，通过这个handler 在消息顶部加上消息的长度
-                        pipeline.AddLast("framing-enc", new LengthFieldPrepender(2));
+                        pipeline.AddLast("framing-enc", new LengthFieldPrepender(4));
                         //入栈消息通过该Handler,解析消息的包长信息，并将正确的消息体发送给下一个处理Handler
-                        pipeline.AddLast("framing-dec", new LengthFieldBasedFrameDecoder(ushort.MaxValue, 0, 2, 0, 2));
+                        pipeline.AddLast("framing-dec", new LengthFieldBasedFrameDecoder(int.MaxValue, 0, 4, 0, 4));
+                        pipeline.AddLast("decoder", new StringDecoder(Encoding.UTF8));
+                        pipeline.AddLast("encoder", new StringEncoder(Encoding.UTF8));
                         //业务handler ，这里是实际处理业务的Handler
                         pipeline.AddLast(new NettyClientHandler());
                     }));
@@ -90,12 +92,7 @@ namespace DotNettyClient
                     await init();
                 }
                 //发送给服务器端
-                byte[] messageBytes = Encoding.UTF8.GetBytes(msg);
-                //缓存区
-                IByteBuffer initialMessage = Unpooled.Buffer(CommonHelper.Size);
-                initialMessage.WriteBytes(messageBytes);
-                //写入输出流并输出
-                await clientChannel.WriteAndFlushAsync(initialMessage);
+                await clientChannel.WriteAndFlushAsync(msg);
             }
             catch (Exception ex)
             {

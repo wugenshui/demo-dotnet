@@ -1,6 +1,5 @@
 ﻿using DotNetty.Codecs;
 using DotNetty.Handlers.Logging;
-using DotNetty.Handlers.Timeout;
 using DotNetty.Handlers.Tls;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
@@ -52,20 +51,20 @@ namespace DotNettyServer
                         {
                             pipeline.AddLast("tls", TlsHandler.Server(tlsCertificate));
                         }
-                        // 读超时、写超时、读写超时
-                        pipeline.AddLast("timeout", new IdleStateHandler(10, 10, 20));
                         //出栈消息，通过这个handler 在消息顶部加上消息的长度
                         pipeline.AddLast("framing-enc", new LengthFieldPrepender(4));
                         //入栈消息通过该Handler,解析消息的包长信息，并将正确的消息体发送给下一个处理Handler，该类比较常用，后面单独说明
                         pipeline.AddLast("framing-dec", new LengthFieldBasedFrameDecoder(int.MaxValue, 0, 4, 0, 4));
                         //业务handler ，这里是实际处理Echo业务的Handler
                         pipeline.AddLast("echo", new NettyServerHandler());
-                        pipeline.AddLast("decoder", new StringDecoder(Encoding.UTF8));
-                        pipeline.AddLast("encoder", new StringEncoder(Encoding.UTF8));
                     }));
 
                 // bootstrap绑定到指定端口的行为 就是服务端启动服务，同样的Serverbootstrap可以bind到多个端口
                 IChannel serverChannel = await bootstrap.BindAsync(CommonHelper.Port);
+
+                Console.ReadLine();
+                //关闭服务
+                await serverChannel.CloseAsync();
             }
             catch (Exception ex)
             {
