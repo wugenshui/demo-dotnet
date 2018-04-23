@@ -38,7 +38,7 @@ namespace DotNettyClient
                     Message msgs = new Message()
                     {
                         type = "emit",
-                        from = Dns.GetHostName(),
+                        from = Environment.UserName,
                         to = user,
                         msg = line,
                     };

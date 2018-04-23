@@ -26,7 +26,7 @@ namespace DotNettyClient
             Message msg = new Message()
             {
                 type = "connect",
-                from = Dns.GetHostName()
+                from = Environment.UserName
             };
             context.WriteAndFlushAsync(JsonHelper.JsonSerialize(msg));
         }
@@ -35,6 +35,7 @@ namespace DotNettyClient
         {
             if (message != null)
             {
+                Console.WriteLine(message);
                 Message msg = JsonHelper.JsonDeserialize<Message>(message.ToString());
                 if (msg != null)
                 {
@@ -54,7 +55,6 @@ namespace DotNettyClient
                     }
                 }
             }
-            //context.WriteAsync(message);
         }
 
         public override void ChannelReadComplete(IChannelHandlerContext context) => context.Flush();
