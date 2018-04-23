@@ -55,9 +55,10 @@ namespace DotNettyService
                         // 读超时、写超时、读写超时
                         pipeline.AddLast("timeout", new IdleStateHandler(10, 10, 20));
                         //出栈消息，通过这个handler 在消息顶部加上消息的长度
-                        pipeline.AddLast("framing-enc", new LengthFieldPrepender(2));
+                        pipeline.AddLast("framing-enc", new LengthFieldPrepender(4));
                         //入栈消息通过该Handler,解析消息的包长信息，并将正确的消息体发送给下一个处理Handler，该类比较常用，后面单独说明
-                        pipeline.AddLast("framing-dec", new LengthFieldBasedFrameDecoder(ushort.MaxValue, 0, 2, 0, 2));
+                        pipeline.AddLast("framing-dec", new LengthFieldBasedFrameDecoder(int.MaxValue, 0, 4, 0, 4));
+
                         //业务handler ，这里是实际处理Echo业务的Handler
                         pipeline.AddLast("echo", new NettyServerHandler());
                     }));
