@@ -96,12 +96,9 @@ namespace DotNettyServer
                                     {
                                         if (_channels.TryGetValue(key, out oldModel) && oldModel.username == request.to)
                                         {
-                                            if (_channels.TryGetValue(key, out oldModel))
-                                            {
-                                                channel = oldModel.channel;
-                                                response.msg = request.msg;
-                                                response.state = true;
-                                            }
+                                            channel = oldModel.channel;
+                                            response.msg = request.msg;
+                                            response.state = true;
                                             hasUser = true;
                                             break;
                                         }
