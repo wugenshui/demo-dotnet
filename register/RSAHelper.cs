@@ -111,7 +111,7 @@ namespace Register
 
         #region 字符串加密解密 公开方法
         /// <summary>
-        /// 字符串加密
+        /// 字符串加密（加密前先使用md5加密）
         /// </summary>
         /// <param name="source">源字符串 明文</param>
         /// <param name="key">密匙</param>
@@ -123,6 +123,7 @@ namespace Register
             byte[] n;
             try
             {
+                source = MD5Helper.CreateMD5(source);
                 if (!CheckSourceValidate(source))
                 {
                     throw new Exception("source string too long");
