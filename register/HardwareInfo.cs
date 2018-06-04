@@ -6,12 +6,6 @@ namespace Register
 {
     public class HardwareInfo
     {
-        //取机器名
-        public string GetHostName()
-        {
-            return System.Net.Dns.GetHostName();
-        }
-
         /// <summary>
         /// 获取 自定义唯一标识码
         /// </summary>
@@ -21,10 +15,19 @@ namespace Register
         }
 
         /// <summary>
+        /// 取机器名
+        /// </summary>
+        /// <returns></returns>
+        private string GetHostName()
+        {
+            return System.Net.Dns.GetHostName();
+        }
+
+        /// <summary>
         /// 获取CPU编号
         /// </summary>
         /// <returns></returns>
-        public string GetCpuID()
+        private string GetCpuID()
         {
             try
             {
@@ -48,7 +51,7 @@ namespace Register
         /// 取第一块硬盘编号
         /// </summary>
         /// <returns></returns>
-        public string GetHardDiskID()
+        private string GetHardDiskID()
         {
             try
             {
@@ -71,7 +74,7 @@ namespace Register
         /// 取网卡mac
         /// </summary>
         /// <returns></returns>
-        public string GetMacAddress()
+        private string GetMacAddress()
         {
             string addr = "";
             try

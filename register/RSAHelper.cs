@@ -11,7 +11,7 @@ namespace Register
     /// http://www.cnblogs.com/hhh/archive/2011/06/03/2070692.html
     /// http://blog.csdn.net/zhilunchen/article/details/2943158
     /// 若是私匙加密 则需公钥解密
-    /// 反正公钥加密 私匙来解密
+    /// 反则公钥加密 私匙来解密
     /// 需要BigInteger类来辅助
     /// </summary>
     public static class RSAHelper
@@ -22,17 +22,23 @@ namespace Register
         public const int DWKEYSIZE = 1024;
 
         /// <summary>
-        /// RSA加密的密匙结构  公钥和私匙
+        /// RSA加密的密匙(公钥和私匙)
         /// </summary>
         public struct RSAKey
         {
+            /// <summary>
+            /// 公钥
+            /// </summary>
             public string PublicKey { get; set; }
+
+            /// <summary>
+            /// 私钥
+            /// </summary>
             public string PrivateKey { get; set; }
         }
 
-        #region 得到RSA的解谜的密匙对
         /// <summary>
-        /// 得到RSA的解谜的密匙对
+        /// 得到RSA解密的密匙对
         /// </summary>
         /// <returns></returns>
         public static RSAKey GetRASKey()
@@ -49,9 +55,7 @@ namespace Register
                 PrivateKey = ComponentKey(p.D, p.Modulus)
             };
         }
-        #endregion
 
-        #region 检查明文的有效性 DWKEYSIZE/8-11 长度之内为有效 中英文都算一个字符
         /// <summary>
         /// 检查明文的有效性 DWKEYSIZE/8-11 长度之内为有效 中英文都算一个字符
         /// </summary>
@@ -61,9 +65,9 @@ namespace Register
         {
             return (DWKEYSIZE / 8 - 11) >= source.Length;
         }
-        #endregion
 
         #region 组合解析密匙
+
         /// <summary>
         /// 组合成密匙字符串
         /// </summary>
@@ -107,9 +111,11 @@ namespace Register
                 }
             }
         }
+
         #endregion
 
-        #region 字符串加密解密 公开方法
+        #region 字符串加密
+
         /// <summary>
         /// 字符串加密（加密前先使用md5加密）
         /// </summary>
@@ -142,34 +148,6 @@ namespace Register
         }
 
         /// <summary>
-        /// 字符串解密
-        /// </summary>
-        /// <param name="encryptString">密文</param>
-        /// <param name="key">密钥</param>
-        /// <returns>遇到解密失败将会返回原字符串</returns>
-        public static string DecryptString(string encryptString, string key)
-        {
-            string source = string.Empty;
-            byte[] e;
-            byte[] n;
-            try
-            {
-                //解析这个密钥
-                ResolveKey(key, out e, out n);
-                BigInteger biE = new BigInteger(e);
-                BigInteger biN = new BigInteger(n);
-                source = DecryptString(encryptString, biE, biN);
-            }
-            catch
-            {
-                source = encryptString;
-            }
-            return source;
-        }
-        #endregion
-
-        #region 字符串加密解密 私有  实现加解密的实现方法
-        /// <summary>
         /// 用指定的密匙加密 
         /// </summary>
         /// <param name="source">明文</param>
@@ -194,7 +172,7 @@ namespace Register
                 else
                     blockLen = len;
                 block = source.Substring(i * 128, blockLen);
-                byte[] oText = System.Text.Encoding.Default.GetBytes(block);
+                byte[] oText = Encoding.Default.GetBytes(block);
                 BigInteger biText = new BigInteger(oText);
                 BigInteger biEnText = biText.modPow(d, n);
                 string temp = biEnText.ToHexString();
@@ -204,8 +182,38 @@ namespace Register
             return result.ToString().TrimEnd('@');
         }
 
+        #endregion
+
+        #region 字符串解密
+
         /// <summary>
-        /// 用指定的密匙加密 
+        /// 字符串解密
+        /// </summary>
+        /// <param name="encryptString">密文</param>
+        /// <param name="key">密钥</param>
+        /// <returns>遇到解密失败将会返回原字符串</returns>
+        public static string DecryptString(string encryptString, string key)
+        {
+            string source = string.Empty;
+            byte[] e;
+            byte[] n;
+            try
+            {
+                //解析这个密钥
+                ResolveKey(key, out e, out n);
+                BigInteger biE = new BigInteger(e);
+                BigInteger biN = new BigInteger(n);
+                source = DecryptString(encryptString, biE, biN);
+            }
+            catch
+            {
+                source = encryptString;
+            }
+            return source;
+        }
+
+        /// <summary>
+        /// 用指定的密匙解密
         /// </summary>
         /// <param name="source">密文</param>
         /// <param name="e">可以是RSACryptoServiceProvider生成的Exponent</param>
@@ -220,11 +228,12 @@ namespace Register
                 string block = strarr1[i];
                 BigInteger biText = new BigInteger(block, 16);
                 BigInteger biEnText = biText.modPow(e, n);
-                string temp = System.Text.Encoding.Default.GetString(biEnText.getBytes());
+                string temp = Encoding.Default.GetString(biEnText.getBytes());
                 result.Append(temp);
             }
             return result.ToString();
         }
+
         #endregion
     }
 }
