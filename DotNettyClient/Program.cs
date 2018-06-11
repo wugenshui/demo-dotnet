@@ -31,6 +31,8 @@ namespace DotNettyClient
                 Message msg = new Message()
                 {
                     type = MessageType.LIST.ToString(),
+                    from = Environment.UserName,
+                    to = CommonHelper.SYS
                 };
                 NettyClientHelper.Send(JsonHelper.JsonSerialize(msg));
                 Thread.Sleep(200);

@@ -51,7 +51,7 @@ namespace DotNettyServerBase
                         newLink.username = request.from;
                         _channels.TryUpdate(context.Channel.RemoteAddress.ToString(), newLink, oldLink);
                     }
-                    else if (request.type == MessageType.CONNECT.ToString())
+                    else if (request.type == MessageType.LIST.ToString())
                     {
                         channel = context;
                         List<string> users = new List<string>();
@@ -65,7 +65,7 @@ namespace DotNettyServerBase
                         response.msg = JsonHelper.JsonSerialize(users);
                         response.state = true;
                     }
-                    else if (request.type == MessageType.CONNECT.ToString())
+                    else if (request.type == MessageType.EMIT.ToString())
                     {
                         response.from = request.from;
                         response.to = request.to;
@@ -124,8 +124,8 @@ namespace DotNettyServerBase
         public override void ChannelInactive(IChannelHandlerContext context)
         {
             Link link = new Link();
-            LogHelper.Info("断开连接：" + context.Channel.RemoteAddress.ToString());
             _channels.TryRemove(context.Channel.RemoteAddress.ToString(), out link);
+            LogHelper.Info("断开连接：" + context.Channel.RemoteAddress.ToString() + " " + (link == null ? "" : link.username));
         }
     }
 }
