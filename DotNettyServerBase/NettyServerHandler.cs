@@ -15,97 +15,128 @@ namespace DotNettyServerBase
     {
         private static ConcurrentDictionary<string, Link> _channels = new ConcurrentDictionary<string, Link>();
 
-        public override void ChannelActive(IChannelHandlerContext context)
-        {
-            if (context != null)
-            {
-                LogHelper.Info("建立连接：" + context.Channel.RemoteAddress.ToString());
-                _channels.TryAdd(context.Channel.RemoteAddress.ToString(), new Link() { channel = context });
-            }
-        }
-
+        /// <summary>
+        /// 处理接收到消息
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="message"></param>
         public override void ChannelRead(IChannelHandlerContext context, object message)
         {
             Message response = new Message();
-            var buffer = message as IByteBuffer;
-            if (buffer != null)
+            try
             {
-                LogHelper.Info("接收到客户端" + context.Channel.RemoteAddress.ToString() + "消息:" + buffer.ToString(Encoding.UTF8));
-                Message request = JsonHelper.JsonDeserialize<Message>(buffer.ToString(Encoding.UTF8));
-                if (request != null)
+                var buffer = message as IByteBuffer;
+                if (buffer != null)
                 {
-                    response.type = request.type;
-                    response.from = request.to;
-                    response.to = request.from;
-                    Link oldLink = null;
-                    IChannelHandlerContext channel = null;
+                    LogHelper.Info("接收到客户端" + context.Channel.RemoteAddress.ToString() + "消息:" + buffer.ToString(Encoding.UTF8));
+                    Message request = JsonHelper.JsonDeserialize<Message>(buffer.ToString(Encoding.UTF8));
+                    if (request != null)
+                    {
+                        response.type = request.type;
+                        response.from = request.to;
+                        response.to = request.from;
+                        Link oldLink = null;
 
-                    if (request.type == MessageType.CONNECT.ToString())
-                    {
-                        channel = context;
-                        response.msg = "注册成功！";
-                        response.state = true;
-                        _channels.TryGetValue(context.Channel.RemoteAddress.ToString(), out oldLink);
-                        Link newLink = new Link();
-                        newLink.channel = oldLink.channel;
-                        newLink.username = request.from;
-                        _channels.TryUpdate(context.Channel.RemoteAddress.ToString(), newLink, oldLink);
-                    }
-                    else if (request.type == MessageType.LIST.ToString())
-                    {
-                        channel = context;
-                        List<string> users = new List<string>();
-                        foreach (string key in _channels.Keys)
+                        if (request.type == MessageType.CONNECT.ToString())
                         {
-                            if (_channels.TryGetValue(key, out oldLink) && !string.IsNullOrWhiteSpace(oldLink.username))
+                            response.msg = "注册成功！";
+                            response.state = true;
+                            Link newLink = new Link();
+                            newLink.channel = context;
+                            newLink.username = request.from;
+                            if (_channels.TryGetValue(context.Channel.RemoteAddress.ToString(), out oldLink))
                             {
-                                users.Add(oldLink.username);
-                            }
-                        }
-                        response.msg = JsonHelper.JsonSerialize(users);
-                        response.state = true;
-                    }
-                    else if (request.type == MessageType.EMIT.ToString())
-                    {
-                        response.from = request.from;
-                        response.to = request.to;
-                        if (!string.IsNullOrWhiteSpace(request.to))
-                        {
-                            if (request.to == CommonHelper.SYS)
-                            {
-
+                                _channels.TryUpdate(context.Channel.RemoteAddress.ToString(), newLink, oldLink);
                             }
                             else
                             {
-                                bool hasUser = false;
-                                foreach (string key in _channels.Keys)
+                                _channels.TryAdd(context.Channel.RemoteAddress.ToString(), newLink);
+                            }
+                            LogHelper.Info("建立连接：" + context.Channel.RemoteAddress.ToString() + "   " + newLink.username);
+                        }
+                        else if (request.type == MessageType.LIST.ToString())
+                        {
+                            List<string> users = new List<string>();
+                            foreach (string key in _channels.Keys)
+                            {
+                                if (_channels.TryGetValue(key, out oldLink) && !string.IsNullOrWhiteSpace(oldLink.username))
                                 {
-                                    if (_channels.TryGetValue(key, out oldLink) && oldLink.username == request.to)
-                                    {
-                                        channel = oldLink.channel;
-                                        response.msg = request.msg;
-                                        response.state = true;
-                                        hasUser = true;
-                                        break;
-                                    }
+                                    users.Add(oldLink.username);
                                 }
-                                if (!hasUser)
+                            }
+                            response.msg = JsonHelper.JsonSerialize(users);
+                            response.state = true;
+                        }
+                        else if (request.type == MessageType.EMIT.ToString())
+                        {
+                            response.from = request.from;
+                            response.to = request.to;
+                            if (!string.IsNullOrWhiteSpace(request.to))
+                            {
+                                if (request.to == CommonHelper.SYS)
                                 {
-                                    channel = context;
-                                    response.msg = "当前用户不存在或不在线！";
-                                    response.state = false;
+
+                                }
+                                else
+                                {
+                                    bool hasUser = false;
+                                    foreach (string key in _channels.Keys)
+                                    {
+                                        if (_channels.TryGetValue(key, out oldLink) && oldLink.username == request.to)
+                                        {
+                                            context = oldLink.channel;
+                                            response.msg = request.msg;
+                                            response.state = true;
+                                            hasUser = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!hasUser)
+                                    {
+                                        response.msg = "当前用户不存在或不在线！";
+                                        response.state = false;
+                                    }
                                 }
                             }
                         }
+                        else
+                        {
+                            response = new Message
+                            {
+                                type = request.type,
+                                from = CommonHelper.SYS,
+                                to = request.from,
+                                state = false,
+                                msg = "不支持的请求类型!"
+                            };
+                        }
                     }
-
-                    byte[] messageBytes = Encoding.UTF8.GetBytes(JsonHelper.JsonSerialize(response));
-                    //缓存区
-                    IByteBuffer initialMessage = Unpooled.Buffer(1024);
-                    initialMessage.WriteBytes(messageBytes);
-                    channel.WriteAndFlushAsync(initialMessage);    // 回写输出流
+                    else
+                    {
+                        response = new Message
+                        {
+                            from = CommonHelper.SYS,
+                            state = false,
+                            msg = "非法的请求格式!"
+                        };
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                response = new Message
+                {
+                    from = CommonHelper.SYS,
+                    state = false,
+                    msg = ex.Message
+                };
+                LogHelper.Error("指令处理出错：" + ex);
+            }
+            byte[] messageBytes = Encoding.UTF8.GetBytes(JsonHelper.JsonSerialize(response));
+            //缓存区
+            IByteBuffer initialMessage = Unpooled.Buffer(1024);
+            initialMessage.WriteBytes(messageBytes);
+            context.WriteAndFlushAsync(initialMessage);    // 回写输出流
         }
 
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)
@@ -125,7 +156,7 @@ namespace DotNettyServerBase
         {
             Link link = new Link();
             _channels.TryRemove(context.Channel.RemoteAddress.ToString(), out link);
-            LogHelper.Info("断开连接：" + context.Channel.RemoteAddress.ToString() + " " + (link == null ? "" : link.username));
+            LogHelper.Info("断开连接：" + context.Channel.RemoteAddress.ToString() + "   " + (link == null ? "" : link.username));
         }
     }
 }
