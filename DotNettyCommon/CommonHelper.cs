@@ -6,7 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotNettyClient
+namespace DotNettyCommon
 {
     public class CommonHelper
     {
@@ -49,5 +49,7 @@ namespace DotNettyClient
                 return Convert.ToInt32(ConfigurationManager.AppSettings["Size"]);
             }
         }
+
+        public const string SYS = "SYS";
     }
 }

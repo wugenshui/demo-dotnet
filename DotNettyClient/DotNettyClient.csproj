@@ -150,8 +150,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonHelper.cs" />
-    <Compile Include="JsonHelper.cs" />
     <Compile Include="NettyClientHandler.cs" />
     <Compile Include="NettyClientHelper.cs" />
     <Compile Include="Program.cs" />
@@ -162,6 +160,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DotNettyCommon\DotNettyCommon.csproj">
+      <Project>{1da94d79-03ce-4695-9fbf-137dc3d7ebe3}</Project>
+      <Name>DotNettyCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

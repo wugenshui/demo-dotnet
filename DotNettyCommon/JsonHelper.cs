@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace DotNettyClient
+namespace DotNettyCommon
 {
     public class JsonHelper
     {

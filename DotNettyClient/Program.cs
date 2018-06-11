@@ -4,6 +4,7 @@ using DotNetty.Handlers.Tls;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
+using DotNettyCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,7 +30,7 @@ namespace DotNettyClient
                 string line = Console.ReadLine();
                 Message msg = new Message()
                 {
-                    type = "list",
+                    type = MessageType.LIST.ToString(),
                 };
                 NettyClientHelper.Send(JsonHelper.JsonSerialize(msg));
                 Thread.Sleep(200);
@@ -37,7 +38,7 @@ namespace DotNettyClient
                 {
                     Message msgs = new Message()
                     {
-                        type = "emit",
+                        type = MessageType.EMIT.ToString(),
                         from = Environment.UserName,
                         to = user,
                         msg = line,

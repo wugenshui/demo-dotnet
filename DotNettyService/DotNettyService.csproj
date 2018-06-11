@@ -192,6 +192,16 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DotNettyCommon\DotNettyCommon.csproj">
+      <Project>{1da94d79-03ce-4695-9fbf-137dc3d7ebe3}</Project>
+      <Name>DotNettyCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNettyServerBase\DotNettyServerBase.csproj">
+      <Project>{74dbc47f-f260-4d7c-8306-ac1b76a25bc2}</Project>
+      <Name>DotNettyServerBase</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
