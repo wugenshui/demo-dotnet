@@ -23,7 +23,7 @@ namespace DotNettyClient
         public static List<string> users = new List<string>();
         static void Main(string[] args)
         {
-            NettyClientHelper.init().Wait();
+            NettyClientHelper.init();
 
             for (;;)
             {

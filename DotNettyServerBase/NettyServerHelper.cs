@@ -4,6 +4,7 @@ using DotNetty.Handlers.Tls;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
+using DotNettyCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +13,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotNettyServer
+namespace DotNettyServerBase
 {
     public class NettyServerHelper
     {
@@ -61,22 +62,19 @@ namespace DotNettyServer
 
                 // bootstrap绑定到指定端口的行为 就是服务端启动服务，同样的Serverbootstrap可以bind到多个端口
                 IChannel serverChannel = await bootstrap.BindAsync(CommonHelper.Port);
-                Console.WriteLine("服务器已启动！");
-                Console.ReadLine();
-                //关闭服务
-                await serverChannel.CloseAsync();
+                LogHelper.Info("服务启动！");
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                LogHelper.Error(ex);
             }
-            finally
-            {
-                // 释放工作组线程
-                await Task.WhenAll(
-                    bossGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)),
-                    workerGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)));
-            }
+            //finally
+            //{
+            //    // 释放工作组线程
+            //    await Task.WhenAll(
+            //        bossGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)),
+            //        workerGroup.ShutdownGracefullyAsync(TimeSpan.FromMilliseconds(100), TimeSpan.FromSeconds(1)));
+            //}
         }
     }
 }

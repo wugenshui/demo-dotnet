@@ -160,17 +160,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonHelper.cs" />
     <Compile Include="DotNettyService.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DotNettyService.Designer.cs">
       <DependentUpon>DotNettyService.cs</DependentUpon>
     </Compile>
-    <Compile Include="JsonHelper.cs" />
-    <Compile Include="LogHelper.cs" />
-    <Compile Include="NettyServerHandler.cs" />
-    <Compile Include="NettyServerHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -182,9 +177,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="NLog.config">
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

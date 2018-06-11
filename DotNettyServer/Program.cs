@@ -1,9 +1,4 @@
-﻿using DotNetty.Codecs;
-using DotNetty.Handlers.Logging;
-using DotNetty.Handlers.Tls;
-using DotNetty.Transport.Bootstrapping;
-using DotNetty.Transport.Channels;
-using DotNetty.Transport.Channels.Sockets;
+﻿using DotNettyServerBase;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +13,8 @@ namespace DotNettyServer
     {
         static void Main(string[] args)
         {
-            NettyServerHelper.init().Wait();
+            NettyServerHelper.init();
+            Console.ReadKey();
         }
     }
 }
