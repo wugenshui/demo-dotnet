@@ -18,7 +18,7 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 Thread thread = new Thread(ThreadFun);
                 thread.Start();
@@ -32,13 +32,8 @@ namespace demo_console
             for (int i = 0; i < 10000; i++)
             {
                 num++;
-                using (IDataReader reader = SqlHelper.ExecuteReader("select * from GMS_Log"))
-                {
-                    while (reader.Read())
-                    {
-                        Console.WriteLine(num + ":" + reader["Message"]);
-                    }
-                }
+                var table = SqlHelper.ExecuteDataset("select * from GMS_Log").Tables[0];
+                Console.WriteLine(num + ":查询出数据条数：" + table.Rows.Count);
                 int count = 0;
                 object counter = SqlHelper.ExecuteScalar(@"INSERT INTO GMS_Log (WorkOrderID, WorkOrderEquipment_ID, MessagePrefix, Message, LogType, CreatTime, WorkSmallStepID, NeedNotify, GMSSign) VALUES (14125, 0, '地线防护2组', '派工单自动同步!', 0, '2018-06-22 09:19:00.483', 1, 0, '');SELECT SCOPE_IDENTITY();");
                 if (int.TryParse(counter.ToString(), out count))
