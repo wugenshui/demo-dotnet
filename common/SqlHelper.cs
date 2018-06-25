@@ -24,7 +24,7 @@ namespace common
         {
             //string connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
             //return Base64Helper.Base64Decode(connectionString);
-            return "server=.;Integrated Security=True;Database=GMS;Persist Security Info=True";
+            return "server=.;Integrated Security=True;Database=GMS;Persist Security Info=True;Persist Security Info=False;Packet Size=4096;Pooling = true;Max Pool Size = 100;Min Pool Size = 1";
         }
         /// <summary> 
         /// 获取数据库连接对象 
@@ -146,12 +146,12 @@ namespace common
         /// <summary> 
         /// 执行指定数据库连接对象的命令 
         /// </summary> 
-        /// <param name="commandType">命令类型(存储过程,命令文本或其它.)</param> 
-        /// <param name="commandText">存储过程名称或T-SQL语句</param> 
+        /// <param name="commandText">T-SQL语句</param> 
+        /// <param name="param">SqlParamter参数数组</param> 
         /// <returns>返回影响的行数</returns> 
-        public static int ExecuteNonQuery(string commandText, CommandType commandType = CommandType.Text, params SqlParameter[] commandParameters)
+        public static int ExecuteNonQuery(string commandText, params SqlParameter[] param)
         {
-            return ExecuteNonQuery(GetConnection(), commandType, commandText, commandParameters);
+            return ExecuteNonQuery(GetConnection(), CommandType.Text, commandText, param);
         }
 
         /// <summary> 
@@ -214,17 +214,12 @@ namespace common
         /// <summary> 
         /// 执行指定数据库连接对象的命令,返回DataSet. 
         /// </summary> 
-        /// <remarks> 
-        /// 示例:  
-        ///  DataSet ds = ExecuteDataset(conn, CommandType.StoredProcedure, "GetOrders"); 
-        /// </remarks> 
-        /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
-        /// <param name="commandText">存储过程名或T-SQL语句</param> 
-        /// <param name="param">参数</param> 
+        /// <param name="commandText">T-SQL语句</param> 
+        /// <param name="param">SqlParamter参数数组</param> 
         /// <returns>返回一个包含结果集的DataSet</returns>
-        public static DataSet ExecuteDataset(string commandText, CommandType commandType = CommandType.Text, params SqlParameter[] param)
+        public static DataSet ExecuteDataset(string commandText, params SqlParameter[] param)
         {
-            return ExecuteDataset(GetConnection(), commandType, commandText, param);
+            return ExecuteDataset(GetConnection(), CommandType.Text, commandText, param);
         }
 
         /// <summary> 
@@ -304,17 +299,12 @@ namespace common
         /// <summary> 
         /// 执行指定数据库连接对象的命令,返回结果集中的第一行第一列. 
         /// </summary> 
-        /// <remarks> 
-        /// 示例:  
-        ///  int orderCount = (int)ExecuteScalar(conn, CommandType.StoredProcedure, "GetOrderCount"); 
-        /// </remarks> 
-        /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
-        /// <param name="commandText">存储过程名称或T-SQL语句</param> 
-        /// <param name="param">参数</param> 
+        /// <param name="commandText">T-SQL语句</param> 
+        /// <param name="param">SqlParamter参数数组</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalar(string commandText, CommandType commandType = CommandType.Text, params SqlParameter[] param)
+        public static object ExecuteScalar(string commandText, params SqlParameter[] param)
         {
-            return ExecuteScalar(GetConnection(), commandType, commandText, param);
+            return ExecuteScalar(GetConnection(), CommandType.Text, commandText, param);
         }
 
         /// <summary> 

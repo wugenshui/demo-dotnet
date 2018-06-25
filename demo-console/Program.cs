@@ -18,7 +18,7 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 1; i++)
             {
                 Thread thread = new Thread(ThreadFun);
                 thread.Start();
@@ -26,22 +26,40 @@ namespace demo_console
             Console.ReadKey();
         }
 
+        public static int num = 0;
         static void ThreadFun() // 来自委托：ThreadStart 
         {
             for (int i = 0; i < 10000; i++)
             {
+                num++;
                 using (IDataReader reader = SqlHelper.ExecuteReader("select * from GMS_Log"))
                 {
                     while (reader.Read())
                     {
-                        Console.WriteLine(reader["Message"]);
+                        Console.WriteLine(num + ":" + reader["Message"]);
                     }
                 }
+                int count = 0;
+                object counter = SqlHelper.ExecuteScalar(@"INSERT INTO GMS_Log (WorkOrderID, WorkOrderEquipment_ID, MessagePrefix, Message, LogType, CreatTime, WorkSmallStepID, NeedNotify, GMSSign) VALUES (14125, 0, '地线防护2组', '派工单自动同步!', 0, '2018-06-22 09:19:00.483', 1, 0, '');SELECT SCOPE_IDENTITY();");
+                if (int.TryParse(counter.ToString(), out count))
+                {
+                    Console.WriteLine("插入成功：" + count);
+                }
+                else
+                {
+                    Console.WriteLine("插入失败！");
+                }
+                int delcount = SqlHelper.ExecuteNonQuery("DELETE FROM GMS_Log WHERE ID=" + count);
+                if (delcount == 1)
+                {
+                    Console.WriteLine("删除成功！");
+                }
+                else
+                {
+                    Console.WriteLine("删除失败！");
+                }
             }
-
-            
         }
-
 
         // nlog记录日志
         static void nlog()
