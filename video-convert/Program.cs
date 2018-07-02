@@ -16,6 +16,18 @@ namespace video_convert
         {
             FFMpegConverter ffMpeg = new FFMpegConverter();
             ConvertSettings setting = new ConvertSettings();
+            setting.CustomOutputArgs = " -threads 2";   // 以两个线程进行运行,加快处理的速度
+            for (int i = 0; i < 100; i++)
+            {
+                ffMpeg.ConvertMedia("1.amr", "2.mp3", "MP3");  // 将h5不支持的视频转换为支持的视频
+                Console.WriteLine(i);
+            }
+        }
+
+        static void ConvertVideo()
+        {
+            FFMpegConverter ffMpeg = new FFMpegConverter();
+            ConvertSettings setting = new ConvertSettings();
             setting.VideoFrameSize = FrameSize.svga800x600;
             setting.CustomOutputArgs = " -threads 2";   // 以两个线程进行运行,加快处理的速度
             //setting.SetVideoFrameSize(100, 20);
