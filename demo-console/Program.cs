@@ -18,12 +18,13 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
-            for (int i = 0; i < 10000; i++)
-            {
-                Thread thread = new Thread(ThreadFun);
-                thread.Start();
-            }
-            Console.ReadKey();
+            nlog();
+            //for (int i = 0; i < 10000; i++)
+            //{
+            //    Thread thread = new Thread(ThreadFun);
+            //    thread.Start();
+            //}
+            //Console.ReadKey();
         }
 
         public static int num = 0;
