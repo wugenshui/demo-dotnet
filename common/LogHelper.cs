@@ -1,21 +1,16 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace common
 {
-    /// <summary>
-    /// 在AssemblyInfo.cs中加入：
-    /// [assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4netConfig.ini", Watch = true)]
-    /// private static readonly log4net.ILog _Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);  //日志
-    /// </summary>
     public class LogHelper
     {
         // 日志纪录对象
-        private static readonly log4net.ILog _Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILogger _Log = LogManager.GetLogger("NLog");
 
         /// <summary>
         /// 记录错误日志
@@ -23,8 +18,14 @@ namespace common
         /// <param name="info">日志信息</param>
         public static void Error(object info)
         {
-            if (_Log.IsErrorEnabled)
-                _Log.Error(info);
+            try
+            {
+                if (_Log.IsErrorEnabled)
+                    _Log.Error(info);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         /// <summary>
@@ -33,8 +34,14 @@ namespace common
         /// <param name="info">日志信息</param>
         public static void Debug(object info)
         {
-            if (_Log.IsDebugEnabled)
-                _Log.Debug(info);
+            try
+            {
+                if (_Log.IsDebugEnabled)
+                    _Log.Debug(info);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         /// <summary>
@@ -43,8 +50,14 @@ namespace common
         /// <param name="info">日志信息</param>
         public static void Info(object info)
         {
-            if (_Log.IsInfoEnabled)
-                _Log.Info(info);
+            try
+            {
+                if (_Log.IsInfoEnabled)
+                    _Log.Info(info);
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

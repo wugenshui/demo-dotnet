@@ -60,10 +60,9 @@ namespace demo_console
         // nlog记录日志
         static void nlog()
         {
-            ILogger log = LogManager.GetLogger("NLog");
-            log.Debug("Debug调试信息");
-            log.Info("Info一般信息");
-            log.Error("Error异常");
+            LogHelper.Debug("Debug调试信息");
+            LogHelper.Info("Info一般信息");
+            LogHelper.Error("Error异常");
             try
             {
                 int a = 0;
@@ -71,7 +70,7 @@ namespace demo_console
             }
             catch (Exception ex)
             {
-                log.Error(ex);
+                LogHelper.Error(ex);
             }
         }
 
