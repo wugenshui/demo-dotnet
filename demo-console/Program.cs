@@ -31,11 +31,11 @@ namespace demo_console
 
         public static void forEachEnum()
         {
-            foreach (var item in Enum.GetValues(typeof(UserType)))
+            foreach (UserType item in Enum.GetValues(typeof(UserType)))
             {
                 Console.WriteLine(item);
                 Console.WriteLine((int)item);
-                Console.WriteLine(GetEnumDesc((UserType)item));
+                Console.WriteLine(GetEnumDesc(item));
             }
         }
 
