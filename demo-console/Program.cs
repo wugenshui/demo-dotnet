@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -16,14 +17,60 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
-            nlog();
+            forEachEnum();
+
             //for (int i = 0; i < 10000; i++)
             //{
             //    Thread thread = new Thread(ThreadFun);
             //    thread.Start();
             //}
-            //Console.ReadKey();
+            Console.ReadKey();
         }
+
+        #region 枚举操作
+
+        public static void forEachEnum()
+        {
+            foreach (var item in Enum.GetValues(typeof(UserType)))
+            {
+                Console.WriteLine(item);
+                Console.WriteLine((int)item);
+                Console.WriteLine(GetEnumDesc((UserType)item));
+            }
+        }
+
+        public enum UserType
+        {
+            [Description("管理员")]
+            Admin = 0,
+
+            [Description("教师")]
+            Teacher = 1,
+
+            [Description("学生")]
+            Student = 2,
+        }
+
+        /// <summary>
+        /// 得到枚举的注释
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public static string GetEnumDesc(Enum e)
+        {
+            FieldInfo EnumInfo = e.GetType().GetField(e.ToString());
+            DescriptionAttribute[] EnumAttributes = (DescriptionAttribute[])EnumInfo.
+                GetCustomAttributes(typeof(DescriptionAttribute), false);
+            if (EnumAttributes.Length > 0)
+            {
+                return EnumAttributes[0].Description;
+            }
+            return e.ToString();
+        }
+
+        #endregion
+
+        #region 多线程测试
 
         public static int num = 0;
         static void ThreadFun() // 来自委托：ThreadStart 
@@ -55,7 +102,9 @@ namespace demo_console
             }
         }
 
-        // nlog记录日志
+        #endregion
+
+        #region nlog记录日志
         static void nlog()
         {
             LogHelper.Debug("Debug调试信息");
@@ -71,6 +120,8 @@ namespace demo_console
                 LogHelper.Error(ex);
             }
         }
+
+        #endregion
 
         public class Person
         {
@@ -94,6 +145,8 @@ namespace demo_console
                 bag.TryGetValue(key, out p);
             }
         }
+
+        #region github网址是否存在
 
         static void GetUrl()
         {
@@ -133,6 +186,8 @@ namespace demo_console
                 }
             }
         }
+
+        #endregion
 
         /// <summary>
         /// 寻找符合条件的文件路径
