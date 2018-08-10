@@ -14,6 +14,28 @@ namespace video_convert
     {
         static void Main(string[] args)
         {
+            ConvertVideo();
+        }
+
+        static void ConvertVideo()
+        {
+            Stopwatch stop = new Stopwatch();
+            stop.Start();
+            FFMpegConverter ffMpeg = new FFMpegConverter();
+            ConvertSettings setting = new ConvertSettings();
+            //setting.VideoFrameSize = FrameSize.svga800x600;
+            setting.CustomOutputArgs = " -threads 1";   // 以1个线程运行,限制cpu使用率为25%
+            //setting.SetVideoFrameSize(100, 20);
+            for (int i = 0; i < 100; i++)
+            {
+                ffMpeg.ConvertMedia("1.mp4", Format.mp4, "2.mp4", Format.mp4, setting);  // 将h5不支持的视频转换为支持的视频
+                Console.WriteLine(i + ":" + stop.ElapsedMilliseconds);
+            }
+            //VideoHelper.RunProcess(" -i 1.mp4 -ab 56 -ar 22050 -b 500K 2.mp4");
+        }
+
+        static void ConvertMedia()
+        {
             FFMpegConverter ffMpeg = new FFMpegConverter();
             ConvertSettings setting = new ConvertSettings();
             setting.CustomOutputArgs = " -threads 2";   // 以两个线程进行运行,加快处理的速度
@@ -22,21 +44,6 @@ namespace video_convert
                 ffMpeg.ConvertMedia("1.amr", "2.mp3", "MP3");  // 将h5不支持的视频转换为支持的视频
                 Console.WriteLine(i);
             }
-        }
-
-        static void ConvertVideo()
-        {
-            FFMpegConverter ffMpeg = new FFMpegConverter();
-            ConvertSettings setting = new ConvertSettings();
-            setting.VideoFrameSize = FrameSize.svga800x600;
-            setting.CustomOutputArgs = " -threads 2";   // 以两个线程进行运行,加快处理的速度
-            //setting.SetVideoFrameSize(100, 20);
-            for (int i = 0; i < 100; i++)
-            {
-                ffMpeg.ConvertMedia("1.mp4", Format.mp4, "2.mp4", Format.mp4, setting);  // 将h5不支持的视频转换为支持的视频
-                Console.WriteLine(i);
-            }
-            //VideoHelper.RunProcess(" -i 1.mp4 -ab 56 -ar 22050 -b 500K 2.mp4");
         }
     }
 
