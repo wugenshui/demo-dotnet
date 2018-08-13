@@ -14,9 +14,9 @@ namespace SwaggerCustom.Test.Controllers
     public class FileController : ApiController
     {
         [HttpPost]
-        public IHttpActionResult Post([FromBody]FileInfo file)
+        public IHttpActionResult Post([FromBody]HttpPostedFileBase file)
         {
-            return Json(file.FullName);
+            return Json(file.FileName);
         }
     }
 }

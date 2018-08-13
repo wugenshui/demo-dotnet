@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -19,11 +20,11 @@ namespace demo_console
         {
             forEachEnum();
 
-            //for (int i = 0; i < 10000; i++)
-            //{
-            //    Thread thread = new Thread(ThreadFun);
-            //    thread.Start();
-            //}
+            for (int i = 0; i < 10000; i++)
+            {
+                Thread thread = new Thread(ThreadFun);
+                thread.Start();
+            }
             Console.ReadKey();
         }
 
@@ -33,9 +34,9 @@ namespace demo_console
         {
             foreach (UserType item in Enum.GetValues(typeof(UserType)))
             {
-                Console.WriteLine(item);
-                Console.WriteLine((int)item);
-                Console.WriteLine(GetEnumDesc(item));
+                Console.WriteLine(item);                // Admin
+                Console.WriteLine((int)item);           // 0
+                Console.WriteLine(GetEnumDesc(item));   // 管理员
             }
         }
 
@@ -75,31 +76,36 @@ namespace demo_console
         public static int num = 0;
         static void ThreadFun() // 来自委托：ThreadStart 
         {
-            for (int i = 0; i < 10000; i++)
-            {
-                num++;
-                var table = SqlHelper.ExecuteDataset("select * from GMS_Log").Tables[0];
-                Console.WriteLine(num + ":查询出数据条数：" + table.Rows.Count);
-                int count = 0;
-                object counter = SqlHelper.ExecuteScalar(@"INSERT INTO GMS_Log (WorkOrderID, WorkOrderEquipment_ID, MessagePrefix, Message, LogType, CreatTime, WorkSmallStepID, NeedNotify, GMSSign) VALUES (14125, 0, '地线防护2组', '派工单自动同步!', 0, '2018-06-22 09:19:00.483', 1, 0, '');SELECT SCOPE_IDENTITY();");
-                if (int.TryParse(counter.ToString(), out count))
-                {
-                    Console.WriteLine("插入成功：" + count);
-                }
-                else
-                {
-                    Console.WriteLine("插入失败！");
-                }
-                int delcount = SqlHelper.ExecuteNonQuery("DELETE FROM GMS_Log WHERE ID=" + count);
-                if (delcount == 1)
-                {
-                    Console.WriteLine("删除成功！");
-                }
-                else
-                {
-                    Console.WriteLine("删除失败！");
-                }
-            }
+            //for (int i = 0; i < 10000; i++)
+            //{
+            //    num++;
+            //    var table = SqlHelper.ExecuteDataset("select * from GMS_Log").Tables[0];
+            //    Console.WriteLine(num + ":查询出数据条数：" + table.Rows.Count);
+            //    int count = 0;
+            //    object counter = SqlHelper.ExecuteScalar(@"INSERT INTO GMS_Log (WorkOrderID, WorkOrderEquipment_ID, MessagePrefix, Message, LogType, CreatTime, WorkSmallStepID, NeedNotify, GMSSign) VALUES (14125, 0, '地线防护2组', '派工单自动同步!', 0, '2018-06-22 09:19:00.483', 1, 0, '');SELECT SCOPE_IDENTITY();");
+            //    if (int.TryParse(counter.ToString(), out count))
+            //    {
+            //        Console.WriteLine("插入成功：" + count);
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("插入失败！");
+            //    }
+            //    int delcount = SqlHelper.ExecuteNonQuery("DELETE FROM GMS_Log WHERE ID=" + count);
+            //    if (delcount == 1)
+            //    {
+            //        Console.WriteLine("删除成功！");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("删除失败！");
+            //    }
+            //}
+            string path = "1.jpg";
+            Image img = Image.FromFile(path);
+            int width = img.Width;
+            int height = img.Height;
+            Console.WriteLine(width + ":" + height);
         }
 
         #endregion

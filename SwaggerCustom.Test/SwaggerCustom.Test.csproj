@@ -137,6 +137,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Admin\AdminController.cs" />
     <Compile Include="Controllers\Admin\RoleController.cs" />
+    <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\FantasyApiController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\User\UserController.cs" />
