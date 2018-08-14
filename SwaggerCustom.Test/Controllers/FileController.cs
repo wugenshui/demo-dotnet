@@ -14,9 +14,14 @@ namespace SwaggerCustom.Test.Controllers
     public class FileController : ApiController
     {
         [HttpPost]
-        public IHttpActionResult Post([FromBody]HttpPostedFileBase file)
+        public IHttpActionResult Post([FromBody]IFormFile file)
         {
             return Json(file.FileName);
         }
+    }
+
+    public class IFormFile
+    {
+        public string FileName { get; set; }
     }
 }
