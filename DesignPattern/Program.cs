@@ -11,7 +11,11 @@ namespace DesignPattern
         static void Main(string[] args)
         {
             //FactoryMethod();
-            Strategy();
+
+            //Decorator();
+            Proxy();
+
+            //Strategy();
 
             Console.ReadKey();
         }
@@ -45,6 +49,37 @@ namespace DesignPattern
         #endregion
 
         #region 结构型模式
+
+        // 装饰模式
+        static void Decorator()
+        {
+            Person person = new Person("小菜");
+            TShirts tshirt = new TShirts();
+            Trouser trouser = new Trouser();
+            Sneaker sneaker = new Sneaker();
+            sneaker.Decorate(person);
+            trouser.Decorate(sneaker);
+            tshirt.Decorate(trouser);
+            tshirt.Show();
+
+            Suit suit = new Suit();
+            Tie tie = new Tie();
+            LeatherShoes leatherShoes = new LeatherShoes();
+            leatherShoes.Decorate(person);
+            tie.Decorate(leatherShoes);
+            suit.Decorate(tie);
+            suit.Show();
+        }
+
+        // 代理模式
+        static void Proxy()
+        {
+            SchoolGirl girl = new SchoolGirl("李娇娇");
+            Proxy proxy = new Proxy(girl);
+            proxy.GiveDolls();
+            proxy.GiveFlowers();
+            proxy.GiveChocolate();
+        }
 
         #endregion
 

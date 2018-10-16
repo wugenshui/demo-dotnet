@@ -43,6 +43,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IGiveGift.cs" />
+    <Compile Include="Proxy.cs" />
+    <Compile Include="Pursuit.cs" />
+    <Compile Include="SchoolGirl.cs" />
+    <Compile Include="装饰模式\Finery.cs" />
+    <Compile Include="装饰模式\LeatherShoes.cs" />
+    <Compile Include="装饰模式\Person.cs" />
+    <Compile Include="装饰模式\Sneaker.cs" />
+    <Compile Include="装饰模式\Suit.cs" />
+    <Compile Include="装饰模式\Tie.cs" />
+    <Compile Include="装饰模式\Trouser.cs" />
+    <Compile Include="装饰模式\TShirts.cs" />
     <Compile Include="策略模式\CashContent.cs" />
     <Compile Include="策略模式\CashNormal.cs" />
     <Compile Include="策略模式\CashRebate.cs" />
@@ -60,6 +72,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
