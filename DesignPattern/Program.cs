@@ -10,10 +10,11 @@ namespace DesignPattern
     {
         static void Main(string[] args)
         {
+            SimpleFactory();
             //FactoryMethod();
 
             //Decorator();
-            Proxy();
+            //Proxy();
 
             //Strategy();
 
@@ -22,8 +23,8 @@ namespace DesignPattern
 
         #region 创建型模式
 
-        // 工厂方法
-        static void FactoryMethod()
+        // 简单工厂
+        static void SimpleFactory()
         {
             Operation operate = OperationFactory.createOperate("+");
             operate.NumberA = 1;
@@ -44,6 +45,12 @@ namespace DesignPattern
             operate.NumberA = 1;
             operate.NumberB = 2;
             Console.WriteLine("1/2=" + operate.GetResult());
+        }
+
+        // 工厂方法
+        static void FactoryMethod()
+        {
+
         }
 
         #endregion
