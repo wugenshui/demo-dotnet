@@ -43,10 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IGiveGift.cs" />
-    <Compile Include="Proxy.cs" />
-    <Compile Include="Pursuit.cs" />
-    <Compile Include="SchoolGirl.cs" />
+    <Compile Include="代理模式\IGiveGift.cs" />
+    <Compile Include="代理模式\Proxy.cs" />
+    <Compile Include="代理模式\Pursuit.cs" />
+    <Compile Include="代理模式\SchoolGirl.cs" />
     <Compile Include="装饰模式\Finery.cs" />
     <Compile Include="装饰模式\LeatherShoes.cs" />
     <Compile Include="装饰模式\Person.cs" />
@@ -62,12 +62,12 @@
     <Compile Include="策略模式\CashSuper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="工厂方法\OperaterFactory.cs" />
-    <Compile Include="工厂方法\OperaterDiv.cs" />
-    <Compile Include="工厂方法\OperaterMul.cs" />
-    <Compile Include="工厂方法\OperaterSub.cs" />
-    <Compile Include="工厂方法\OperaterAdd.cs" />
-    <Compile Include="工厂方法\Operater.cs" />
+    <Compile Include="简单工厂\OperaterFactory.cs" />
+    <Compile Include="简单工厂\OperaterDiv.cs" />
+    <Compile Include="简单工厂\OperaterMul.cs" />
+    <Compile Include="简单工厂\OperaterSub.cs" />
+    <Compile Include="简单工厂\OperaterAdd.cs" />
+    <Compile Include="简单工厂\Operater.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
