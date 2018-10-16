@@ -43,6 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="策略模式\CashContent.cs" />
+    <Compile Include="策略模式\CashNormal.cs" />
+    <Compile Include="策略模式\CashRebate.cs" />
+    <Compile Include="策略模式\CashReturn.cs" />
+    <Compile Include="策略模式\CashSuper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="工厂方法\OperaterFactory.cs" />
