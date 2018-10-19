@@ -44,12 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Center.cs" />
-    <Compile Include="ForeignCenter.cs" />
-    <Compile Include="Forwards.cs" />
-    <Compile Include="Guards.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Translator.cs" />
+    <Compile Include="适配器模式\Center.cs" />
+    <Compile Include="适配器模式\ForeignCenter.cs" />
+    <Compile Include="适配器模式\Forwards.cs" />
+    <Compile Include="适配器模式\Guards.cs" />
+    <Compile Include="适配器模式\Player.cs" />
+    <Compile Include="适配器模式\Translator.cs" />
     <Compile Include="状态模式\AfterNoonState.cs" />
     <Compile Include="状态模式\EveningState.cs" />
     <Compile Include="状态模式\ForenoonState.cs" />
