@@ -14,7 +14,7 @@ namespace DesignPattern
         {
             //SimpleFactory();
             //FactoryMethod();
-            Builder();
+            //Builder();
             //Prototype();
 
             //Decorator();
@@ -23,6 +23,7 @@ namespace DesignPattern
 
             //Strategy();
             //TemplateMethod();
+            Observer();
 
             Console.ReadKey();
         }
@@ -186,6 +187,22 @@ namespace DesignPattern
             testPaperB.TestQuestion1();
             testPaperB.TestQuestion2();
             testPaperB.TestQuestion3();
+        }
+
+        // 观察者模式
+        static void Observer()
+        {
+            INotifyer notifyer = new Secretary();
+
+            Observer observer1 = new StockObserver("张三", notifyer);
+            Observer observer2 = new StockObserver("魏观察", notifyer);
+
+            notifyer.Attach(observer1);
+            notifyer.Attach(observer2);
+
+            notifyer.Detach(observer2);
+            notifyer.NotifyerState = "老板回来了";
+            notifyer.Notify();
         }
 
         #endregion

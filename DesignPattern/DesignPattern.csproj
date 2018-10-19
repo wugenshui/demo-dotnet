@@ -43,6 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="观察者模式\Boss.cs" />
+    <Compile Include="观察者模式\INotifyer.cs" />
+    <Compile Include="观察者模式\NBAObserver.cs" />
+    <Compile Include="观察者模式\Observer.cs" />
+    <Compile Include="观察者模式\Secretary.cs" />
+    <Compile Include="观察者模式\StockObserver.cs" />
     <Compile Include="建造者模式\Builder.cs" />
     <Compile Include="建造者模式\Computer.cs" />
     <Compile Include="建造者模式\ConcreteBuilder1.cs" />
