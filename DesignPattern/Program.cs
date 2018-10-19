@@ -14,7 +14,7 @@ namespace DesignPattern
         {
             //SimpleFactory();
             //FactoryMethod();
-            AbstractFactory();
+            //AbstractFactory();
             //Builder();
             //Prototype();
 
@@ -23,6 +23,7 @@ namespace DesignPattern
             //Facade();
 
             //Strategy();
+            State();
             //TemplateMethod();
             //Observer();
 
@@ -180,6 +181,32 @@ namespace DesignPattern
             CashReturn cashReturn = new CashReturn("300", "100");
             CashContext contextReturn = new CashContext(cashReturn);
             Console.WriteLine("700满300减100:" + contextReturn.GetResult(700));
+        }
+
+        // 状态模式
+        static void State()
+        {
+            Work work = new Work();
+            work.Hour = 9;
+            work.WriteProgram();
+            work.Hour = 10;
+            work.WriteProgram();
+            work.Hour = 11;
+            work.WriteProgram();
+            work.Hour = 12;
+            work.WriteProgram();
+            work.Hour = 13;
+            work.WriteProgram();
+            work.Hour = 14;
+            work.WriteProgram();
+            work.Hour = 17;
+
+            work.TaskFinish = false;
+            work.WriteProgram();
+            work.Hour = 19;
+            work.WriteProgram();
+            work.Hour = 22;
+            work.WriteProgram();
         }
 
         // 模板方法

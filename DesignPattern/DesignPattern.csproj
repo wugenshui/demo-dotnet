@@ -44,6 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="状态模式\AfterNoonState.cs" />
+    <Compile Include="状态模式\EveningState.cs" />
+    <Compile Include="状态模式\ForenoonState.cs" />
+    <Compile Include="状态模式\NoonState.cs" />
+    <Compile Include="状态模式\RestState.cs" />
+    <Compile Include="状态模式\SleepingState.cs" />
+    <Compile Include="状态模式\State.cs" />
+    <Compile Include="状态模式\Work.cs" />
     <Compile Include="抽象工厂\AccessUser.cs" />
     <Compile Include="抽象工厂\DataAccess.cs" />
     <Compile Include="抽象工厂\IUser.cs" />
