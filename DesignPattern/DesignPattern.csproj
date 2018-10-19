@@ -44,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Center.cs" />
+    <Compile Include="ForeignCenter.cs" />
+    <Compile Include="Forwards.cs" />
+    <Compile Include="Guards.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Translator.cs" />
     <Compile Include="状态模式\AfterNoonState.cs" />
     <Compile Include="状态模式\EveningState.cs" />
     <Compile Include="状态模式\ForenoonState.cs" />

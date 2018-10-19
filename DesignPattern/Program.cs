@@ -18,12 +18,13 @@ namespace DesignPattern
             //Builder();
             //Prototype();
 
+            Adapter();
             //Decorator();
             //Proxy();
             //Facade();
 
             //Strategy();
-            State();
+            //State();
             //TemplateMethod();
             //Observer();
 
@@ -123,6 +124,20 @@ namespace DesignPattern
         #endregion
 
         #region 结构型模式
+
+        // 适配器模式
+        static void Adapter()
+        {
+            Player b = new Forwards("巴蒂尔");
+            b.Attack();
+
+            Player m = new Guards("麦克格雷迪");
+            m.Attack();
+
+            Player y = new Translator("姚明");
+            y.Attack();
+            y.Defence();
+        }
 
         // 装饰模式
         static void Decorator()
