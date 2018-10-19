@@ -18,9 +18,10 @@ namespace DesignPattern
 
             //Decorator();
             //Proxy();
+            Facade();
 
             //Strategy();
-            TemplateMethod();
+            //TemplateMethod();
 
             Console.ReadKey();
         }
@@ -116,6 +117,14 @@ namespace DesignPattern
             proxy.GiveDolls();
             proxy.GiveFlowers();
             proxy.GiveChocolate();
+        }
+
+        // 外观模式
+        static void Facade()
+        {
+            Fund fund = new Fund();
+            fund.Buy();
+            fund.Sell();
         }
 
         #endregion

@@ -43,6 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="外观模式\Fund.cs" />
+    <Compile Include="外观模式\NationalDebt.cs" />
+    <Compile Include="外观模式\Realty.cs" />
+    <Compile Include="外观模式\Stock3.cs" />
+    <Compile Include="外观模式\Stock2.cs" />
+    <Compile Include="外观模式\Stock1.cs" />
     <Compile Include="模板方法\TestPaper.cs" />
     <Compile Include="模板方法\TestPaperA.cs" />
     <Compile Include="模板方法\TestPaperB.cs" />
