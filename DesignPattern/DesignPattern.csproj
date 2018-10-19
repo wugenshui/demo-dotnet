@@ -43,6 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="建造者模式\Builder.cs" />
+    <Compile Include="建造者模式\Computer.cs" />
+    <Compile Include="建造者模式\ConcreteBuilder1.cs" />
+    <Compile Include="建造者模式\ConcreteBuilder2.cs" />
+    <Compile Include="建造者模式\Customer.cs" />
+    <Compile Include="建造者模式\Director.cs" />
     <Compile Include="外观模式\Fund.cs" />
     <Compile Include="外观模式\NationalDebt.cs" />
     <Compile Include="外观模式\Realty.cs" />
