@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,6 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="抽象工厂\AccessUser.cs" />
+    <Compile Include="抽象工厂\DataAccess.cs" />
+    <Compile Include="抽象工厂\IUser.cs" />
+    <Compile Include="抽象工厂\SqlserverUser.cs" />
     <Compile Include="观察者模式\Boss.cs" />
     <Compile Include="观察者模式\INotifyer.cs" />
     <Compile Include="观察者模式\NBAObserver.cs" />

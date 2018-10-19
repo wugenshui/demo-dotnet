@@ -14,6 +14,7 @@ namespace DesignPattern
         {
             //SimpleFactory();
             //FactoryMethod();
+            AbstractFactory();
             //Builder();
             //Prototype();
 
@@ -23,7 +24,7 @@ namespace DesignPattern
 
             //Strategy();
             //TemplateMethod();
-            Observer();
+            //Observer();
 
             Console.ReadKey();
         }
@@ -63,6 +64,14 @@ namespace DesignPattern
             lerFeng.Sweep();
             lerFeng.Wash();
             lerFeng.BuyRice();
+        }
+
+        // 抽象工厂
+        static void AbstractFactory()
+        {
+            IUser user = DataAccess.CreateUser();
+            user.Insert();
+            user.Search();
         }
 
         // 建造者模式
