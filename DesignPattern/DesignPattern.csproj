@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="模板方法\TestPaper.cs" />
+    <Compile Include="模板方法\TestPaperA.cs" />
+    <Compile Include="模板方法\TestPaperB.cs" />
+    <Compile Include="原型模式\CloneClass.cs" />
     <Compile Include="工厂方法\IFactory.cs" />
     <Compile Include="工厂方法\LeiFeng.cs" />
     <Compile Include="工厂方法\Undergraduate.cs" />

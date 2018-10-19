@@ -8,69 +8,19 @@ using System.Threading.Tasks;
 
 namespace DesignPattern
 {
-    [Serializable]
-    class Student
-    {
-        public string name { get; set; }
-    }
-
-    [Serializable]
-    class DemoClass : ICloneable
-    {
-        public int i = 0;
-        public int[] iArr = { 1, 2, 3 };
-        public Student student = new Student() { name = "张三" };
-
-        public object Clone()
-        {
-            return this.MemberwiseClone() as DemoClass;
-        }
-
-        public DemoClass Clone2() //深clone
-        {
-            MemoryStream stream = new MemoryStream();
-            BinaryFormatter formatter = new BinaryFormatter();
-            formatter.Serialize(stream, this);
-            stream.Position = 0;
-            return formatter.Deserialize(stream) as DemoClass;
-        }
-    }
-
     class Program
     {
         static void Main(string[] args)
         {
             //SimpleFactory();
-            FactoryMethod();
+            //FactoryMethod();
+            //Prototype();
 
             //Decorator();
             //Proxy();
 
             //Strategy();
-            DemoClass a = new DemoClass();
-            a.i = 10;
-            a.iArr = new int[] { 8, 9, 10 };
-            DemoClass b = a.Clone() as DemoClass;
-            DemoClass c = a.Clone2();
-
-            // 更改 a 对象的iArr[0], 导致 b 对象的iArr[0] 也发生了变化 而 c不会变化
-            a.iArr[0] = 88;
-
-            Console.WriteLine("MemberwiseClone");
-            Console.WriteLine(b.i);
-            foreach (var item in b.iArr)
-            {
-                Console.WriteLine(item);
-            }
-
-            Console.WriteLine("Clone2");
-            Console.WriteLine(c.i);
-            foreach (var item in c.iArr)
-            {
-                Console.WriteLine(item);
-            }
-
-
+            TemplateMethod();
 
             Console.ReadKey();
         }
@@ -110,6 +60,27 @@ namespace DesignPattern
             lerFeng.Sweep();
             lerFeng.Wash();
             lerFeng.BuyRice();
+        }
+
+        // 原型模式
+        static void Prototype()
+        {
+            CloneClass a = new CloneClass();
+            a.i = 10;
+            a.iArr = new int[] { 8, 9, 10 };
+            Console.WriteLine("a 初始化：\ti=" + a.i + "\tiArr=" + string.Join(",", a.iArr));
+            CloneClass b = a.Clone() as CloneClass;
+            Console.WriteLine("b 浅拷贝a：\ti=" + b.i + "\tiArr=" + string.Join(",", b.iArr));
+            CloneClass c = a.DeepClone();
+            Console.WriteLine("c 深拷贝a：\ti=" + c.i + "\tiArr=" + string.Join(",", c.iArr));
+
+            a.i = 15;
+            a.iArr[0] = 88;
+            Console.WriteLine("a.i=" + a.i);
+            Console.WriteLine("a.iArr[0]=" + a.iArr[0]);
+            Console.WriteLine("b 浅拷贝a：\ti=" + b.i + "\tiArr=" + string.Join(",", b.iArr));
+            Console.WriteLine("c 深拷贝a：\ti=" + c.i + "\tiArr=" + string.Join(",", c.iArr));
+            Console.WriteLine("浅拷贝复制了值类型的值和引用类型的引用");
         }
 
         #endregion
@@ -165,6 +136,22 @@ namespace DesignPattern
             CashReturn cashReturn = new CashReturn("300", "100");
             CashContext contextReturn = new CashContext(cashReturn);
             Console.WriteLine("700满300减100:" + contextReturn.GetResult(700));
+        }
+
+        // 模板方法
+        static void TemplateMethod()
+        {
+            Console.WriteLine("学生A答卷:");
+            TestPaper testPaperA = new TestPaperA();
+            testPaperA.TestQuestion1();
+            testPaperA.TestQuestion2();
+            testPaperA.TestQuestion3();
+
+            Console.WriteLine("学生B答卷:");
+            TestPaper testPaperB = new TestPaperB();
+            testPaperB.TestQuestion1();
+            testPaperB.TestQuestion2();
+            testPaperB.TestQuestion3();
         }
 
         #endregion
