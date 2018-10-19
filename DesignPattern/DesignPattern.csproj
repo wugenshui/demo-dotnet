@@ -43,6 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="工厂方法\IFactory.cs" />
+    <Compile Include="工厂方法\LeiFeng.cs" />
+    <Compile Include="工厂方法\Undergraduate.cs" />
+    <Compile Include="工厂方法\UndergraduateFactory.cs" />
+    <Compile Include="工厂方法\Volunteer.cs" />
+    <Compile Include="工厂方法\VolunteerFactory.cs" />
     <Compile Include="代理模式\IGiveGift.cs" />
     <Compile Include="代理模式\Proxy.cs" />
     <Compile Include="代理模式\Pursuit.cs" />

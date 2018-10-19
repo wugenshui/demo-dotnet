@@ -1,22 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DesignPattern
 {
+    [Serializable]
+    class Student
+    {
+        public string name { get; set; }
+    }
+
+    [Serializable]
+    class DemoClass : ICloneable
+    {
+        public int i = 0;
+        public int[] iArr = { 1, 2, 3 };
+        public Student student = new Student() { name = "张三" };
+
+        public object Clone()
+        {
+            return this.MemberwiseClone() as DemoClass;
+        }
+
+        public DemoClass Clone2() //深clone
+        {
+            MemoryStream stream = new MemoryStream();
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(stream, this);
+            stream.Position = 0;
+            return formatter.Deserialize(stream) as DemoClass;
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
-            SimpleFactory();
-            //FactoryMethod();
+            //SimpleFactory();
+            FactoryMethod();
 
             //Decorator();
             //Proxy();
 
             //Strategy();
+            DemoClass a = new DemoClass();
+            a.i = 10;
+            a.iArr = new int[] { 8, 9, 10 };
+            DemoClass b = a.Clone() as DemoClass;
+            DemoClass c = a.Clone2();
+
+            // 更改 a 对象的iArr[0], 导致 b 对象的iArr[0] 也发生了变化 而 c不会变化
+            a.iArr[0] = 88;
+
+            Console.WriteLine("MemberwiseClone");
+            Console.WriteLine(b.i);
+            foreach (var item in b.iArr)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.WriteLine("Clone2");
+            Console.WriteLine(c.i);
+            foreach (var item in c.iArr)
+            {
+                Console.WriteLine(item);
+            }
+
+
 
             Console.ReadKey();
         }
@@ -50,7 +104,12 @@ namespace DesignPattern
         // 工厂方法
         static void FactoryMethod()
         {
+            IFactory factory = new VolunteerFactory();
+            LeiFeng lerFeng = factory.CreateLeiFeng();
 
+            lerFeng.Sweep();
+            lerFeng.Wash();
+            lerFeng.BuyRice();
         }
 
         #endregion
