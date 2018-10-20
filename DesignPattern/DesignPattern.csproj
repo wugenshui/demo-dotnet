@@ -44,6 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="命令模式\BakeChickenWingCommand.cs" />
+    <Compile Include="命令模式\BakeMuttonCommand.cs" />
+    <Compile Include="命令模式\Barbecuer.cs" />
+    <Compile Include="命令模式\Command.cs" />
+    <Compile Include="命令模式\Waiter.cs" />
     <Compile Include="桥接模式\HandsetAddress.cs" />
     <Compile Include="桥接模式\HandsetBrand.cs" />
     <Compile Include="桥接模式\HandsetBrandM.cs" />

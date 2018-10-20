@@ -23,7 +23,7 @@ namespace DesignPattern
             //Decorator();
             //Proxy();
             //Facade();
-            Bridge();
+            //Bridge();
             //Composite();
             Flyweight();
 
@@ -326,7 +326,14 @@ namespace DesignPattern
         // 命令模式 将一个请求封装为一个对象，从而可用不同的请求对客户进行参数化，将请求排队或记录请求日志，支持可撤销的操作。 
         static void Command()
         {
+            Barbecuer boy = new Barbecuer();
+            Command cmd1 = new BakeMuttonCommand(boy);
+            Command cmd2 = new BakeChickenWingCommand(boy);
 
+            Waiter girl = new Waiter();
+            girl.SetOrder(cmd1);
+            girl.SetOrder(cmd2);
+            girl.Notify();
         }
 
         // 备忘录模式 在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，从而可以在以后将该对象恢复到原先保存的状态。
