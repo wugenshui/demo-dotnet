@@ -44,6 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="中介者模式\Country.cs" />
+    <Compile Include="中介者模式\Iraq.cs" />
+    <Compile Include="中介者模式\UnitedNations.cs" />
+    <Compile Include="中介者模式\UnitedNationsSecurityCouncil.cs" />
+    <Compile Include="中介者模式\USA.cs" />
     <Compile Include="代理模式\IGiveGift.cs" />
     <Compile Include="代理模式\Proxy.cs" />
     <Compile Include="代理模式\Pursuit.cs" />

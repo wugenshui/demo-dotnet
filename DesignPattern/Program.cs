@@ -424,7 +424,15 @@ namespace DesignPattern
         // 中介者模式 用一个中介对象来封装一系列的对象交互。它使各对象不需要显式地相互调用，从而达到低耦合，还可以独立地改变对象间的交互
         static void Mediator()
         {
+            UnitedNationsSecurityCouncil unsc = new UnitedNationsSecurityCouncil();
 
+            USA c1 = new USA(unsc);
+            Iraq c2 = new Iraq(unsc);
+            unsc.Country1 = c1;
+            unsc.Country2 = c2;
+
+            c1.Declare("不准研制核武器，否则要发动战争！");
+            c2.Declare("我们没有核武器，也不怕侵略。");
         }
 
         // 解释器模式 给定一种语言，定义它的文法表示，并定义一个解释器，该解释器用来根据文法表示来解释语言中的句子。
