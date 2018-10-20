@@ -18,7 +18,7 @@ namespace DesignPattern
             //Builder();
             //Prototype();
 
-            Adapter();
+            //Adapter();
             //Decorator();
             //Proxy();
             //Facade();
@@ -27,6 +27,7 @@ namespace DesignPattern
             //State();
             //TemplateMethod();
             //Observer();
+            Memento();
 
             Console.ReadKey();
         }
@@ -256,6 +257,22 @@ namespace DesignPattern
             notifyer.Notify();
         }
 
+        // 备忘录模式
+        static void Memento()
+        {
+            GameRole role = new GameRole();
+            role.GetInitState();
+            role.Display();
+
+            RoleStateCaretaker stateAdmin = new RoleStateCaretaker();
+            stateAdmin.Memento = role.SaveState();
+
+            role.Fight();
+            role.Display();
+
+            role.RecoveryState(stateAdmin.Memento);
+            role.Display();
+        }
         #endregion
     }
 }

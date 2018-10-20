@@ -44,6 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="备忘录模式\GameRole.cs" />
+    <Compile Include="备忘录模式\RoleStateCaretaker.cs" />
+    <Compile Include="备忘录模式\RoleStateMemento.cs" />
     <Compile Include="适配器模式\Center.cs" />
     <Compile Include="适配器模式\ForeignCenter.cs" />
     <Compile Include="适配器模式\Forwards.cs" />
