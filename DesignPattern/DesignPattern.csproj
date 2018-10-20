@@ -44,6 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="代理模式\IGiveGift.cs" />
+    <Compile Include="代理模式\Proxy.cs" />
+    <Compile Include="代理模式\Pursuit.cs" />
+    <Compile Include="代理模式\SchoolGirl.cs" />
+    <Compile Include="职责链模式\CommonManager.cs" />
+    <Compile Include="职责链模式\GeneralManager.cs" />
+    <Compile Include="职责链模式\Majordomo.cs" />
+    <Compile Include="职责链模式\Manager.cs" />
+    <Compile Include="职责链模式\Request.cs" />
+    <Compile Include="职责链模式\RequestType.cs" />
     <Compile Include="命令模式\BakeChickenWingCommand.cs" />
     <Compile Include="命令模式\BakeMuttonCommand.cs" />
     <Compile Include="命令模式\Barbecuer.cs" />
@@ -109,10 +119,6 @@
     <Compile Include="工厂方法\UndergraduateFactory.cs" />
     <Compile Include="工厂方法\Volunteer.cs" />
     <Compile Include="工厂方法\VolunteerFactory.cs" />
-    <Compile Include="代理模式\IGiveGift.cs" />
-    <Compile Include="代理模式\Proxy.cs" />
-    <Compile Include="代理模式\Pursuit.cs" />
-    <Compile Include="代理模式\SchoolGirl.cs" />
     <Compile Include="装饰模式\Finery.cs" />
     <Compile Include="装饰模式\LeatherShoes.cs" />
     <Compile Include="装饰模式\Person.cs" />

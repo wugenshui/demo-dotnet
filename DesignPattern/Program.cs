@@ -32,7 +32,7 @@ namespace DesignPattern
             //Observer();
             //Iterator();
             ChainOfResponsibility();
-            Command();
+            //Command();
             //Memento();
             //State();
             Visitor();
@@ -320,7 +320,43 @@ namespace DesignPattern
         // 职责链模式 通过给多个对象处理请求的机会，减少请求的发送者与接收者之间的耦合。将接收对象链接起来，在链中传递请求，直到有一个对象处理这个请求。
         static void ChainOfResponsibility()
         {
+            CommonManager cm = new CommonManager("经理");
+            Majordomo md = new Majordomo("总监");
+            GeneralManager gm = new GeneralManager("总经理");
+            cm.SetSuperior(md);
+            md.SetSuperior(gm);
 
+            Request req1 = new Request()
+            {
+                Type = RequestType.请假,
+                Content = "小菜请假",
+                Number = 1
+            };
+            cm.RequestApplications(req1);
+
+            Request req2 = new Request()
+            {
+                Type = RequestType.请假,
+                Content = "小菜请假",
+                Number = 4
+            };
+            cm.RequestApplications(req2);
+
+            Request req3 = new Request()
+            {
+                Type = RequestType.加薪,
+                Content = "小菜请求加薪",
+                Number = 500
+            };
+            cm.RequestApplications(req3);
+
+            Request req4 = new Request()
+            {
+                Type = RequestType.加薪,
+                Content = "小菜请求加薪",
+                Number = 1000
+            };
+            cm.RequestApplications(req4);
         }
 
         // 命令模式 将一个请求封装为一个对象，从而可用不同的请求对客户进行参数化，将请求排队或记录请求日志，支持可撤销的操作。 

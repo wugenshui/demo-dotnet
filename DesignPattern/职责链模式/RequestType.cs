@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DesignPattern
+{
+    public enum RequestType
+    {
+        请假 = 0,
+        加薪 = 1
+    }
+}
