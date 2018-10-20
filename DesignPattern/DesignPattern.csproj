@@ -44,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="桥接模式\HandsetAddress.cs" />
+    <Compile Include="桥接模式\HandsetBrand.cs" />
+    <Compile Include="桥接模式\HandsetBrandM.cs" />
+    <Compile Include="桥接模式\HandsetBrandN.cs" />
+    <Compile Include="桥接模式\HandsetGame.cs" />
+    <Compile Include="桥接模式\HandsetSoft.cs" />
     <Compile Include="单例模式\Singleton.cs" />
     <Compile Include="组合模式\Company.cs" />
     <Compile Include="组合模式\ConcreteCompany.cs" />

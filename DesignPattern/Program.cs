@@ -15,7 +15,7 @@ namespace DesignPattern
             //SimpleFactory();
             //FactoryMethod();
             //AbstractFactory();
-            Singleton1();
+            //Singleton1();
             //Builder();
             //Prototype();
 
@@ -204,7 +204,19 @@ namespace DesignPattern
         // 桥接模式 将类的抽象部分和它的实现部分分离开来，使它们可以独立地变化
         static void Bridge()
         {
+            HandsetBrand ab;
 
+            ab = new HandsetBrandN();
+            ab.SetHandsetSoft(new HandsetGame());
+            ab.Run();
+            ab.SetHandsetSoft(new HandsetAddress());
+            ab.Run();
+
+            ab = new HandsetBrandM();
+            ab.SetHandsetSoft(new HandsetGame());
+            ab.Run();
+            ab.SetHandsetSoft(new HandsetAddress());
+            ab.Run();
         }
 
         // 组合模式 将对象组合成树型结构以表示“整体-部分”的层次结构，使得用户对单个对象和组合对象的使用具有一致性
