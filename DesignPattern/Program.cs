@@ -22,12 +22,13 @@ namespace DesignPattern
             //Decorator();
             //Proxy();
             //Facade();
+            Composite();
 
             //Strategy();
             //State();
             //TemplateMethod();
             //Observer();
-            Memento();
+            //Memento();
 
             Console.ReadKey();
         }
@@ -177,6 +178,30 @@ namespace DesignPattern
             Fund fund = new Fund();
             fund.Buy();
             fund.Sell();
+        }
+
+        // 组合模式
+        static void Composite()
+        {
+            ConcreteCompany root = new ConcreteCompany("北京总公司");
+            root.Add(new HRDepartment("总公司人力资源部"));
+            root.Add(new FinanceDepartment("总公司财务部"));
+
+            ConcreteCompany comp1 = new ConcreteCompany("上海华东分公司");
+            comp1.Add(new HRDepartment("上海华东分公司人力资源部"));
+            comp1.Add(new FinanceDepartment("上海华东分公司财务部"));
+            root.Add(comp1);
+
+            ConcreteCompany comp2 = new ConcreteCompany("杭州办事处");
+            comp2.Add(new HRDepartment("杭州办事处人力资源部"));
+            comp2.Add(new FinanceDepartment("杭州办事处财务部"));
+            root.Add(comp2);
+
+            Console.WriteLine("\n结构图：");
+            root.Display(1);
+
+            Console.WriteLine("\n职责：");
+            root.LineOfDuty();
         }
 
         #endregion

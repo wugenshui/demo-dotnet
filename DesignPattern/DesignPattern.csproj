@@ -44,6 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Company.cs" />
+    <Compile Include="ConcreteCompany.cs" />
+    <Compile Include="FinanceDepartment.cs" />
+    <Compile Include="HRDepartment.cs" />
     <Compile Include="备忘录模式\GameRole.cs" />
     <Compile Include="备忘录模式\RoleStateCaretaker.cs" />
     <Compile Include="备忘录模式\RoleStateMemento.cs" />
@@ -122,7 +126,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="组合模式\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
