@@ -44,10 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Company.cs" />
-    <Compile Include="ConcreteCompany.cs" />
-    <Compile Include="FinanceDepartment.cs" />
-    <Compile Include="HRDepartment.cs" />
+    <Compile Include="组合模式\Company.cs" />
+    <Compile Include="组合模式\ConcreteCompany.cs" />
+    <Compile Include="组合模式\FinanceDepartment.cs" />
+    <Compile Include="组合模式\HRDepartment.cs" />
     <Compile Include="备忘录模式\GameRole.cs" />
     <Compile Include="备忘录模式\RoleStateCaretaker.cs" />
     <Compile Include="备忘录模式\RoleStateMemento.cs" />
@@ -127,7 +127,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="组合模式\" />
+    <Folder Include="迭代器模式\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

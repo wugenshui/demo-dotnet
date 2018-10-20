@@ -22,12 +22,13 @@ namespace DesignPattern
             //Decorator();
             //Proxy();
             //Facade();
-            Composite();
+            //Composite();
 
             //Strategy();
             //State();
             //TemplateMethod();
             //Observer();
+            Iterator();
             //Memento();
 
             Console.ReadKey();
@@ -280,6 +281,23 @@ namespace DesignPattern
             notifyer.Detach(observer2);
             notifyer.NotifyerState = "老板回来了";
             notifyer.Notify();
+        }
+
+        // 迭代器模式 提供一种方法来顺序访问一个聚合对象中的各个元素，而不需要暴露该对象的内部表示
+        static void Iterator()
+        {
+            IList<string> list = new List<string>();
+            list.Add("大鸟");
+            list.Add("小菜");
+            list.Add("行李");
+            list.Add("老外");
+            list.Add("内部员工");
+            list.Add("小偷");
+
+            foreach (var item in list)
+            {
+                Console.WriteLine("{0} 请买车票！", item);
+            }
         }
 
         // 备忘录模式
