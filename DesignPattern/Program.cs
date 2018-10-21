@@ -31,7 +31,7 @@ namespace DesignPattern
             //TemplateMethod();
             //Observer();
             //Iterator();
-            ChainOfResponsibility();
+            //ChainOfResponsibility();
             //Command();
             //Memento();
             //State();
@@ -246,6 +246,16 @@ namespace DesignPattern
         // 享元模式 提供支持大量细粒度对象共享的有效方法。
         static void Flyweight()
         {
+            WebSiteFactory factory = new WebSiteFactory();
+
+            WebSite w1 = new ConcreteWebSite("产品展示");
+            w1.Use(new User("张三"));
+            WebSite w2 = new ConcreteWebSite("产品展示");
+            w2.Use(new User("李四"));
+            WebSite w3 = new ConcreteWebSite("博客");
+            w3.Use(new User("王五"));
+            WebSite w4 = new ConcreteWebSite("博客");
+            w4.Use(new User("何六"));
         }
 
         #endregion

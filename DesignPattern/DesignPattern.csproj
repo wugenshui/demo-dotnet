@@ -44,6 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="享元模式\ConcreteWebSite.cs" />
+    <Compile Include="享元模式\User.cs" />
+    <Compile Include="享元模式\WebSite.cs" />
+    <Compile Include="享元模式\WebSiteFactory.cs" />
     <Compile Include="中介者模式\Country.cs" />
     <Compile Include="中介者模式\Iraq.cs" />
     <Compile Include="中介者模式\UnitedNations.cs" />
