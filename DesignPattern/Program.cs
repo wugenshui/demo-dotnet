@@ -25,7 +25,7 @@ namespace DesignPattern
             //Facade();
             //Bridge();
             //Composite();
-            Flyweight();
+            //Flyweight();
 
             //Strategy();
             //TemplateMethod();
@@ -36,7 +36,7 @@ namespace DesignPattern
             //Memento();
             //State();
             Visitor();
-            Mediator();
+            //Mediator();
             Interpreter();
 
             Console.ReadKey();
@@ -448,7 +448,37 @@ namespace DesignPattern
         // 解释器模式 给定一种语言，定义它的文法表示，并定义一个解释器，该解释器用来根据文法表示来解释语言中的句子。
         static void Interpreter()
         {
-
+            PlayContext context = new PlayContext();
+            Console.WriteLine("上海滩：");
+            context.PlayText = "O 2 E 0.5 A 3 E 0.5 G";
+            Expression expression = null;
+            try
+            {
+                while (context.PlayText.Length > 0)
+                {
+                    string str = context.PlayText.Substring(0, 1);
+                    switch (str)
+                    {
+                        case "O":
+                            expression = new Scale();
+                            break;
+                        case "C":
+                        case "D":
+                        case "E":
+                        case "F":
+                        case "G":
+                        case "A":
+                        case "B":
+                            expression = new Note();
+                            break;
+                    }
+                    expression.Interpret(context);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         #endregion

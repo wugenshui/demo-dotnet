@@ -44,6 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="解释器模式\Expression.cs" />
+    <Compile Include="解释器模式\Note.cs" />
+    <Compile Include="解释器模式\PlayContext.cs" />
+    <Compile Include="解释器模式\Scale.cs" />
     <Compile Include="享元模式\ConcreteWebSite.cs" />
     <Compile Include="享元模式\User.cs" />
     <Compile Include="享元模式\WebSite.cs" />
