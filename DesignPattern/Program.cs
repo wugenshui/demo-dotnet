@@ -37,7 +37,7 @@ namespace DesignPattern
             //State();
             Visitor();
             //Mediator();
-            Interpreter();
+            //Interpreter();
 
             Console.ReadKey();
         }
@@ -428,7 +428,18 @@ namespace DesignPattern
         // 访问者模式 表示一个作用于某对象结构中的各元素的操作，使得在不改变各元素的类的前提下定义作用于这些元素的新操作
         static void Visitor()
         {
+            ObjectStructure o = new ObjectStructure();
+            o.Attach(new Man());
+            o.Attach(new Woman());
 
+            Success v1 = new Success();
+            o.Display(v1);
+
+            Failing v2 = new Failing();
+            o.Display(v2);
+
+            Amativeness v3 = new Amativeness();
+            o.Display(v3);
         }
 
         // 中介者模式 用一个中介对象来封装一系列的对象交互。它使各对象不需要显式地相互调用，从而达到低耦合，还可以独立地改变对象间的交互

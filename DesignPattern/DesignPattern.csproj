@@ -44,6 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="访问者模式\Action.cs" />
+    <Compile Include="访问者模式\Amativeness.cs" />
+    <Compile Include="访问者模式\Failing.cs" />
+    <Compile Include="访问者模式\Man.cs" />
+    <Compile Include="访问者模式\Human.cs" />
+    <Compile Include="访问者模式\ObjectStructure.cs" />
+    <Compile Include="访问者模式\Success.cs" />
+    <Compile Include="访问者模式\Woman.cs" />
     <Compile Include="解释器模式\Expression.cs" />
     <Compile Include="解释器模式\Note.cs" />
     <Compile Include="解释器模式\PlayContext.cs" />
