@@ -39,7 +39,7 @@ namespace common
                 request.KeepAlive = false;
                 request.Headers.Add("Accept-Encoding", "gzip, deflate");
                 //表示请求消息正文的长度
-                request.ContentLength = data.Length;
+                //request.ContentLength = data.Length;
                 Stream postStream = request.GetRequestStream();
                 byte[] postData = Encoding.UTF8.GetBytes(data);
                 //将传输的数据，请求正文写入请求流
@@ -63,10 +63,22 @@ namespace common
                     zip.Dispose();
                     result = Encoding.UTF8.GetString(ms.ToArray());
                 }
+                else
+                {
+                    Stream stream = response.GetResponseStream();
+                    string StrDate = "";
+                    StringBuilder sb = new StringBuilder();
+                    StreamReader Reader = new StreamReader(stream, Encoding.UTF8);
+                    while ((StrDate = Reader.ReadLine()) != null)
+                    {
+                        sb.Append(StrDate + "\r\n");
+                    }
+                    result = sb.ToString();
+                }
 
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }

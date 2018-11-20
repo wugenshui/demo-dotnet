@@ -35,6 +35,22 @@ namespace common
             return new SqlConnection(GetConnSting());
         }
 
+        public static SqlTransaction BeginTransaction(string connectionString = "")
+        {
+            SqlConnection connection = null;
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                connection = GetConnection();
+            }
+            else
+            {
+                connection = new SqlConnection(connectionString);
+            }
+            connection.Open();
+            SqlTransaction tran = connection.BeginTransaction();
+            return tran;
+        }
+
         /// <summary>
         /// 大数据量批量插入BulkToDB
         /// </summary>
@@ -143,8 +159,8 @@ namespace common
 
         #region ExecuteNonQuery
 
-        /// <summary> 
-        /// 执行指定数据库连接对象的命令 
+        /// <summary>
+        /// 执行T-SQL语句
         /// </summary> 
         /// <param name="commandText">T-SQL语句</param> 
         /// <param name="param">SqlParamter参数数组</param> 
@@ -152,6 +168,18 @@ namespace common
         public static int ExecuteNonQuery(string commandText, params SqlParameter[] param)
         {
             return ExecuteNonQuery(GetConnection(), CommandType.Text, commandText, param);
+        }
+
+        /// <summary> 
+        /// 执行带事务的T-SQL语句 
+        /// </summary> 
+        /// <param name="transaction">一个有效的连接事务</param> 
+        /// <param name="commandText">T-SQL语句</param> 
+        /// <param name="commandParameters">SqlParamter参数数组</param> 
+        /// <returns>返回影响的行数</returns> 
+        public static int ExecuteNonQuery(SqlTransaction transaction, string commandText, params SqlParameter[] param)
+        {
+            return ExecuteNonQuery(transaction, CommandType.Text, commandText, param);
         }
 
         /// <summary> 
@@ -184,7 +212,7 @@ namespace common
         /// <summary> 
         /// 执行带事务的SqlCommand(指定参数). 
         /// </summary> 
-        /// <param name="transaction">一个有效的数据库连接对象</param> 
+        /// <param name="transaction">一个有效的连接事务</param> 
         /// <param name="commandType">命令类型(存储过程,命令文本或其它.)</param> 
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
         /// <param name="commandParameters">SqlParamter参数数组</param> 
@@ -223,17 +251,25 @@ namespace common
         }
 
         /// <summary> 
-        /// 执行指定数据库连接对象的命令,指定存储过程参数,返回DataSet. 
+        /// 执行指定事务的命令,指定参数,返回DataSet. 
         /// </summary> 
-        /// <remarks> 
-        /// 示例:  
-        ///  DataSet ds = ExecuteDataset(conn, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24)); 
-        /// </remarks> 
-        /// <param name="connection">一个有效的数据库连接对象</param> 
-        /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
-        /// <param name="commandText">存储过程名或T-SQL语句</param> 
+        /// <param name="transaction">一个有效的连接事务</param> 
+        /// <param name="commandText">T-SQL语句</param> 
         /// <param name="commandParameters">SqlParamter参数数组</param> 
         /// <returns>返回一个包含结果集的DataSet</returns> 
+        public static DataSet ExecuteDataset(SqlTransaction transaction, string commandText, params SqlParameter[] commandParameters)
+        {
+            return ExecuteDataset(transaction, CommandType.Text, commandText, commandParameters);
+        }
+
+        /// <summary> 
+        /// 执行指定数据库连接对象的命令,指定存储过程参数,返回DataSet
+        /// </summary> 
+        /// <param name="connection">一个有效的数据库连接对象</param>
+        /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param>
+        /// <param name="commandText">存储过程名或T-SQL语句</param>
+        /// <param name="commandParameters">SqlParamter参数数组</param>
+        /// <returns>返回一个包含结果集的DataSet</returns>
         public static DataSet ExecuteDataset(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
             if (connection == null) throw new ArgumentNullException("connection");
@@ -263,11 +299,7 @@ namespace common
         /// <summary> 
         /// 执行指定事务的命令,指定参数,返回DataSet. 
         /// </summary> 
-        /// <remarks> 
-        /// 示例:  
-        ///  DataSet ds = ExecuteDataset(trans, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24)); 
-        /// </remarks> 
-        /// <param name="transaction">事务</param> 
+        /// <param name="transaction">一个有效的连接事务</param> 
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名或T-SQL语句</param> 
         /// <param name="commandParameters">SqlParamter参数数组</param> 
@@ -308,20 +340,19 @@ namespace common
         }
 
         /// <summary> 
-        /// 执行指定数据库连接对象的命令,返回结果集中的第一行第一列. 
+        /// 执行指定数据库事务的命令,指定参数,返回结果集中的第一行第一列. 
         /// </summary> 
         /// <remarks> 
         /// 示例:  
-        ///  int orderCount = (int)ExecuteScalar(conn, CommandType.StoredProcedure, "GetOrderCount"); 
+        ///  int orderCount = (int)ExecuteScalar(trans, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@prodid", 24)); 
         /// </remarks> 
-        /// <param name="connection">一个有效的数据库连接对象</param> 
-        /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
+        /// <param name="transaction">一个有效的连接事务</param> 
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
+        /// <param name="param">分配给命令的SqlParamter参数数组</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalar(SqlConnection connection, CommandType commandType, string commandText)
+        public static object ExecuteScalar(SqlTransaction transaction, string commandText, params SqlParameter[] param)
         {
-            // 执行参数为空的方法 
-            return ExecuteScalar(connection, commandType, commandText, (SqlParameter[])null);
+            return ExecuteScalar(transaction, CommandType.Text, commandText, param);
         }
 
         /// <summary> 
@@ -334,9 +365,9 @@ namespace common
         /// <param name="connection">一个有效的数据库连接对象</param> 
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
-        /// <param name="commandParameters">分配给命令的SqlParamter参数数组</param> 
+        /// <param name="param">分配给命令的SqlParamter参数数组</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalar(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        public static object ExecuteScalar(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] param)
         {
             if (connection == null) throw new ArgumentNullException("connection");
 
@@ -344,7 +375,7 @@ namespace common
             SqlCommand cmd = new SqlCommand();
 
             bool mustCloseConnection = false;
-            PrepareCommand(cmd, connection, null, commandType, commandText, commandParameters, out mustCloseConnection);
+            PrepareCommand(cmd, connection, null, commandType, commandText, param, out mustCloseConnection);
 
             // 执行SqlCommand命令,并返回结果. 
             object retval = cmd.ExecuteScalar();
@@ -368,9 +399,9 @@ namespace common
         /// <param name="transaction">一个有效的连接事务</param> 
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
-        /// <param name="commandParameters">分配给命令的SqlParamter参数数组</param> 
+        /// <param name="param">分配给命令的SqlParamter参数数组</param> 
         /// <returns>返回结果集中的第一行第一列</returns> 
-        public static object ExecuteScalar(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        public static object ExecuteScalar(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] param)
         {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("事务已经被回退或已经被提交，请提供一个开放事务。", "transaction");
@@ -378,7 +409,7 @@ namespace common
             // 创建SqlCommand命令,并进行预处理 
             SqlCommand cmd = new SqlCommand();
             bool mustCloseConnection = false;
-            PrepareCommand(cmd, transaction.Connection, transaction, commandType, commandText, commandParameters, out mustCloseConnection);
+            PrepareCommand(cmd, transaction.Connection, transaction, commandType, commandText, param, out mustCloseConnection);
 
             // 执行SqlCommand命令,并返回结果. 
             object retval = cmd.ExecuteScalar();
@@ -392,20 +423,39 @@ namespace common
 
         #region ExecuteReader 数据阅读器
 
+        /// <summary>
+        /// [调用者方式]执行指定数据库连接对象的数据阅读器,指定参数.
+        /// </summary>
+        /// <param name="commandText">T-SQL语句</param>
+        /// <param name="param">SqlParamter参数数组</param>
+        /// <returns>返回包含结果集的SqlDataReader</returns>
+        public static SqlDataReader ExecuteReader(string commandText, params SqlParameter[] param)
+        {
+            return ExecuteReader(GetConnection(), null, CommandType.Text, commandText, param);
+        }
+
+        /// <summary> 
+        /// [调用者方式]执行指定数据库事务的数据阅读器,指定参数值. 
+        /// </summary> 
+        /// <param name="transaction">一个有效的连接事务</param>
+        /// <param name="commandText">存储过程名称或T-SQL语句</param>
+        /// <param name="param">SqlParamter参数数组</param>
+        /// <returns>返回包含结果集的SqlDataReader</returns>
+        public static SqlDataReader ExecuteReader(SqlTransaction transaction, string commandText, params SqlParameter[] param)
+        {
+            return ExecuteReader(transaction, CommandType.Text, commandText, param);
+        }
+
         /// <summary> 
         /// 执行指定数据库连接对象的数据阅读器. 
         /// </summary> 
-        /// <remarks> 
-        /// 如果是SqlHelper打开连接,当连接关闭DataReader也将关闭. 
-        /// 如果是调用都打开连接,DataReader由调用都管理. 
-        /// </remarks> 
         /// <param name="connection">一个有效的数据库连接对象</param> 
         /// <param name="transaction">一个有效的事务,或者为 'null'</param> 
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名或T-SQL语句</param> 
-        /// <param name="commandParameters">SqlParameters参数数组,如果没有参数则为'null'</param>
+        /// <param name="param">SqlParameters参数数组,如果没有参数则为'null'</param>
         /// <returns>返回包含结果集的SqlDataReader</returns>
-        private static SqlDataReader ExecuteReader(SqlConnection connection, SqlTransaction transaction, CommandType commandType, string commandText, SqlParameter[] commandParameters)
+        private static SqlDataReader ExecuteReader(SqlConnection connection, SqlTransaction transaction, CommandType commandType, string commandText, SqlParameter[] param)
         {
             if (connection == null) throw new ArgumentNullException("connection");
 
@@ -414,7 +464,7 @@ namespace common
             SqlCommand cmd = new SqlCommand();
             try
             {
-                PrepareCommand(cmd, connection, transaction, commandType, commandText, commandParameters, out mustCloseConnection);
+                PrepareCommand(cmd, connection, transaction, commandType, commandText, param, out mustCloseConnection);
 
                 // 创建数据阅读器 
                 SqlDataReader dataReader;
@@ -449,49 +499,19 @@ namespace common
         }
 
         /// <summary> 
-        /// [调用者方式]执行指定数据库连接对象的数据阅读器,指定参数. 
-        /// </summary> 
-        /// <param name="commandText">命令类型 (存储过程,命令文本或其它)</param> 
-        /// <param name="commandParameters">SqlParamter参数数组</param> 
-        /// <returns>返回包含结果集的SqlDataReader</returns> 
-        public static SqlDataReader ExecuteReader(string commandText, params SqlParameter[] commandParameters)
-        {
-            return ExecuteReader(GetConnection(), null, CommandType.Text, commandText, commandParameters);
-        }
-
-        /// <summary> 
-        /// [调用者方式]执行指定数据库事务的数据阅读器,指定参数值. 
-        /// </summary> 
-        /// <remarks> 
-        /// 示例:  
-        ///  SqlDataReader dr = ExecuteReader(trans, CommandType.StoredProcedure, "GetOrders"); 
-        /// </remarks> 
-        /// <param name="transaction">一个有效的连接事务</param> 
-        /// <param name="commandText">存储过程名称或T-SQL语句</param> 
-        /// <returns>返回包含结果集的SqlDataReader</returns> 
-        public static SqlDataReader ExecuteReader(SqlTransaction transaction, string commandText)
-        {
-            return ExecuteReader(transaction, CommandType.Text, commandText, null);
-        }
-
-        /// <summary> 
         /// [调用者方式]执行指定数据库事务的数据阅读器,指定参数. 
         /// </summary> 
-        /// <remarks> 
-        /// 示例:  
-        ///   SqlDataReader dr = ExecuteReader(trans, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24)); 
-        /// </remarks> 
         /// <param name="transaction">一个有效的连接事务</param> 
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param> 
         /// <param name="commandText">存储过程名称或T-SQL语句</param> 
-        /// <param name="commandParameters">分配给命令的SqlParamter参数数组</param> 
+        /// <param name="param">分配给命令的SqlParamter参数数组</param> 
         /// <returns>返回包含结果集的SqlDataReader</returns> 
-        public static SqlDataReader ExecuteReader(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        public static SqlDataReader ExecuteReader(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] param)
         {
             if (transaction == null) throw new ArgumentNullException("transaction");
             if (transaction != null && transaction.Connection == null) throw new ArgumentException("The transaction was rollbacked or commited, please provide an open transaction.", "transaction");
 
-            return ExecuteReader(transaction.Connection, transaction, commandType, commandText, commandParameters);
+            return ExecuteReader(transaction.Connection, transaction, commandType, commandText, param);
         }
 
         #endregion ExecuteReader数据阅读器
