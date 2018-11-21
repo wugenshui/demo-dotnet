@@ -66,30 +66,38 @@ namespace demo_windowsService
             Process[] localByName = Process.GetProcessesByName(appName);
             if (localByName.Length == 0) //如果得到的进程数是0, 那么说明程序未启动，需要启动程序
             {
-                IntPtr userTokenHandle = IntPtr.Zero;
-                ApiDefinitions.WTSQueryUserToken(ApiDefinitions.WTSGetActiveConsoleSessionId(), ref userTokenHandle);
+                try
+                {
+                    IntPtr userTokenHandle = IntPtr.Zero;
+                    ApiDefinitions.WTSQueryUserToken(ApiDefinitions.WTSGetActiveConsoleSessionId(), ref userTokenHandle);
 
-                ApiDefinitions.PROCESS_INFORMATION procInfo = new ApiDefinitions.PROCESS_INFORMATION();
-                ApiDefinitions.STARTUPINFO startInfo = new ApiDefinitions.STARTUPINFO();
-                startInfo.cb = (uint)Marshal.SizeOf(startInfo);
+                    ApiDefinitions.PROCESS_INFORMATION procInfo = new ApiDefinitions.PROCESS_INFORMATION();
+                    ApiDefinitions.STARTUPINFO startInfo = new ApiDefinitions.STARTUPINFO();
+                    startInfo.cb = (uint)Marshal.SizeOf(startInfo);
 
-                ApiDefinitions.CreateProcessAsUser(
-                    userTokenHandle,
-                    appPath,
-                    "",
-                    IntPtr.Zero,
-                    IntPtr.Zero,
-                    false,
-                    0,
-                    IntPtr.Zero,
-                    null,
-                    ref startInfo,
-                    out procInfo);
+                    ApiDefinitions.CreateProcessAsUser(
+                        userTokenHandle,
+                        appPath,
+                        "",
+                        IntPtr.Zero,
+                        IntPtr.Zero,
+                        false,
+                        0,
+                        IntPtr.Zero,
+                        null,
+                        ref startInfo,
+                        out procInfo);
 
-                if (userTokenHandle != IntPtr.Zero)
-                    ApiDefinitions.CloseHandle(userTokenHandle);
+                    if (userTokenHandle != IntPtr.Zero)
+                        ApiDefinitions.CloseHandle(userTokenHandle);
 
-                int _currentAquariusProcessId = (int)procInfo.dwProcessId;
+                    int _currentAquariusProcessId = (int)procInfo.dwProcessId;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("启动程序失败！" + ex);
+                }
+
             }
             else
             {
