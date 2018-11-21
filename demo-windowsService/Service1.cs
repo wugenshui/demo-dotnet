@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Cjwdev.WindowsApi;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.ServiceProcess;
 using System.Text;
 using System.Timers;
@@ -33,7 +35,7 @@ namespace demo_windowsService
 
         private void Timer_Click(Object sender, ElapsedEventArgs e)
         {
-            NoUI();
+            HasUI();
         }
 
         /// <summary>
@@ -41,11 +43,53 @@ namespace demo_windowsService
         /// </summary>
         private void NoUI()
         {
-            string path = "G://demo-winform.exe";
-            Process[] localByName = Process.GetProcessesByName("demo-winform");
+            string appName = "demo-winform";
+            string appPath = "G://demo-winform.exe";
+            Process[] localByName = Process.GetProcessesByName(appName);
             if (localByName.Length == 0) //如果得到的进程数是0, 那么说明程序未启动，需要启动程序
             {
-                Process.Start(path); //启动程序 
+                Process.Start(appPath); //启动程序 
+            }
+            else
+            {
+                //如果程序已经启动，则执行这一部分代码
+            }
+        }
+
+        /// <summary>
+        /// 服务启动程序 显示界面
+        /// </summary>
+        private void HasUI()
+        {
+            string appName = "demo-winform";
+            string appPath = "G://demo-winform.exe";
+            Process[] localByName = Process.GetProcessesByName(appName);
+            if (localByName.Length == 0) //如果得到的进程数是0, 那么说明程序未启动，需要启动程序
+            {
+                IntPtr userTokenHandle = IntPtr.Zero;
+                ApiDefinitions.WTSQueryUserToken(ApiDefinitions.WTSGetActiveConsoleSessionId(), ref userTokenHandle);
+
+                ApiDefinitions.PROCESS_INFORMATION procInfo = new ApiDefinitions.PROCESS_INFORMATION();
+                ApiDefinitions.STARTUPINFO startInfo = new ApiDefinitions.STARTUPINFO();
+                startInfo.cb = (uint)Marshal.SizeOf(startInfo);
+
+                ApiDefinitions.CreateProcessAsUser(
+                    userTokenHandle,
+                    appPath,
+                    "",
+                    IntPtr.Zero,
+                    IntPtr.Zero,
+                    false,
+                    0,
+                    IntPtr.Zero,
+                    null,
+                    ref startInfo,
+                    out procInfo);
+
+                if (userTokenHandle != IntPtr.Zero)
+                    ApiDefinitions.CloseHandle(userTokenHandle);
+
+                int _currentAquariusProcessId = (int)procInfo.dwProcessId;
             }
             else
             {
