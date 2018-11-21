@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -111,16 +112,8 @@ namespace demo_console
 
         static void HttpPost()
         {
-            string url = "http://localhost:58949/api/Workorder";
-            string data = @"[
-{'oUCode':'0012413401','remark':'','groupType':'007-002','groupName':'车梯1组','leader':'顾明','members':'陈国世,测量2',
-'skylightDate':'2018-11-22','uniqueCode':'8a2997146336347401355d6d8954782','workticketCode': '18-11-22','material':[{'materialTypeId':'1238','count':1.0,'name':'弹簧垫片','model':'M12','unit':'个'},{'materialTypeId':'1601','count':1.0,'name':'承力索','model':'JTHM - 120','unit':'个'},{'materialTypeId':'0','count':4.0,'name':'地线','model':'','unit':'组'},{ 'materialTypeId':'4249','count':1.0,'name':'车梯（主）','model':'1号整体','unit':'台'}]},
-
-{'oUCode':'40','remark':'','groupType':'004-000','groupName':'地线1组','leader':'吕伟华','members':'吴水生,吴惠垣','skylightDate':'2018-11-19T00:00:00Z','uniqueCode':'8a2997146336347401355d6d8954782','workticketCode': '18-19-01','material':[{'materialTypeId':'3339','count':1.0,'name':'测温片','model':'','unit':'片'},{'materialTypeId':'1600','count':1.0,'name':'承力索','model':'JTHM-95','unit':'个'},{'materialTypeId':'1422','count':2.0,'name':'螺母','model':'不锈钢六角M10','unit':'个'},{'materialTypeId':'0','count':1.0,'name':'验电器','model':'','unit':'把'},{'materialTypeId':'1207','count':1.0,'name':'对讲机','model':'','unit':'台'},{'materialTypeId':'881','count':1.0,'name':'钢丝钳','model':'200','unit':'把'},{'materialTypeId':'892','count':6.0,'name':'扭力扳手','model':'20-100N.m','unit':'把'}]},
-{'oUCode':'40','remark':'','groupType':'007-006','groupName':'巡视1组','leader':'张晓红','members':'','skylightDate':'2018-11-19T00:00:00Z','uniqueCode':'8a2997146336347401355d6d8954782','workticketCode': '18-19-01','material':[{'materialTypeId':'881','count':1.0,'name':'钢丝钳','model':'200','unit':'把'},{'materialTypeId':'1601','count':1.0,'name':'承力索','model':'JTHM-120','unit':'个'},{'materialTypeId':'0','count':4.0,'name':'地线','model':'','unit':'组'}]},
-{'oUCode':'40','remark':'','groupType':'007-005','groupName':'测量1组','leader':'张晓红','members':'','skylightDate':'2018-11-19T00:00:00Z','uniqueCode':'8a2997146336347401355d6d8954782','workticketCode': '18-19-01','material':[{'materialTypeId':'0','count':1.0,'name':'工具包','model':'双肩','unit':'个'},{'materialTypeId':'881','count':1.0,'name':'钢丝钳','model':'200','unit':'把'},{'materialTypeId':'1601','count':1.0,'name':'承力索','model':'JTHM-120','unit':'个'},{'materialTypeId':'0','count':4.0,'name':'地线','model':'','unit':'组'}]},
-{'oUCode':'40','remark':'','groupType':'007-010','groupName':'待定1组','leader':'张晓红','members':'张三丰,小五','skylightDate':'2018-11-19T00:00:00Z','uniqueCode':'8a2997146336347401355d6d8954782','workticketCode': '18-19-01','material':[{'materialTypeId':'0','count':1.0,'name':'工具包','model':'双肩','unit':'个'},{'materialTypeId':'881','count':1.0,'name':'钢丝钳','model':'200','unit':'把'},{'materialTypeId':'1601','count':1.0,'name':'承力索','model':'JTHM-120','unit':'个'},{'materialTypeId':'0','count':4.0,'name':'地线','model':'','unit':'组'}]}]]
-";
+            string url = ConfigurationManager.AppSettings["url"];
+            string data = ConfigurationManager.AppSettings["data"];
             //命名空间System.Net下的HttpWebRequest类
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             //参照浏览器的请求报文 封装需要的参数 这里参照ie9
