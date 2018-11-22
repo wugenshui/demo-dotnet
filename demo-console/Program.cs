@@ -19,10 +19,13 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
+            string dir = Environment.CurrentDirectory;
+            string path = Path.Combine(dir, "demo-winform.exe");
+            Interop.CreateProcess(path, dir);
             for (int i = 0; i < 5; i++)
             {
-                Thread thread = new Thread(ThreadFun);
-                thread.Start();
+                //Thread thread = new Thread(ThreadFun);
+                //thread.Start();
             }
             Console.ReadKey();
         }
