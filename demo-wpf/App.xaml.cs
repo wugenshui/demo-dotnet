@@ -15,15 +15,14 @@ namespace demo_wpf
     {
         public App()
         {
-            TaskScheduler.UnobservedTaskException += (sender, e) =>
+            Current.DispatcherUnhandledException += (sender, e) =>
             {
-                MessageBox.Show(e.Exception.Message);
-                e.SetObserved();
+                MessageBox.Show("UI线程全局异常！" + Environment.NewLine + (e.Exception));
+                e.Handled = true;
             };
-
             AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
             {
-                MessageBox.Show("出现异常！请联系获取支持！" + Environment.NewLine + (e.ExceptionObject as Exception));
+                MessageBox.Show("非UI线程全局异常！" + Environment.NewLine + (e.ExceptionObject as Exception));
             };
         }
     }
