@@ -61,6 +61,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demo-winform", "demo-winfor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demo-windowsService", "demo-windowsService\demo-windowsService.csproj", "{22CFA713-4BAD-497F-86BE-ED8AFAA2F92C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demo-wpf", "demo-wpf\demo-wpf.csproj", "{6E3F3AF6-F7ED-4E7B-BCD5-C921C58EEFCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -249,6 +251,14 @@ Global
 		{22CFA713-4BAD-497F-86BE-ED8AFAA2F92C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{22CFA713-4BAD-497F-86BE-ED8AFAA2F92C}.Release|x86.ActiveCfg = Release|Any CPU
 		{22CFA713-4BAD-497F-86BE-ED8AFAA2F92C}.Release|x86.Build.0 = Release|Any CPU
+		{6E3F3AF6-F7ED-4E7B-BCD5-C921C58EEFCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E3F3AF6-F7ED-4E7B-BCD5-C921C58EEFCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E3F3AF6-F7ED-4E7B-BCD5-C921C58EEFCD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6E3F3AF6-F7ED-4E7B-BCD5-C921C58EEFCD}.Debug|x86.Build.0 = Debug|Any CPU
+		{6E3F3AF6-F7ED-4E7B-BCD5-C921C58EEFCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E3F3AF6-F7ED-4E7B-BCD5-C921C58EEFCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E3F3AF6-F7ED-4E7B-BCD5-C921C58EEFCD}.Release|x86.ActiveCfg = Release|Any CPU
+		{6E3F3AF6-F7ED-4E7B-BCD5-C921C58EEFCD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
