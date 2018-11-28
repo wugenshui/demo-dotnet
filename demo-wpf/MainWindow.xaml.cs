@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -20,6 +21,8 @@ namespace demo_wpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string key = "test";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -40,6 +43,26 @@ namespace demo_wpf
             Thread t = new Thread(() => { throw new InvalidOperationException("Something has gone wrong."); });
             t.IsBackground = true;
             t.Start();
+        }
+
+        private void btnWrite_Click(object sender, RoutedEventArgs e)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings[key]))
+            {
+                config.AppSettings.Settings[key].Value = txtWrite.Text;
+            }
+            else
+            {
+                config.AppSettings.Settings.Add(key, txtWrite.Text);
+            }
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
+        private void btnRead_Click(object sender, RoutedEventArgs e)
+        {
+            txtRead.Text = ConfigurationManager.AppSettings[key];
         }
     }
 }
