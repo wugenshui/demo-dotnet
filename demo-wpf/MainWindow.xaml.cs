@@ -48,7 +48,16 @@ namespace demo_wpf
         private void btnWrite_Click(object sender, RoutedEventArgs e)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings[key]))
+            bool hasKey = false;
+            foreach (string item in ConfigurationManager.AppSettings.Keys)
+            {
+                if (key == item)
+                {
+                    hasKey = true;
+                    break;
+                }
+            }
+            if (hasKey)
             {
                 config.AppSettings.Settings[key].Value = txtWrite.Text;
             }
