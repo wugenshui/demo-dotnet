@@ -47,6 +47,7 @@ namespace demo_wpf
 
         private void btnWrite_Click(object sender, RoutedEventArgs e)
         {
+            // 修改App.config里的值
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             bool hasKey = false;
             foreach (string item in ConfigurationManager.AppSettings.Keys)
