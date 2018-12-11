@@ -20,55 +20,55 @@ namespace demo_console
         static void Main(string[] args)
         {
             // 读取日志统计分析
-            DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
-            StringBuilder sb = new StringBuilder();
-            foreach (FileInfo file in dir.GetFiles())
-            {
-                string filename = file.Name;
-                if (filename.Contains("log"))
-                {
-                    List<string> listUnicode = new List<string>();
-                    var txt = File.ReadAllText(filename);
-                    var lines = txt.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Reverse();
-                    foreach (var line in lines)
-                    {
-                        if (line.Contains("调用上传小组料具单接口："))
-                        {
-                            List<TYWorkOrderInfo> order = JsonHelper.JsonDeserialize<List<TYWorkOrderInfo>>(line.Replace("调用上传小组料具单接口：", ""));
-                            if (!listUnicode.Contains(order[0].uniqueCode))
-                            {
-                                listUnicode.Add(order[0].uniqueCode);
-                                Console.WriteLine(order[0].skylightDate.ToString("yyyy-MM-dd"));
-                                Console.WriteLine(order[0].oUCode);
-                                Console.WriteLine(order[0].uniqueCode);
-                                foreach (TYWorkOrderInfo workorder in order)
-                                {
-                                    Console.Write(workorder.groupName);
-                                    int hasid = 0;
-                                    int noid = 0;
-                                    foreach (var tool in workorder.material)
-                                    {
-                                        if (tool.materialTypeId == "0")
-                                        {
-                                            noid++;
-                                        }
-                                        else
-                                        {
-                                            hasid++;
-                                        }
-                                    }
-                                    Console.WriteLine("\t" + hasid + ":" + noid);
-                                }
-                                Console.WriteLine();
-                            }
+            //DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
+            //StringBuilder sb = new StringBuilder();
+            //foreach (FileInfo file in dir.GetFiles())
+            //{
+            //    string filename = file.Name;
+            //    if (filename.Contains("log"))
+            //    {
+            //        List<string> listUnicode = new List<string>();
+            //        var txt = File.ReadAllText(filename);
+            //        var lines = txt.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Reverse();
+            //        foreach (var line in lines)
+            //        {
+            //            if (line.Contains("调用上传小组料具单接口："))
+            //            {
+            //                List<TYWorkOrderInfo> order = JsonHelper.JsonDeserialize<List<TYWorkOrderInfo>>(line.Replace("调用上传小组料具单接口：", ""));
+            //                if (!listUnicode.Contains(order[0].uniqueCode))
+            //                {
+            //                    listUnicode.Add(order[0].uniqueCode);
+            //                    Console.WriteLine(order[0].skylightDate.ToString("yyyy-MM-dd"));
+            //                    Console.WriteLine(order[0].oUCode);
+            //                    Console.WriteLine(order[0].uniqueCode);
+            //                    foreach (TYWorkOrderInfo workorder in order)
+            //                    {
+            //                        Console.Write(workorder.groupName);
+            //                        int hasid = 0;
+            //                        int noid = 0;
+            //                        foreach (var tool in workorder.material)
+            //                        {
+            //                            if (tool.materialTypeId == "0")
+            //                            {
+            //                                noid++;
+            //                            }
+            //                            else
+            //                            {
+            //                                hasid++;
+            //                            }
+            //                        }
+            //                        Console.WriteLine("\t" + hasid + ":" + noid);
+            //                    }
+            //                    Console.WriteLine();
+            //                }
 
-                        }
-                    }
+            //            }
+            //        }
 
-                    Console.WriteLine("");
-                    Console.WriteLine("---------------------------------------");
-                }
-            }
+            //        Console.WriteLine("");
+            //        Console.WriteLine("---------------------------------------");
+            //    }
+            //}
 
             //string dir = Environment.CurrentDirectory;
             //string path = Path.Combine(dir, "demo-winform.exe");

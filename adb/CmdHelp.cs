@@ -15,16 +15,16 @@ namespace adb
         public string[] GetDevices()
         {
             var result = ProcessHelper.Run(AdbExePath, CmdAdbInfo.adb_devices);
-            var itemsString = result.OutputString;
+            string itemsString = result.OutputString;
             EventReceiveData(itemsString);
 
             var items = itemsString.Split(new[] { "$", "#", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-            var itemsList = new List<String>();
-            foreach (var item in items)
+            var itemsList = new List<string>();
+            foreach (string item in items)
             {
-                var tmp = item.Trim();
+                string temp = item.Trim();
                 //第一行不含\t所以排除
-                if (tmp.IndexOf("\t") == -1)
+                if (temp.IndexOf("\t") == -1)
                 {
                     continue;
                 }
@@ -36,13 +36,13 @@ namespace adb
         }
 
         /// <summary>
-        /// 获取设备安装的APP
+        /// 获取设备安装的第三方APP
         /// </summary>
         /// <param name="deviceName">设备名称</param>
         /// <returns></returns>
         public string[] GetAPP(string deviceName)
         {
-            var result = ProcessHelper.Run(AdbExePath, "-s " + deviceName + " " + CmdAdbInfo.adb_shell_pm_list_packages);
+            var result = ProcessHelper.Run(AdbExePath, "-s " + deviceName + " " + CmdAdbInfo.adb_shell_pm_list_packages_3);
             var itemsString = result.OutputString;
             EventReceiveData(itemsString);
             string[] items = itemsString.Split(new[] { "$", "#", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
@@ -53,8 +53,8 @@ namespace adb
         /// 文件拉取
         /// </summary>
         /// <param name="deviceName">设备名称</param>
-        /// <param name="source">移动端的路径</param>
-        /// <param name="target">本机路径</param>
+        /// <param name="source">移动端的源路径</param>
+        /// <param name="target">本机目标路径</param>
         /// <returns></returns>
         public string FilePull(string deviceName, string source, string target)
         {
@@ -68,8 +68,8 @@ namespace adb
         /// 文件推送
         /// </summary>
         /// <param name="deviceName">设备名称</param>
-        /// <param name="source">移动端的路径</param>
-        /// <param name="target">本机路径</param>
+        /// <param name="source">本机源路径</param>
+        /// <param name="target">移动端的目标路径</param>
         /// <returns></returns>
         public string FilePush(string deviceName, string source, string target)
         {
@@ -78,6 +78,70 @@ namespace adb
 
             return itemsString;
         }
+
+        /// <summary>
+        /// 移动端文件重命名 adb -s OVBIAQMJ8LKNPJYD shell rename /sdcard/1.txt  /sdcard/2.txt
+        /// </summary>
+        /// <param name="deviceName">设备名称</param>
+        /// <param name="source">移动端的源路径</param>
+        /// <param name="target">移动端的目标路径</param>
+        /// <returns></returns>
+        public string FileRename(string deviceName, string source, string target)
+        {
+            var result = ProcessHelper.Run(AdbExePath, "-s " + deviceName + " shell " + CmdAdbInfo.adb_rename + " " + source + " " + target);
+            var itemsString = result.OutputString;
+
+            return itemsString;
+        }
+
+        /// <summary>
+        /// 发送adb 命令（同步）
+        /// </summary>
+        /// <returns></returns>
+        public void SendAdbCmd(string deviceStr, string cmdStr)
+        {
+            CmdProcessHelper.Run(AdbExePath, CmdAdbInfo.adb_universal_s + " " + deviceStr + " " + cmdStr);
+        }
+
+        /// <summary>
+        /// 获取设备文件内容
+        /// </summary>
+        /// <param name="deviceNo"></param>
+        /// <param name="propKey"></param>
+        /// <returns></returns>
+        public string GetFileContent(string deviceNo, string cmdStr)
+        {
+            var result = ProcessHelper.Run(AdbExePath, string.Format("-s {0} {1}", deviceNo, cmdStr));
+            EventReceiveData(result.OutputString.Trim());
+            return result.OutputString.Trim();
+        }
+
+        /// <summary>
+        /// 开启服务
+        /// </summary>
+        /// <param name="port"></param>
+        public void StartServer(string port)
+        {
+            CmdProcessHelper.Run(AdbExePath, CmdAdbInfo.adb_universal_p + " " + port + " " + CmdAdbInfo.adb_start_server);
+        }
+
+        /// <summary>
+        /// 退出服务
+        /// </summary>
+        public void KillServer()
+        {
+            CmdProcessHelper.Run(AdbExePath, CmdAdbInfo.adb_kill_server);
+        }
+
+        /// <summary>
+        /// 重启移动设备
+        /// </summary>
+        /// <param name="port"></param>
+        public void ReBoot(string port)
+        {
+            CmdProcessHelper.Run(AdbExePath, CmdAdbInfo.adb_universal_p + " " + port + " " + CmdAdbInfo.adb_reboot);
+        }
+
         #endregion
 
         //adb路径
@@ -160,38 +224,6 @@ namespace adb
         }
 
         /// <summary>
-        /// 发送adb 命令（同步）
-        /// </summary>
-        /// <returns></returns>
-        public void SendAdbCmd(string deviceStr, string cmdStr)
-        {
-            CmdProcessHelper.Run(AdbExePath, CmdAdbInfo.adb_universal_s + " " + deviceStr + " " + cmdStr);
-        }
-
-        public void StartServer(string port)
-        {
-            CmdProcessHelper.Run(AdbExePath, CmdAdbInfo.adb_universal_p + " " + port + " " + CmdAdbInfo.adb_start_server);
-        }
-
-        public void KillServer(string port)
-        {
-            CmdProcessHelper.Run(AdbExePath, CmdAdbInfo.adb_kill_server);
-        }
-
-        /// <summary>
-        /// 获取设备文件内容
-        /// </summary>
-        /// <param name="deviceNo"></param>
-        /// <param name="propKey"></param>
-        /// <returns></returns>
-        public string GetFileContent(string deviceNo, string cmdStr)
-        {
-            var result = ProcessHelper.Run(AdbExePath, string.Format("-s {0} {1}", deviceNo, cmdStr));
-            EventReceiveData(result.OutputString.Trim());
-            return result.OutputString.Trim();
-        }
-
-        /// <summary>
         /// 卸载软件
         /// </summary>
         /// <returns></returns>
@@ -203,6 +235,7 @@ namespace adb
         }
 
         #region 获取设备相关信息
+
         /// <summary>
         /// -s 0123456789ABCDEF shell getprop ro.product.brand
         /// </summary>

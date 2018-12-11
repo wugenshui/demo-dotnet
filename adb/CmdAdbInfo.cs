@@ -46,6 +46,8 @@ namespace adb
         public static string adb_pull = "pull";
         /**复制电脑文件到设备**/
         public static string adb_push = "push";
+        // 重命名
+        public static string adb_rename = "rename";
 
         /**获取所有adb指令*/
         public static List<string> GetAllADBCmdList()

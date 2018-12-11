@@ -29,21 +29,28 @@ namespace adb
 
             cmdHelp.StartServer("10010"); // 防止端口占用
             string[] devices = cmdHelp.GetDevices();
-            foreach (var name in devices)
+            foreach (var device in devices)
             {
-                Console.WriteLine("设备：" + name);
-                string[] apps = cmdHelp.GetAPP(name);
+                Console.WriteLine("设备：" + device);
+                Console.WriteLine("型号:" + cmdHelp.GetDeviceModel(device));
+                Console.WriteLine("品牌:" + cmdHelp.GetDeviceBrand(device));
+                Console.WriteLine("设备指纹:" + cmdHelp.GetDeviceFingerprint(device));
+                Console.WriteLine("系统版本:" + cmdHelp.GetDeviceVersionRelease(device));
+                Console.WriteLine("SDK版本:" + cmdHelp.GetDeviceVersionSdk(device));
+                string[] apps = cmdHelp.GetAPP(device);
                 foreach (var app in apps)
                 {
                     Console.WriteLine("\t" + app);
                 }
-                string file = name + ".txt";
+                string file = device + ".txt";
                 string remote = "/sdcard/" + file;
-                File.WriteAllText(file, string.Join(",", apps));
-                var pushResult = cmdHelp.FilePush(name, file, remote);
+                File.WriteAllText(file, string.Join("\r\n", apps));
+                var pushResult = cmdHelp.FilePush(device, file, remote);
                 Console.WriteLine("上传结果：" + pushResult);
-                var pullResult = cmdHelp.FilePull(name, remote, "pull.txt");
+                var pullResult = cmdHelp.FilePull(device, remote, "pull.txt");
                 Console.WriteLine("下载结果：" + pullResult);
+                var renameResult = cmdHelp.FileRename(device, remote, remote.Replace(device, "target"));
+                Console.WriteLine("重命名结果：成功！");
             }
 
             Console.Read();
