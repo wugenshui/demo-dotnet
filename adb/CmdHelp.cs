@@ -98,9 +98,23 @@ namespace adb
         /// 发送adb 命令（同步）
         /// </summary>
         /// <returns></returns>
+        public void Run(string cmdStr)
+        {
+            CmdProcessHelper.Run(AdbExePath, cmdStr);
+        }
+
+        /// <summary>
+        /// 发送adb 命令（同步）
+        /// </summary>
+        /// <returns></returns>
         public void SendAdbCmd(string deviceStr, string cmdStr)
         {
             CmdProcessHelper.Run(AdbExePath, CmdAdbInfo.adb_universal_s + " " + deviceStr + " " + cmdStr);
+        }
+
+        public void StopApp(string appName)
+        {
+            Run("shell am force-stop " + appName);
         }
 
         /// <summary>
