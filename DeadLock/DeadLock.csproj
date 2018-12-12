@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDAL\ADAL.cs" />
+    <Compile Include="BaseDAL\BDAL.cs" />
+    <Compile Include="BaseModel\AInfo.cs" />
+    <Compile Include="BaseModel\BInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
