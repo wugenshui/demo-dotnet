@@ -10,18 +10,61 @@ namespace adb
 {
     class Program
     {
-        CmdHelp cmdHelp = new CmdHelp();
-        SynchronizationContext m_SyncContext = null;
         public string m_ReviceMsgStr = string.Empty;
+        static int total = 0;
+        static int threadCount = 50;
+        static int exeCount = 2;
 
         static void Main(string[] args)
         {
+            var adbProcess = Process.GetProcessesByName("adb");
+            int adbCount = 0;
+            foreach (Process adb in adbProcess)
+            {
+                adb.Kill();
+                Console.WriteLine("杀死" + (++adbCount) + "个adb进程!!!!!!!!!!!!!!");
+            }
 
-            //RunCmd2("", "node");
-            //RunCmd2("", "1+1");
-            new Program().StartADB();
+            for (int i = 0; i < threadCount; i++)
+            {
+                Thread thread = new Thread(TestClose);
+                thread.Name = "线程" + (i + 1).ToString("00");
+                thread.Start();
+            }
 
-            Console.ReadKey();
+            while (true)
+            {
+                Console.ReadLine();
+                Console.WriteLine();
+                Console.WriteLine("..............开始新一轮遍历..............");
+                total = 0;
+                for (int i = 0; i < threadCount; i++)
+                {
+                    Thread thread = new Thread(TestClose);
+                    thread.Name = "线程" + (i + 1).ToString("00");
+                    thread.Start();
+                }
+            }
+
+            //Console.ReadKey();
+        }
+
+        static void TestClose()
+        {
+            int counter = 0;
+
+            AdbHelp.StartServer("10010");
+            string[] devices = AdbHelp.GetDevices();
+            string deviceName = devices.Length > 0 ? devices[0] : "0123456789ABCDEF";
+            for (int i = 0; i < exeCount; i++)
+            {
+                AdbHelp.StopApp(deviceName, "com.tencent.mm");
+                AdbHelp.FilePull(deviceName, "/sdcard/sdms/dbs/PdaSDMS.db", Environment.CurrentDirectory);
+                AdbHelp.FilePull(deviceName, Environment.CurrentDirectory, "/sdcard/sdms/dbs/1.db");
+                AdbHelp.FileRename(deviceName, "/sdcard/sdms/dbs/1.db", "/sdcard/sdms/dbs/2.db");
+                AdbHelp.GetDeviceModel(deviceName);
+                Console.WriteLine(string.Format("{0}:当前执行条数{1}....................{2}/{3}", Thread.CurrentThread.Name, ++counter, ++total, threadCount * exeCount));
+            }
         }
 
         static void RunCmd()
@@ -109,23 +152,19 @@ namespace adb
         void StartADB()
         {
             // 注册事件(adb,Android Debug Bridge)
-            CmdHelp.EventReceiveData += new CmdHelp.DelegateReceiveData(cmdHelp_EventReceiveData);
-            CmdHelp.EventReceiveThreadData += new CmdHelp.DelegateReceiveThreadData(CmdHelp_EventReceiveThreadData);
-            CmdHelp.EventReceiveThreadErrorData += new CmdHelp.DelegateReceiveThreadErrorData(CmdHelp_EventReceiveThreadErrorData);
-            m_SyncContext = SynchronizationContext.Current;
-            cmdHelp.StartServer("10010"); // 防止端口占用
+            AdbHelp.StartServer("10010"); // 防止端口占用
 
-            cmdHelp.StopApp("com.tencent.mm"); // 关闭程序
-            string[] devices = cmdHelp.GetDevices();
+            string[] devices = AdbHelp.GetDevices();
             foreach (var device in devices)
             {
+                AdbHelp.StopApp(device, "com.tencent.mm");
                 Console.WriteLine("设备：" + device);
-                Console.WriteLine("型号:" + cmdHelp.GetDeviceModel(device));
-                Console.WriteLine("品牌:" + cmdHelp.GetDeviceBrand(device));
-                Console.WriteLine("设备指纹:" + cmdHelp.GetDeviceFingerprint(device));
-                Console.WriteLine("系统版本:" + cmdHelp.GetDeviceVersionRelease(device));
-                Console.WriteLine("SDK版本:" + cmdHelp.GetDeviceVersionSdk(device));
-                string[] apps = cmdHelp.GetAPP(device);
+                Console.WriteLine("型号:" + AdbHelp.GetDeviceModel(device));
+                Console.WriteLine("品牌:" + AdbHelp.GetDeviceBrand(device));
+                Console.WriteLine("设备指纹:" + AdbHelp.GetDeviceFingerprint(device));
+                Console.WriteLine("系统版本:" + AdbHelp.GetDeviceVersionRelease(device));
+                Console.WriteLine("SDK版本:" + AdbHelp.GetDeviceVersionSdk(device));
+                string[] apps = AdbHelp.GetAPP(device);
                 foreach (var app in apps)
                 {
                     Console.WriteLine("\t" + app);
@@ -133,33 +172,15 @@ namespace adb
                 string file = device + ".txt";
                 string remote = "/sdcard/" + file;
                 File.WriteAllText(file, string.Join("\r\n", apps));
-                var pushResult = cmdHelp.FilePush(device, file, remote);
+                var pushResult = AdbHelp.FilePush(device, file, remote);
                 Console.WriteLine("上传结果：" + pushResult);
-                var pullResult = cmdHelp.FilePull(device, remote, "pull.txt");
+                var pullResult = AdbHelp.FilePull(device, remote, "pull.txt");
                 Console.WriteLine("下载结果：" + pullResult);
-                var renameResult = cmdHelp.FileRename(device, remote, remote.Replace(device, "target"));
+                var renameResult = AdbHelp.FileRename(device, remote, remote.Replace(device, "target"));
                 Console.WriteLine("重命名结果：成功！");
             }
 
             Console.Read();
-        }
-
-        //接收到数据
-        private void cmdHelp_EventReceiveData(string data)
-        {
-            //m_SyncContext.Post(setListData, data);
-        }
-
-        //接收错误数据
-        private void CmdHelp_EventReceiveThreadErrorData(string data)
-        {
-            //m_SyncContext.Post(setListData, data);
-        }
-
-
-        void CmdHelp_EventReceiveThreadData(string data)
-        {
-            //m_SyncContext.Post(setListData, data);
         }
 
         private void setListData(object data)

@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>adb</RootNamespace>
-    <AssemblyName>adb</AssemblyName>
+    <AssemblyName>adb-test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -41,13 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CmdAdbInfo.cs" />
-    <Compile Include="CmdHelp.cs" />
-    <Compile Include="CmdProcessHelper.cs" />
+    <Compile Include="AdbHelp.cs" />
     <Compile Include="ProcessHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SystemErrorCodes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\adb.exe">

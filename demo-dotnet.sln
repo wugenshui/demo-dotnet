@@ -61,7 +61,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demo-windowsService", "demo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "demo-wpf", "demo-wpf\demo-wpf.csproj", "{6E3F3AF6-F7ED-4E7B-BCD5-C921C58EEFCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "adb", "adb\adb.csproj", "{E06F75B3-189B-496E-963D-0F37271AE82D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "adb-test", "adb\adb-test.csproj", "{E06F75B3-189B-496E-963D-0F37271AE82D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadLock", "DeadLock\DeadLock.csproj", "{615D49C9-67E5-4780-9679-D3BA9ADA8D19}"
 EndProject

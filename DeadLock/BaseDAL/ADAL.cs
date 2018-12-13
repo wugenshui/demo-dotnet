@@ -84,27 +84,23 @@ namespace DeadLock.DAL
 
         public int Insert(AInfo model, SqlTransaction trans = null)
         {
-            int count = 0;
             string sql = @"INSERT INTO A
                         (ID,Value)
-                        VALUES (@ID,@Value);
-                        SELECT SCOPE_IDENTITY();";
+                        VALUES (@ID,@Value)";
             SqlParameter[] param = new SqlParameter[]
             {
                 new SqlParameter("ID",model.ID),
                 new SqlParameter("Value",model.Value),
             };
-            object counter = null;
             if (trans == null)
             {
-                counter = SqlHelper.ExecuteScalar(sql, param);
+                SqlHelper.ExecuteScalar(sql, param);
             }
             else
             {
-                counter = SqlHelper.ExecuteScalar(trans, sql, param);
+                SqlHelper.ExecuteScalar(trans, sql, param);
             }
-            int.TryParse(counter.ToString(), out count);
-            return count;
+            return model.ID;
         }
 
         public int Update(AInfo model, SqlTransaction trans = null)

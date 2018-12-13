@@ -1,5 +1,4 @@
-﻿using HuaweiSoftware.SyncTool.Common.AdbHelp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -10,6 +9,23 @@ namespace adb
 {
     class ProcessHelper
     {
+        public static string Run(string exePath, string args)
+        {
+            string result = string.Empty;
+            using (Process p = GetProcess())
+            {
+                p.StartInfo.FileName = exePath;
+                p.StartInfo.Arguments = args;
+                p.Start();
+                result = p.StandardOutput.ReadToEnd(); // 正常信息
+                // p.StandardError.ReadToEnd() 异常信息
+
+                p.WaitForExit();
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// 读取数据的时候等待时间，等待时间过短时，可能导致读取不出正确的数据。
         /// </summary>
@@ -17,15 +33,15 @@ namespace adb
 
         private static Process GetProcess()
         {
-            Process mProcess = new Process();
-            mProcess.StartInfo.CreateNoWindow = true;
-            mProcess.StartInfo.UseShellExecute = false;
-            mProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            mProcess.StartInfo.RedirectStandardInput = true;
-            mProcess.StartInfo.RedirectStandardError = true;
-            mProcess.StartInfo.RedirectStandardOutput = true;
-            mProcess.StartInfo.StandardOutputEncoding = Encoding.UTF8;
-            return mProcess;
+            Process process = new Process();
+            process.StartInfo.CreateNoWindow = true; // 不显示Dos窗口
+            process.StartInfo.UseShellExecute = false; // 是否指定操作系统外壳进程启动程序
+            process.StartInfo.RedirectStandardInput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+
+            return process;
         }
         private static string ReadStandardOutputLine(Process p)
         {
@@ -86,52 +102,6 @@ namespace adb
                     result.ExitCode = p.ExitCode;
                     result.Success = true;
                 }
-            }
-            catch (Win32Exception ex)
-            {
-                result.Success = false;
-                result.OutputString = string.Format("{0},{1}", ex.NativeErrorCode, SystemErrorCodes.ToString(ex.NativeErrorCode));
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.OutputString = ex.ToString();
-            }
-            return result;
-        }
-
-        public static RunResult Run(string exePath, string args)
-        {
-            var result = new RunResult();
-            try
-            {
-                using (var p = GetProcess())
-                {
-                    p.StartInfo.FileName = exePath;
-                    p.StartInfo.Arguments = args;
-                    p.Start();
-
-                    //获取正常信息
-                    if (p.StandardOutput.Peek() > -1)
-                    {
-                        result.OutputString = p.StandardOutput.ReadToEnd();
-                    }
-
-                    //获取错误信息
-                    if (p.StandardError.Peek() > -1)
-                    {
-                        result.OutputString = p.StandardError.ReadToEnd();
-                    }
-
-                    p.WaitForExit();
-                    result.ExitCode = p.ExitCode;
-                    result.Success = true;
-                }
-            }
-            catch (Win32Exception ex)
-            {
-                result.Success = false;
-                result.OutputString = string.Format("{0},{1}", ex.NativeErrorCode, SystemErrorCodes.ToString(ex.NativeErrorCode));
             }
             catch (Exception ex)
             {
