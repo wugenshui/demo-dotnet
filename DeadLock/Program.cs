@@ -17,14 +17,14 @@ namespace DeadLock
     {
         private static ADAL _ADAL = new ADAL();
         private static BDAL _BDAL = new BDAL();
-        private static Random random = new Random();
         private static int num = 0;
+        private static int times = 10; // 每条sql执行次数，增加次数可以增大死锁出现概率
 
         static void Main(string[] args)
         {
             InitData();
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 10; i++)
             {
                 Thread thread = new Thread(t1);
                 thread.Start();
@@ -91,15 +91,16 @@ namespace DeadLock
             {
                 try
                 {
-                    _ADAL.Update(new AInfo() { ID = 1, Value = 1 }, trans);
-                    Thread.Sleep(random.Next(0, 100));
-                    _BDAL.Update(new BInfo() { ID = 1, Value = 1 }, trans);
+                    for (int i = 0; i < times; i++)
+                        _ADAL.Update(new AInfo() { ID = 1, Value = 1 }, trans);
+                    for (int i = 0; i < times; i++)
+                        _BDAL.Update(new BInfo() { ID = 1, Value = 1 }, trans);
                     trans.Commit();
-                    Console.WriteLine("t1执行成功:" + ++num);
+                    Console.WriteLine(++num + "：t1执行成功");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(++num + "：t1执行失败\t" + ex.Message);
                     trans.Rollback();
                 }
             }
@@ -112,15 +113,16 @@ namespace DeadLock
             {
                 try
                 {
-                    _ADAL.Update(new AInfo() { ID = 1, Value = 2 }, trans);
-                    Thread.Sleep(random.Next(0, 100));
-                    _BDAL.Update(new BInfo() { ID = 1, Value = 2 }, trans);
+                    for (int i = 0; i < times; i++)
+                        _BDAL.Update(new BInfo() { ID = 1, Value = 2 }, trans);
+                    for (int i = 0; i < times; i++)
+                        _ADAL.Update(new AInfo() { ID = 1, Value = 2 }, trans);
                     trans.Commit();
-                    Console.WriteLine("t2执行成功:" + ++num);
+                    Console.WriteLine(++num + "：t2执行成功");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(++num + "：t2执行失败\t" + ex.Message);
                     trans.Rollback();
                 }
             }
