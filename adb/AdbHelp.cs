@@ -37,8 +37,8 @@ namespace adb
         /// <returns>设备序列号集合</returns>
         public static string[] GetDevices()
         {
-            var result = Run("devices");
-            var items = result.Split(new[] { "$", "#", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var cmdResult = Run("devices");
+            var items = cmdResult.Split(new[] { "$", "#", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
             var itemsList = new List<string>();
             foreach (string item in items)
             {
@@ -52,18 +52,6 @@ namespace adb
             }
             itemsList.Sort();
             return itemsList.ToArray();
-        }
-
-        /// <summary>
-        /// 获取设备安装的第三方APP
-        /// </summary>
-        /// <param name="serialNo">设备序列号</param>
-        /// <returns></returns>
-        public static string[] GetAPP(string serialNo)
-        {
-            var result = Run(string.Format("-s {0} shell pm list packages -3", serialNo));
-            string[] items = result.Split(new[] { "$", "#", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-            return items;
         }
 
         /// <summary>
@@ -100,6 +88,41 @@ namespace adb
         public static string FileRename(string serialNo, string source, string target)
         {
             return Run("-s " + serialNo + " shell rename " + source + " " + target);
+        }
+
+        /// <summary>
+        /// 获取设备安装的第三方APP
+        /// </summary>
+        /// <param name="serialNo">设备序列号</param>
+        /// <returns></returns>
+        public static string[] GetAPP(string serialNo)
+        {
+            var cmdResult = Run(string.Format("-s {0} shell pm list packages -3", serialNo));
+            string[] items = cmdResult.Split(new[] { "$", "#", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            return items;
+        }
+
+        /// <summary>
+        /// 检测App是否运行
+        /// </summary>
+        /// <param name="serialNo">设备序列号</param>
+        /// <param name="appName">App包名</param>
+        public bool IsAppRun(string serialNo, string appName)
+        {
+            bool hasApp = false;
+            var cmdResult = Run(serialNo, string.Format("shell \"ps | grep {0}\"", appName));
+
+            var items = cmdResult.Split(new[] { "$", "#", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string item in items)
+            {
+                if (item.Contains(appName))
+                {
+                    hasApp = true;
+                    break;
+                }
+            }
+
+            return hasApp;
         }
 
         /// <summary>
