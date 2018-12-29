@@ -26,6 +26,8 @@ namespace demo_wpf
         public MainWindow()
         {
             InitializeComponent();
+            NewWindow newWindow = new NewWindow();
+            newWindow.Show();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
