@@ -24,6 +24,18 @@
         <WrapPanel Grid.Row="2">
             <Button Name="btnRead" Margin="5" Click="btnRead_Click">读取配置</Button>
             <TextBox Name="txtRead" Width="400"></TextBox>
+            <ListBox x:Name="listBox" Height="88" Width="461">
+                <ListBox></ListBox>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Border BorderBrush="Red" BorderThickness="2" Width="50" Height="50"/>
+                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text="{Binding Age}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </WrapPanel>
     </Grid>
 </Window>
