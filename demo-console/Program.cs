@@ -19,15 +19,329 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
-            string dir = Environment.CurrentDirectory;
-            string path = Path.Combine(dir, "demo-winform.exe");
-            Interop.CreateProcess(path, dir);
-            for (int i = 0; i < 5; i++)
-            {
-                //Thread thread = new Thread(ThreadFun);
-                //thread.Start();
-            }
+            // 读取日志统计分析
+            //DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
+            //StringBuilder sb = new StringBuilder();
+            //foreach (FileInfo file in dir.GetFiles())
+            //{
+            //    string filename = file.Name;
+            //    if (filename.Contains("log"))
+            //    {
+            //        List<string> listUnicode = new List<string>();
+            //        var txt = File.ReadAllText(filename);
+            //        var lines = txt.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Reverse();
+            //        foreach (var line in lines)
+            //        {
+            //            if (line.Contains("调用上传小组料具单接口："))
+            //            {
+            //                List<TYWorkOrderInfo> order = JsonHelper.JsonDeserialize<List<TYWorkOrderInfo>>(line.Replace("调用上传小组料具单接口：", ""));
+            //                if (!listUnicode.Contains(order[0].uniqueCode))
+            //                {
+            //                    listUnicode.Add(order[0].uniqueCode);
+            //                    Console.WriteLine(order[0].skylightDate.ToString("yyyy-MM-dd"));
+            //                    Console.WriteLine(order[0].oUCode);
+            //                    Console.WriteLine(order[0].uniqueCode);
+            //                    foreach (TYWorkOrderInfo workorder in order)
+            //                    {
+            //                        Console.Write(workorder.groupName);
+            //                        int hasid = 0;
+            //                        int noid = 0;
+            //                        foreach (var tool in workorder.material)
+            //                        {
+            //                            if (tool.materialTypeId == "0")
+            //                            {
+            //                                noid++;
+            //                            }
+            //                            else
+            //                            {
+            //                                hasid++;
+            //                            }
+            //                        }
+            //                        Console.WriteLine("\t" + hasid + ":" + noid);
+            //                    }
+            //                    Console.WriteLine();
+            //                }
+
+            //            }
+            //        }
+
+            //        Console.WriteLine("");
+            //        Console.WriteLine("---------------------------------------");
+            //    }
+            //}
+
+            //string dir = Environment.CurrentDirectory;
+            //string path = Path.Combine(dir, "demo-winform.exe");
+            //Interop.CreateProcess(path, dir);
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    //Thread thread = new Thread(ThreadFun);
+            //    //thread.Start();
+            //}
             Console.ReadKey();
+        }
+
+        public class TYWorkOrderInfo
+        {
+            private string m_OUCode = string.Empty;
+            private string m_Remark = string.Empty;
+            private string m_GroupType = string.Empty;
+            private string m_GroupName = string.Empty;
+            private string m_Leader = string.Empty;
+            private string m_Members = string.Empty;
+            private DateTime m_SkylightDate = new DateTime(1990, 1, 1);
+            private string m_UniqueCode = string.Empty;
+            private string m_workticketCode = string.Empty;
+            private List<TakeMaterialInfo> m_Material = new List<TakeMaterialInfo>();
+
+            /// <summary>
+            /// 工区编码
+            /// </summary>
+            public string oUCode
+            {
+                get
+                {
+                    return m_OUCode;
+                }
+
+                set
+                {
+                    m_OUCode = value;
+                }
+            }
+
+            /// <summary>
+            /// 备注
+            /// </summary>
+            public string remark
+            {
+                get
+                {
+                    return m_Remark;
+                }
+
+                set
+                {
+                    m_Remark = value;
+                }
+            }
+
+            /// <summary>
+            /// 小组类型
+            /// </summary>
+            public string groupType
+            {
+                get
+                {
+                    return m_GroupType;
+                }
+
+                set
+                {
+                    m_GroupType = value;
+                }
+            }
+
+            /// <summary>
+            /// 小组名称
+            /// </summary>
+            public string groupName
+            {
+                get
+                {
+                    return m_GroupName;
+                }
+
+                set
+                {
+                    m_GroupName = value;
+                }
+            }
+
+            /// <summary>
+            /// 小组负责人
+            /// </summary>
+            public string leader
+            {
+                get
+                {
+                    return m_Leader;
+                }
+
+                set
+                {
+                    m_Leader = value;
+                }
+            }
+
+            /// <summary>
+            /// 作业组成员
+            /// </summary>
+            public string members
+            {
+                get
+                {
+                    return m_Members;
+                }
+
+                set
+                {
+                    m_Members = value;
+                }
+            }
+
+            /// <summary>
+            /// 天窗日期
+            /// </summary>
+            public DateTime skylightDate
+            {
+                get
+                {
+                    return m_SkylightDate;
+                }
+
+                set
+                {
+                    m_SkylightDate = value;
+                }
+            }
+
+            /// <summary>
+            /// 分工作业唯一标识码
+            /// </summary>
+            public string uniqueCode
+            {
+                get
+                {
+                    return m_UniqueCode;
+                }
+
+                set
+                {
+                    m_UniqueCode = value;
+                }
+            }
+
+            /// <summary>
+            /// 工作票号
+            /// </summary>
+            public string workticketCode
+            {
+                get
+                {
+                    return m_workticketCode;
+                }
+
+                set
+                {
+                    m_workticketCode = value;
+                }
+            }
+
+            /// <summary>
+            /// 计划携带工具材料
+            /// </summary>
+            public List<TakeMaterialInfo> material
+            {
+                get
+                {
+                    return m_Material;
+                }
+
+                set
+                {
+                    m_Material = value;
+                }
+            }
+        }
+
+        public class TakeMaterialInfo
+        {
+            private string m_MaterialTypeId = string.Empty;
+            private float m_Count = 0;
+            private string m_Name = string.Empty;
+            private string m_Model = string.Empty;
+            private string m_unit = string.Empty;
+
+            /// <summary>
+            /// 料具类型
+            /// </summary>
+            public string materialTypeId
+            {
+                get
+                {
+                    return m_MaterialTypeId;
+                }
+
+                set
+                {
+                    m_MaterialTypeId = value;
+                }
+            }
+
+            /// <summary>
+            /// 数量
+            /// </summary>
+            public float count
+            {
+                get
+                {
+                    return m_Count;
+                }
+
+                set
+                {
+                    m_Count = value;
+                }
+            }
+
+            /// <summary>
+            /// 料具名称
+            /// </summary>
+            public string name
+            {
+                get
+                {
+                    return m_Name;
+                }
+
+                set
+                {
+                    m_Name = value;
+                }
+            }
+
+            /// <summary>
+            /// 规格型号
+            /// </summary>
+            public string model
+            {
+                get
+                {
+                    return m_Model;
+                }
+
+                set
+                {
+                    m_Model = value;
+                }
+            }
+
+            /// <summary>
+            /// 单位
+            /// </summary>
+            public string unit
+            {
+                get
+                {
+                    return m_unit;
+                }
+
+                set
+                {
+                    m_unit = value;
+                }
+            }
         }
 
         #region 枚举操作

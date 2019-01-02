@@ -24,7 +24,7 @@ namespace common
         {
             //string connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
             //return Base64Helper.Base64Decode(connectionString);
-            return "server=.;Integrated Security=True;Database=GMS;Persist Security Info=True;Persist Security Info=False;Packet Size=4096;Pooling = true;Max Pool Size = 100;Min Pool Size = 1";
+            return "server=.;Integrated Security=True;Database=Test;Persist Security Info=True;Persist Security Info=False;Packet Size=4096;Pooling = true;Max Pool Size = 100;Min Pool Size = 1";
         }
         /// <summary> 
         /// 获取数据库连接对象 
