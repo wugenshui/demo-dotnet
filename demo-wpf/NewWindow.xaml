@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:demo_wpf"
         mc:Ignorable="d"
-        Title="NewWindow" Height="300" Width="300">
+        Title="NewWindow" Height="400" Width="500" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button Name="btn" Width="100" Height="50" Content="关闭窗口" Click="btn_Click"></Button>
+        <Button Name="btn" Width="100" Height="50" Content="关闭新窗口" Click="btn_Click"></Button>
     </Grid>
 </Window>

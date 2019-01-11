@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:demo_wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="400" Width="500" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
@@ -16,6 +16,7 @@
             <Button Click="Button_Click" Margin="5">UI线程异常1</Button>
             <Button Click="Button_Click_1" Margin="5">UI线程异常2</Button>
             <Button Click="Button_Click_2" Margin="5">其它线程异常</Button>
+            <Button Click="Button_Click_3" Margin="15">打开新窗口</Button>
         </WrapPanel>
         <WrapPanel Grid.Row="1">
             <Button Name="btnWrite" Margin="5" Click="btnWrite_Click">写入配置</Button>

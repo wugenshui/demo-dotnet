@@ -18,13 +18,16 @@ namespace demo_wpf
     /// </summary>
     public partial class NewWindow : Window
     {
-        public NewWindow()
+        Window win = null;
+        public NewWindow(Window win)
         {
             InitializeComponent();
+            this.win = win;
         }
 
         private void btn_Click(object sender, RoutedEventArgs e)
         {
+            win.Show();
             this.Close();
         }
     }

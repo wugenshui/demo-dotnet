@@ -26,8 +26,6 @@ namespace demo_wpf
         public MainWindow()
         {
             InitializeComponent();
-            NewWindow newWindow = new NewWindow();
-            newWindow.Show();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -75,6 +73,13 @@ namespace demo_wpf
         private void btnRead_Click(object sender, RoutedEventArgs e)
         {
             txtRead.Text = ConfigurationManager.AppSettings[key];
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            NewWindow newWindow = new NewWindow(this);
+            newWindow.Show();
+            this.Hide();
         }
     }
 }
