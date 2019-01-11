@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace demo_wpf
 {
     /// <summary>
-    /// ProgressBar.xaml 的交互逻辑
+    /// 调用WPFSpark组件
     /// </summary>
     public partial class ProgressBar : Window
     {
