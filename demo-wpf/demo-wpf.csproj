@@ -54,6 +54,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DispatcherHelper.cs" />
+    <Compile Include="FluidProgressBar.xaml.cs">
+      <DependentUpon>FluidProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FluidStatusBar.xaml.cs">
+      <DependentUpon>FluidStatusBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProgressBar.xaml.cs">
+      <DependentUpon>ProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StatusDirection.cs" />
+    <Compile Include="StatusMessage.cs" />
+    <Page Include="FluidProgressBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FluidStatusBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +87,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProgressBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
