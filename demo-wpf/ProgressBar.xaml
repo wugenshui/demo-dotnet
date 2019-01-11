@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:demo_wpf"
         mc:Ignorable="d"
-        Title="ProgressBar" Height="300" Width="300">
+        Title="ProgressBar" Height="300" Width="300" WindowStartupLocation="CenterScreen">
     <Grid>
+        <Button Width="50" Height="30" VerticalAlignment="Top" Click="Button_Click">显示进度条</Button>
         <local:FluidStatusBar x:Name="customStatusBar" Width="300"
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 FadeOutDirection="Up" FadeOutDistance="50" FadeOutDuration="00:00:00.75" MoveDuration="00:00:00.3"
                 Foreground="Blue" Background="Transparent"
                 FontFamily="Miscrosoft YaHei" FontWeight="Light" FontStyle="Normal" FontSize="20"></local:FluidStatusBar>
-        <local:FluidProgressBar x:Name="pgBarDownload" VerticalAlignment="Bottom" Visibility="Collapsed" Margin="0 0 0 5"
+        <local:FluidProgressBar x:Name="pgBarDownload" VerticalAlignment="Bottom" Visibility="Hidden" Margin="0 0 0 5"
                                    HorizontalAlignment="Stretch"
                                    Foreground="Cyan"
                                    DotWidth="6"
