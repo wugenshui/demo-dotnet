@@ -29,14 +29,14 @@ namespace demo_wpf
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            Thread t = new Thread(() =>
-            {
-                SplashScreen splashScreen = new SplashScreen("startup.gif");
-                splashScreen.Show(true);
-                splashScreen.Close(new TimeSpan(0, 0, 3));
-            });
-            t.SetApartmentState(ApartmentState.STA);//设置单线程
-            t.Start();
+            //Thread t = new Thread(() =>
+            //{
+            //    SplashScreen splashScreen = new SplashScreen("startup.gif");
+            //    splashScreen.Show(true);
+            //    splashScreen.Close(new TimeSpan(0, 0, 3));
+            //});
+            //t.SetApartmentState(ApartmentState.STA);//设置单线程
+            //t.Start();
 
 
 

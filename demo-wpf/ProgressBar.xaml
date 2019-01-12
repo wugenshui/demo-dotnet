@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:demo_wpf"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
         mc:Ignorable="d"
         Title="ProgressBar" Height="600" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
         <Button Width="50" Height="30" VerticalAlignment="Top" Click="Button_Click">显示进度条</Button>
-        <Image Source="startup.gif"></Image>
+        <Image gif:ImageBehavior.AnimatedSource="startup.gif"></Image>
         <local:FluidStatusBar x:Name="customStatusBar" Width="300"
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 FadeOutDirection="Up" FadeOutDistance="50" FadeOutDuration="00:00:00.75" MoveDuration="00:00:00.3"
