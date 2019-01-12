@@ -32,6 +32,8 @@ namespace demo_wpf
             bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(OnWorkCompleted);
             bgWorker.ProgressChanged += new ProgressChangedEventHandler(OnProgress);
 
+            Thread.Sleep(3000);
+
             // 窗体加载完成事件
             Loaded += Button_Click;
         }
