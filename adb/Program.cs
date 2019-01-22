@@ -53,7 +53,7 @@ namespace adb
         {
             int counter = 0;
 
-            AdbHelp.StartServer("10010");
+            AdbHelp.StartServer();
             string[] devices = AdbHelp.GetDevices();
             string deviceName = devices.Length > 0 ? devices[0] : "0123456789ABCDEF";
             for (int i = 0; i < exeCount; i++)
@@ -152,7 +152,7 @@ namespace adb
         void StartADB()
         {
             // 注册事件(adb,Android Debug Bridge)
-            AdbHelp.StartServer("10010"); // 防止端口占用
+            AdbHelp.StartServer();
 
             string[] devices = AdbHelp.GetDevices();
             foreach (var device in devices)
