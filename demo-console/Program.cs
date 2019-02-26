@@ -19,6 +19,25 @@ namespace demo_console
     {
         static void Main(string[] args)
         {
+            try
+            {
+                try
+                {
+                    int i = 0;
+                    int j = 1 / i;
+                }
+                catch (Exception ex)
+                {
+                    // 直接throw ex会重置堆栈跟踪信息，导致后续异常捕获困难
+                    throw ex;
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            Console.Read();
             // 读取日志统计分析
             //DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
             //StringBuilder sb = new StringBuilder();
