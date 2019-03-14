@@ -71,6 +71,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathCalculate", "MathCalcul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathCalculateMSTests", "MathCalculateMSTests\MathCalculateMSTests.csproj", "{99EAE458-B662-433B-97B7-A86A1BCBFE53}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathCalculateNUnit3Tests", "MathCalculateNUnit3Tests\MathCalculateNUnit3Tests.csproj", "{39306E0D-A9DC-4553-BA73-B9BB9C6D8B13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -291,6 +293,14 @@ Global
 		{99EAE458-B662-433B-97B7-A86A1BCBFE53}.Release|Any CPU.Build.0 = Release|Any CPU
 		{99EAE458-B662-433B-97B7-A86A1BCBFE53}.Release|x86.ActiveCfg = Release|Any CPU
 		{99EAE458-B662-433B-97B7-A86A1BCBFE53}.Release|x86.Build.0 = Release|Any CPU
+		{39306E0D-A9DC-4553-BA73-B9BB9C6D8B13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39306E0D-A9DC-4553-BA73-B9BB9C6D8B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39306E0D-A9DC-4553-BA73-B9BB9C6D8B13}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{39306E0D-A9DC-4553-BA73-B9BB9C6D8B13}.Debug|x86.Build.0 = Debug|Any CPU
+		{39306E0D-A9DC-4553-BA73-B9BB9C6D8B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39306E0D-A9DC-4553-BA73-B9BB9C6D8B13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39306E0D-A9DC-4553-BA73-B9BB9C6D8B13}.Release|x86.ActiveCfg = Release|Any CPU
+		{39306E0D-A9DC-4553-BA73-B9BB9C6D8B13}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -314,5 +324,6 @@ Global
 		{615D49C9-67E5-4780-9679-D3BA9ADA8D19} = {A5F9BB64-629B-4C5C-8BD2-59D3B84FC462}
 		{E18FD989-AE94-42A1-ACE4-9E94219CB297} = {DC9828C8-D4C0-4661-BE39-813B7E8168FB}
 		{99EAE458-B662-433B-97B7-A86A1BCBFE53} = {DC9828C8-D4C0-4661-BE39-813B7E8168FB}
+		{39306E0D-A9DC-4553-BA73-B9BB9C6D8B13} = {DC9828C8-D4C0-4661-BE39-813B7E8168FB}
 	EndGlobalSection
 EndGlobal

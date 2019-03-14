@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MathCalculate.MSTests
+namespace MathCalculate.MathCalculateNUnit3Tests
 {
     [TestClass()]
     public class DivisionTests
