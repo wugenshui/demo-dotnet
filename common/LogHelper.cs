@@ -25,6 +25,7 @@ namespace common
             }
             catch (Exception)
             {
+                // 防止因为日志记录报错导致系统异常
             }
         }
 
@@ -41,6 +42,7 @@ namespace common
             }
             catch (Exception)
             {
+                // 防止因为日志记录报错导致系统异常
             }
         }
 
@@ -57,6 +59,7 @@ namespace common
             }
             catch (Exception)
             {
+                // 防止因为日志记录报错导致系统异常
             }
         }
     }
