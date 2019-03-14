@@ -20,7 +20,7 @@ namespace MathCalculate
         {
             if (dividend == 0)
             {
-                throw new Exception("除数不能为0");
+                throw new DivideByZeroException("尝试除以零。");
             }
             return divisor / dividend;
         }

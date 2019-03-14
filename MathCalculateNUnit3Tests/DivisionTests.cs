@@ -19,5 +19,14 @@ namespace MathCalculate.MathCalculateNUnit3Tests
         {
             return Division.Calculation(divisor, dividend);
         }
+
+        [Test()]
+        public void CalculationTest_DivideZero_ThrowException()
+        {
+            Assert.Throws<DivideByZeroException>(delegate ()
+            {
+                Division.Calculation(12, 0);
+            });
+        }
     }
 }
