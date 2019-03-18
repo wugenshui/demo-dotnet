@@ -21,5 +21,14 @@ namespace MathCalculate.MSTests
             double actualResult = Division.Calculation(divisor, dividend);
             Assert.AreEqual(expectedResult, actualResult);
         }
+
+        [TestMethod()]
+        public void CalculationTest_DivideZero_ThrowException()
+        {
+            Assert.ThrowsException<DivideByZeroException>(delegate ()
+            {
+                Division.Calculation(12, 0);
+            });
+        }
     }
 }
