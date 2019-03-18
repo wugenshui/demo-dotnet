@@ -25,9 +25,10 @@ namespace MathCalculate.MathCalculateNUnit3Tests
         }
 
         //[DataTestMethod]
-        //[DataRow(1, 2, 2)]
-        //[DataRow(2, 3, 5)]
-        //[DataRow(3, 5, 8)]
+        //[DataRow(700, 100, 7)]
+        //[DataRow(3, 2, 1.5)]
+        //[DataRow(0, 2, 0)]
+        //[DataRow(-3, 1, -3)]
         //public void AdditionTest(int a, int b, int result)
         //{
         //    Assert.AreEqual(result, a + b);
