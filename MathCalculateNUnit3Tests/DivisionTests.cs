@@ -10,6 +10,8 @@ namespace MathCalculate.MathCalculateNUnit3Tests
     [TestFixture()]
     public class DivisionTests
     {
+        public static DateTime date = DateTime.Now;
+
         [Test()]
         [TestCase(700, 100, ExpectedResult = 7)]
         [TestCase(3, 2, ExpectedResult = 1.5)]
@@ -27,6 +29,16 @@ namespace MathCalculate.MathCalculateNUnit3Tests
             {
                 Division.Calculation(12, 0);
             });
+        }
+
+        /// <summary>
+        /// 获取格式化的时间文本
+        /// </summary>
+        /// <param name="today"></param>
+        /// <returns></returns>
+        public static string GetFormatDateStr(DateTime date)
+        {
+            return date.ToString("yyyy-MM-dd");
         }
     }
 }

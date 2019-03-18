@@ -4,34 +4,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace MathCalculate.MathCalculateNUnit3Tests
+namespace MathCalculate.MSTests
 {
     [TestClass()]
     public class DivisionTests
     {
-        [TestMethod()]
-        public void CalculationTest_Return5()
+        [DataTestMethod]
+        [DataRow(700, 100, 7)]
+        [DataRow(3, 2, 1.5)]
+        [DataRow(0, 2, 0)]
+        [DataRow(-3, 1, -3)]
+        public void CalculationTest(double divisor, double dividend, double expectedResult)
         {
-            Assert.AreEqual(5, Division.Calculation(5, 1));
-
-            Assert.AreEqual(2.5, Division.Calculation(5, 2));
-
-            Assert.AreEqual(2, Division.Calculation(4, 2));
-
-            Assert.AreEqual(5, Division.Calculation(5, 1));
-
-            Assert.AreEqual(5, Division.Calculation(5, 1));
+            double actualResult = Division.Calculation(divisor, dividend);
+            Assert.AreEqual(expectedResult, actualResult);
         }
-
-        //[DataTestMethod]
-        //[DataRow(700, 100, 7)]
-        //[DataRow(3, 2, 1.5)]
-        //[DataRow(0, 2, 0)]
-        //[DataRow(-3, 1, -3)]
-        //public void AdditionTest(int a, int b, int result)
-        //{
-        //    Assert.AreEqual(result, a + b);
-        //}
     }
 }
