@@ -11,10 +11,10 @@ namespace MathCalculate.MathCalculateNUnit3Tests
     public class DivisionTests
     {
         [Test()]
-        [TestCase(3, 2, ExpectedResult = 1.5)]
         [TestCase(700, 100, ExpectedResult = 7)]
-        [TestCase(3, 1, ExpectedResult = 3)]
-        [TestCase(3888, 2, ExpectedResult = 1944)]
+        [TestCase(3, 2, ExpectedResult = 1.5)]
+        [TestCase(0, 2, ExpectedResult = 0)]
+        [TestCase(-3, 1, ExpectedResult = -3)]
         public double CalculationTest(double divisor, double dividend)
         {
             return Division.Calculation(divisor, dividend);
