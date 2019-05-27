@@ -57,25 +57,18 @@ namespace common
         /// <param name="data">数据表</param>
         public static void BulkToDB(DataTable data)
         {
-            SqlConnection conn = new SqlConnection(GetConnSting());
-            SqlBulkCopy bulkCopy = new SqlBulkCopy(conn);
-            bulkCopy.DestinationTableName = data.TableName;
-            bulkCopy.BatchSize = data.Rows.Count;
-            try
+            using (SqlConnection conn = new SqlConnection(GetConnSting()))
             {
-                conn.Open();
-                if (data != null && data.Rows.Count != 0)
-                    bulkCopy.WriteToServer(data);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-                if (bulkCopy != null)
-                    bulkCopy.Close();
+                using (SqlBulkCopy bulkCopy = new SqlBulkCopy(conn))
+                {
+                    bulkCopy.DestinationTableName = data.TableName;
+                    bulkCopy.BatchSize = data.Rows.Count;
+                    conn.Open();
+                    if (data.Rows.Count != 0)
+                    {
+                        bulkCopy.WriteToServer(data);
+                    }
+                }
             }
         }
 
@@ -152,7 +145,6 @@ namespace common
             {
                 AttachParameters(command, commandParameters);
             }
-            return;
         }
 
         #endregion 私有构造函数和方法结束
@@ -220,7 +212,7 @@ namespace common
         public static int ExecuteNonQuery(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
             if (transaction == null) throw new ArgumentNullException("transaction");
-            if (transaction != null && transaction.Connection == null) throw new ArgumentException("事务已经被回退或已经被提交，请提供一个开放事务。", "transaction");
+            if (transaction.Connection == null) throw new ArgumentException("事务已经被回退或已经被提交，请提供一个开放事务。", "transaction");
 
             // 预处理 
             SqlCommand cmd = new SqlCommand();
@@ -307,7 +299,7 @@ namespace common
         public static DataSet ExecuteDataset(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
             if (transaction == null) throw new ArgumentNullException("transaction");
-            if (transaction != null && transaction.Connection == null) throw new ArgumentException("事务已经被回退或已经被提交，请提供一个开放事务。", "transaction");
+            if (transaction.Connection == null) throw new ArgumentException("事务已经被回退或已经被提交，请提供一个开放事务。", "transaction");
 
             // 预处理 
             SqlCommand cmd = new SqlCommand();
@@ -404,7 +396,7 @@ namespace common
         public static object ExecuteScalar(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] param)
         {
             if (transaction == null) throw new ArgumentNullException("transaction");
-            if (transaction != null && transaction.Connection == null) throw new ArgumentException("事务已经被回退或已经被提交，请提供一个开放事务。", "transaction");
+            if (transaction.Connection == null) throw new ArgumentException("事务已经被回退或已经被提交，请提供一个开放事务。", "transaction");
 
             // 创建SqlCommand命令,并进行预处理 
             SqlCommand cmd = new SqlCommand();
